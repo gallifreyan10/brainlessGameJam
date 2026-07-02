@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dapfs78ury1r8"]
+
+[ext_resource type="Script" uid="uid://cefhq42fy42xu" path="res://scripts/prize_container.gd" id="1_jpwin"]
+[ext_resource type="PackedScene" uid="uid://cetcbao7tx6gi" path="res://scenes/blueAlien.tscn" id="1_xr4xt"]
+[ext_resource type="PackedScene" uid="uid://bugkbr4528jdv" path="res://scenes/cabinetWall.tscn" id="2_c6sfa"]
+[ext_resource type="PackedScene" uid="uid://dbr1lqox8605y" path="res://scenes/prizeChute.tscn" id="3_jpwin"]
+
+[node name="root" type="Sprite2D" unique_id=1035922221]
+position = Vector2(1090, 806)
+scale = Vector2(13.08, 1)
+
+[node name="prizeContainer" type="Node2D" parent="." unique_id=1425589497 node_paths=PackedStringArray("spawn_top_left", "spawn_bottom_right")]
+script = ExtResource("1_jpwin")
+blue_Scene = ExtResource("1_xr4xt")
+spawn_top_left = NodePath("../PrizeSpawnTopLeft")
+spawn_bottom_right = NodePath("../PrizeSpawnBottomRight")
+
+[node name="blueLittleGuy" parent="prizeContainer" unique_id=923555866 instance=ExtResource("1_xr4xt")]
+position = Vector2(-2063.15, -85.99902)
+scale = Vector2(10, 61.828)
+
+[node name="clawSpawn" type="Marker2D" parent="." unique_id=601436855]
+position = Vector2(-55.963303, -2240)
+scale = Vector2(0.0764526, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1951429874]
+
+[node name="CabinetWall" parent="." unique_id=1560813676 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(-148.77676, -902)
+scale = Vector2(1, 21.200003)
+
+[node name="CabinetWall2" parent="." unique_id=1439492563 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(1785.6271, -991)
+scale = Vector2(1, 21.200003)
+
+[node name="CabinetWall3" parent="." unique_id=878238190 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(1329.2813, -881)
+scale = Vector2(1, 21.200003)
+
+[node name="CabinetWall4" parent="." unique_id=1216061017 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(637.7676, 18442)
+rotation = -1.5707964
+scale = Vector2(10, 1.33)
+
+[node name="PrizeChute" parent="." unique_id=596256380 instance=ExtResource("3_jpwin")]
+z_index = 1
+position = Vector2(-1520.6421, 13298.001)
+scale = Vector2(15, 15)
+
+[node name="PrizeSpawnTopLeft" type="Marker2D" parent="." unique_id=1699542291]
+position = Vector2(273.24158, 5250)
+
+[node name="PrizeSpawnBottomRight" type="Marker2D" parent="." unique_id=105204545]
+position = Vector2(5918.5015, 30538)

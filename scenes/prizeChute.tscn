@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dbr1lqox8605y"]
+
+[ext_resource type="Texture2D" uid="uid://3b1u7n4grsd4" path="res://art/prototypeSprites/prizeChute.png" id="1_upew5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lsd3k"]
+size = Vector2(32, 32)
+
+[node name="PrizeChute" type="Area2D" unique_id=596256380]
+
+[node name="PrizeChute" type="Sprite2D" parent="." unique_id=780791825]
+position = Vector2(227, 125)
+texture = ExtResource("1_upew5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1978611267]
+position = Vector2(227, 125)
+shape = SubResource("RectangleShape2D_lsd3k")

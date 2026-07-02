@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cmd68cakaymg0"]
+
+[ext_resource type="Texture2D" uid="uid://b3imqcifw1ejr" path="res://art/prototypeSprites/claw.png" id="1_xymyp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nge5k"]
+radius = 12.993939
+height = 25.987879
+
+[node name="Claw" type="Node2D" unique_id=1355383]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=621652505]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1113854003]
+position = Vector2(507, 205)
+scale = Vector2(10.40625, 10.3125)
+shape = SubResource("CapsuleShape2D_nge5k")
+
+[node name="Claw" type="Sprite2D" parent="CharacterBody2D" unique_id=402214849]
+position = Vector2(515, 164)
+scale = Vector2(10.40625, 10.3125)
+texture = ExtResource("1_xymyp")

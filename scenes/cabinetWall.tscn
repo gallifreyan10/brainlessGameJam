@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bugkbr4528jdv"]
+
+[ext_resource type="Texture2D" uid="uid://gsrcd5hmbga0" path="res://art/prototypeSprites/ClawborderMarker.png" id="1_g4wae"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eaiqy"]
+size = Vector2(32, 32)
+
+[node name="CabinetWall" type="StaticBody2D" unique_id=1560813676]
+
+[node name="ClawborderMarker" type="Sprite2D" parent="." unique_id=2048969901]
+position = Vector2(320, 205)
+scale = Vector2(1, 35.280003)
+texture = ExtResource("1_g4wae")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1261063117]
+position = Vector2(320, 205)
+scale = Vector2(1, 35.280003)
+shape = SubResource("RectangleShape2D_eaiqy")
