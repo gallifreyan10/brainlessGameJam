@@ -8,11 +8,9 @@ size = Vector2(32, 32)
 [node name="CabinetWall" type="StaticBody2D" unique_id=1560813676]
 
 [node name="ClawborderMarker" type="Sprite2D" parent="." unique_id=2048969901]
-position = Vector2(320, 205)
-scale = Vector2(1, 35.280003)
+scale = Vector2(0.4, 11.64)
 texture = ExtResource("1_g4wae")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1261063117]
-position = Vector2(320, 205)
-scale = Vector2(1, 35.280003)
+scale = Vector2(0.4000013, 11.640001)
 shape = SubResource("RectangleShape2D_eaiqy")

@@ -1,58 +1,125 @@
 [gd_scene format=3 uid="uid://dapfs78ury1r8"]
 
 [ext_resource type="Script" uid="uid://cefhq42fy42xu" path="res://scripts/prize_container.gd" id="1_jpwin"]
-[ext_resource type="PackedScene" uid="uid://cetcbao7tx6gi" path="res://scenes/blueAlien.tscn" id="1_xr4xt"]
-[ext_resource type="PackedScene" uid="uid://bugkbr4528jdv" path="res://scenes/cabinetWall.tscn" id="2_c6sfa"]
-[ext_resource type="PackedScene" uid="uid://dbr1lqox8605y" path="res://scenes/prizeChute.tscn" id="3_jpwin"]
+[ext_resource type="PackedScene" uid="uid://cetcbao7tx6gi" path="res://scenes/Assets/blueAlien.tscn" id="1_xr4xt"]
+[ext_resource type="PackedScene" uid="uid://bugkbr4528jdv" path="res://scenes/Assets/cabinetWall.tscn" id="2_c6sfa"]
+[ext_resource type="PackedScene" uid="uid://dbr1lqox8605y" path="res://scenes/Assets/prizeChute.tscn" id="3_jpwin"]
+[ext_resource type="PackedScene" uid="uid://cmd68cakaymg0" path="res://scenes/Assets/claw.tscn" id="5_42ncc"]
 
 [node name="root" type="Sprite2D" unique_id=1035922221]
-position = Vector2(1090, 806)
-scale = Vector2(13.08, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=302279949]
+position = Vector2(320, 180)
 
 [node name="prizeContainer" type="Node2D" parent="." unique_id=1425589497 node_paths=PackedStringArray("spawn_top_left", "spawn_bottom_right")]
 script = ExtResource("1_jpwin")
 blue_Scene = ExtResource("1_xr4xt")
-spawn_top_left = NodePath("../PrizeSpawnTopLeft")
-spawn_bottom_right = NodePath("../PrizeSpawnBottomRight")
+spawn_top_left = NodePath("PrizeSpawnTopLeft")
+spawn_bottom_right = NodePath("PrizeSpawnBottomRight")
+
+[node name="PrizeSpawnTopLeft" type="Marker2D" parent="prizeContainer" unique_id=1699542291]
+position = Vector2(80, 120)
+
+[node name="PrizeSpawnBottomRight" type="Marker2D" parent="prizeContainer" unique_id=105204545]
+position = Vector2(455, 300)
 
 [node name="blueLittleGuy" parent="prizeContainer" unique_id=923555866 instance=ExtResource("1_xr4xt")]
-position = Vector2(-2063.15, -85.99902)
-scale = Vector2(10, 61.828)
+position = Vector2(312, 304)
 
 [node name="clawSpawn" type="Marker2D" parent="." unique_id=601436855]
-position = Vector2(-55.963303, -2240)
-scale = Vector2(0.0764526, 1)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1951429874]
+position = Vector2(318, 31)
 
 [node name="CabinetWall" parent="." unique_id=1560813676 instance=ExtResource("2_c6sfa")]
 z_index = 1
-position = Vector2(-148.77676, -902)
-scale = Vector2(1, 21.200003)
+position = Vector2(136, 56)
+scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall2" parent="." unique_id=1439492563 instance=ExtResource("2_c6sfa")]
+[node name="CabinetWall2" parent="." unique_id=1214076349 instance=ExtResource("2_c6sfa")]
 z_index = 1
-position = Vector2(1785.6271, -991)
-scale = Vector2(1, 21.200003)
+position = Vector2(136, 168)
+scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall3" parent="." unique_id=878238190 instance=ExtResource("2_c6sfa")]
+[node name="CabinetWall3" parent="." unique_id=361861103 instance=ExtResource("2_c6sfa")]
 z_index = 1
-position = Vector2(1329.2813, -881)
-scale = Vector2(1, 21.200003)
+position = Vector2(136, 280)
+scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall4" parent="." unique_id=1216061017 instance=ExtResource("2_c6sfa")]
+[node name="CabinetWall4" parent="." unique_id=1070191200 instance=ExtResource("2_c6sfa")]
 z_index = 1
-position = Vector2(637.7676, 18442)
+position = Vector2(136, 296)
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall5" parent="." unique_id=128228457 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(488, 139)
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall6" parent="." unique_id=694358223 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(488, 168)
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall7" parent="." unique_id=25730055 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(488, 280)
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall8" parent="." unique_id=964376761 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(488, 296)
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall9" parent="." unique_id=57404117 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(576, 56)
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall10" parent="." unique_id=1126289352 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(576, 168)
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall11" parent="." unique_id=2008990289 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(576, 280)
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall12" parent="." unique_id=358182783 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(576, 296)
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall13" parent="." unique_id=42287628 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(192, 352)
 rotation = -1.5707964
-scale = Vector2(10, 1.33)
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall14" parent="." unique_id=1973275786 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(304, 352)
+rotation = -1.5707964
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall15" parent="." unique_id=374922236 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(416, 352)
+rotation = -1.5707964
+scale = Vector2(0.5, 0.32)
+
+[node name="CabinetWall16" parent="." unique_id=626909662 instance=ExtResource("2_c6sfa")]
+z_index = 1
+position = Vector2(432.00003, 352)
+rotation = -1.5707964
+scale = Vector2(0.5, 0.32)
 
 [node name="PrizeChute" parent="." unique_id=596256380 instance=ExtResource("3_jpwin")]
 z_index = 1
-position = Vector2(-1520.6421, 13298.001)
-scale = Vector2(15, 15)
+position = Vector2(532, 347)
+scale = Vector2(2.46, 0.5)
 
-[node name="PrizeSpawnTopLeft" type="Marker2D" parent="." unique_id=1699542291]
-position = Vector2(273.24158, 5250)
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1951429874]
 
-[node name="PrizeSpawnBottomRight" type="Marker2D" parent="." unique_id=105204545]
-position = Vector2(5918.5015, 30538)
+[node name="Claw" parent="." unique_id=1355383 instance=ExtResource("5_42ncc")]
+position = Vector2(319, 31)
+scale = Vector2(2, 2)

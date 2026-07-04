@@ -1,7 +1,7 @@
 extends Node2D
 @export var blue_Scene: PackedScene
 var rng = RandomNumberGenerator.new()
-var alienCount = rng.randf_range(0, 6)
+var alienCount: int = rng.randi_range(1, 6)
 @export var spawn_top_left: Marker2D
 @export var spawn_bottom_right: Marker2D
 
