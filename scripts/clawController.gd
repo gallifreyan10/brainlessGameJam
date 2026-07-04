@@ -12,7 +12,26 @@ extends CharacterBody2D
 @export_category("References")
 #Timer that gets triggered when player takes too long and drops claw
 @export var attempt_timer: Timer
+#Array of possible prizes to be picked from
+var grab_candidates: Array[RigidBody2D] = []
+@export var grab_Area: Area2D
+@export var hold_point: Marker2D
+@export var release_point: Marker2D
+@export var chuteReleasePoint: Marker2D
+@export var chuteArea: Area2D
+@export var resolutionTimer: Timer
+@export var release_impulse: float = 30.0
+@export var chuteMoveSpeed: float = 120.0
+@export var chuteArrivalTolerance: float = 2.0
 
+#Selected prize that is picked up by the claw
+var held_prize: RigidBody2D = null
+var held_prize_original_parent: Node = null
+var resolvingPrize: RigidBody2D = null
+
+signal prize_released(prize: RigidBody2D)
+var held_prize_original_layer: int
+var held_prize_original_mask: int
 @export_category("Animations")
 @export var animation_player: AnimationPlayer
 signal claw_closed(claw: CharacterBody2D)
@@ -29,13 +48,29 @@ var close_request_locked: bool = false
 
 @export var starting_y:float = 0
 
+@export_range(0.0, 1.0) var slipChance: float = 0.15
+@export var minimum_slip_delay: float = 0.5
+@export var maximum_slip_delay: float = 1.5
+
+@export var slipTimer: Timer
+
+signal prize_Slipped(prize: RigidBody2D)
+
 
 
 
 signal position_changed(new_position: Vector2)
 signal state_changed(new_state: State)
 
-enum State{IDLE,DROPPING,GRABBING,RETURNING}
+enum State{
+	IDLE,
+	DROPPING,
+	GRABBING,
+	RETURNING,
+	RELEASING,
+	MOVING_TO_CHUTE,
+	RESOLVING
+	}
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -49,6 +84,12 @@ func _physics_process(delta: float) -> void:
 			process_grabbing()
 		State.RETURNING:
 			process_returning()
+		State.RELEASING:
+			process_releasing()
+		State.MOVING_TO_CHUTE:
+			process_moving_to_chute()
+		State.RESOLVING:
+			process_resolving()
 	updateCable()
 	
 	
@@ -69,6 +110,10 @@ func start_dropping() -> void:
 	#Prevent repeated input or timer signals from restarting an already triggered drop
 	if current_State != State.IDLE:
 		return
+	if slipTimer != null:
+		slipTimer.stop()	
+		
+	grab_candidates.clear()
 		
 	if attempt_timer != null:
 		attempt_timer.stop()
@@ -115,15 +160,65 @@ func process_returning() -> void:
 	if global_position.y <= starting_y:
 		global_position.y = starting_y
 		velocity = Vector2.ZERO
-		change_state(State.IDLE)
-		animation_player.play(&"RESET")
-		close_request_locked=false
 		
-		if(attempt_timer != null):
-			attempt_timer.start()
+		if grab_Area != null:
+			grab_Area.set_deferred("monitoring", false)
 			
+		grab_candidates.clear()
+		
+		if is_instance_valid(held_prize):
+			change_state(State.MOVING_TO_CHUTE)
+		else:
+		#Lock the claw in place while it opens
+			change_state(State.RELEASING)
+		
+			if animation_player != null:
+				animation_player.play(&"open_claw")
 	
+func process_releasing() -> void:
+	velocity = Vector2.ZERO
 	
+func process_moving_to_chute() -> void:
+	if chuteReleasePoint == null:
+		push_error("Chute Release Point is not assigned.")
+		velocity = Vector2.ZERO
+		return
+	if not is_instance_valid(held_prize):
+		velocity = Vector2.ZERO
+		change_state(State.RELEASING)
+		animation_player.play(&"open_claw")
+		return
+	var difference := (chuteReleasePoint.global_position.x-global_position.x)
+	
+	velocity.y = 0.0
+	
+	if absf(difference) <=chuteArrivalTolerance:
+		global_position.x = chuteReleasePoint.global_position.x
+		velocity = Vector2.ZERO
+		change_state(State.RELEASING)
+		animation_player.play(&"open_claw")
+		return
+	
+	velocity.x = signf(difference) * chuteMoveSpeed
+	move_and_slide()
+	
+func process_resolving() -> void:
+	velocity = Vector2.ZERO	
+	
+func finish_resolution() -> void:
+	if resolutionTimer != null:
+		resolutionTimer.stop()
+		
+	if slipTimer != null:
+		slipTimer.stop()
+		
+	resolvingPrize = null
+	close_request_locked = false
+	change_state(State.IDLE)
+	
+	if attempt_timer != null:
+		attempt_timer.start()
+			
 func updateCable() -> void:
 	if cable == null or cable.get_point_count() < 2:
 		return
@@ -152,17 +247,119 @@ func request_close_claw() -> void:
 		
 	close_request_locked = true
 	velocity = Vector2.ZERO
+	grab_candidates.clear()
+	
+	grab_Area.set_deferred("monitoring", true)
+	
 	change_state(State.GRABBING)
 	animation_player.play(&"close_claw")	
 	
 func _on_animation_finished(animation_name: StringName) -> void:
-	if animation_name != &"close_claw":
-		return
-	if current_State != State.GRABBING:
+	if animation_name == &"close_claw":
+		if current_State != State.GRABBING:
+			return
+			
+		remove_invalid_candidates()
+		
+		#Select one prize before clearing the temporary candidates.
+		held_prize = choose_nearest_candidate()
+		grab_Area.set_deferred("monitoring", false)
+		grab_candidates.clear()
+			
+		if is_instance_valid(held_prize):
+			hold_selected_prize()
+			
+		claw_closed.emit(self)
+		change_state(State.RETURNING)
 		return
 		
-	claw_closed.emit(self)
-	change_state(State.RETURNING)
+	if animation_name == &"open_claw":
+		release_held_prize(true)
+		
+		if is_instance_valid(resolvingPrize):
+			change_state(State.RESOLVING)
+			
+			if resolutionTimer != null:
+				resolutionTimer.start()
+			else:
+				finish_resolution()
+		else:
+			finish_resolution()
+				
+		return
+	
+func hold_selected_prize() -> void:
+	if not is_instance_valid(held_prize):
+		held_prize = null
+		return
+		
+	#Save everything needed to give back to prize if it is dropped
+	held_prize_original_parent = held_prize.get_parent()
+	held_prize_original_layer = held_prize.collision_layer
+	held_prize_original_mask = held_prize.collision_mask
+	
+	#preserve its world transform during reparting
+	var previous_transform := held_prize.global_transform
+	
+	#Disable normal physics while held
+	held_prize.freeze = true
+	held_prize.collision_layer = 0
+	held_prize.collision_mask = 0
+	
+	held_prize.reparent(hold_point)
+	held_prize.global_transform = previous_transform
+	
+	if slipTimer != null:
+		slipTimer.stop()
+		
+		if randf() < slipChance:
+			slipTimer.wait_time = randf_range(minimum_slip_delay,maximum_slip_delay)
+			slipTimer.start()
+			
+func release_held_prize(expect_chute_resolution: bool = true) -> void:
+	if slipTimer != null:
+		slipTimer.stop()
+	
+	grab_Area.set_deferred("monitoring", false)
+	grab_candidates.clear()
+	
+	#a second call is stoppped here
+	if not is_instance_valid(held_prize):
+		held_prize = null
+		held_prize_original_parent = null
+		return
+		
+	if release_point == null:
+		push_error("Relase Point has not been assigned")
+		return
+		
+	var released_prize: RigidBody2D = held_prize
+	held_prize = null
+	
+	if is_instance_valid(held_prize_original_parent):
+		released_prize.reparent(held_prize_original_parent)
+	else:
+		released_prize.reparent(get_tree().current_scene)
+		
+	released_prize.global_position = release_point.global_position
+	
+	released_prize.collision_layer = held_prize_original_layer
+	released_prize.collision_mask = held_prize_original_mask
+	released_prize.freeze = false
+	released_prize.linear_velocity = Vector2.ZERO
+	released_prize.angular_velocity = 0.0
+	released_prize.sleeping = false
+	
+	released_prize.apply_central_impulse(Vector2.DOWN * release_impulse)
+	
+	if expect_chute_resolution:
+		resolvingPrize = released_prize
+	else:
+		resolvingPrize = null
+		
+	held_prize_original_parent = null
+	prize_released.emit(released_prize)
+	
 func _ready() -> void:
 	starting_y = global_position.y
 	
@@ -179,3 +376,103 @@ func _ready() -> void:
 			_on_animation_finished
 		): 
 			animation_player.animation_finished.connect(_on_animation_finished)
+
+func choose_nearest_candidate() -> RigidBody2D:
+	remove_invalid_candidates()
+	
+	var nearest_prize: RigidBody2D = null
+	var nearest_distance_squared: float = INF
+	
+	for prize in grab_candidates:
+		if not is_instance_valid(prize):
+			continue
+		if prize.is_queued_for_deletion():
+			continue
+		if not prize.is_inside_tree():
+			continue
+			
+		#optional eligability check if all prizes use this group
+		if not prize.is_in_group("prizes"):
+			continue
+		
+		var distance_squared := (
+			hold_point.global_position.distance_squared_to(prize.global_position)
+		)
+		
+		if distance_squared < nearest_distance_squared:
+			nearest_distance_squared = distance_squared
+			nearest_prize = prize
+			
+	return nearest_prize
+
+func _on_grab_area_body_entered(body: Node2D) -> void:
+	# Ignore cabinet walls and other non-prize body types
+	if not body is RigidBody2D:
+		return
+	
+	var prize := body as RigidBody2D
+	
+	#Ignore bodies that are already being deleted
+	if not is_instance_valid(prize):
+		return
+	
+	if prize.is_queued_for_deletion():
+		return
+		
+	#prevent the same prize from appearing twice
+	if not grab_candidates.has(prize):
+		grab_candidates.append(prize)
+
+func _on_grab_area_body_exited(body: Node2D) -> void:
+	if body is RigidBody2D:
+		grab_candidates.erase(body)
+		
+	remove_invalid_candidates()
+	
+func remove_invalid_candidates() -> void:
+	for index in range(grab_candidates.size() -1, -1, -1):
+		var prize := grab_candidates[index]
+	
+		if not is_instance_valid(prize):
+			grab_candidates.remove_at(index)
+			continue
+	
+		if prize.is_queued_for_deletion():
+			grab_candidates.remove_at(index)
+			continue
+	
+		if not prize.is_inside_tree():
+			grab_candidates.remove_at(index)
+			
+func _exit_tree() -> void:
+	if slipTimer != null:
+		slipTimer.stop()
+	grab_candidates.clear()
+
+
+func _on_slip_timer_timeout() -> void:
+	if not is_instance_valid(held_prize):
+		return
+		
+	#For now slipping happens while the claw rises
+	if current_State != State.RETURNING and current_State != State.MOVING_TO_CHUTE:
+		return
+		
+	var slipped_prize: RigidBody2D = held_prize
+	
+	release_held_prize(false)
+	prize_Slipped.emit(slipped_prize)
+
+
+func _on_prize_chute_body_entered(body: Node2D) -> void:
+	if not is_instance_valid(resolvingPrize):
+		return
+		
+	if body != resolvingPrize:
+		return
+		
+	finish_resolution()
+
+
+func _on_resolution_timer_timeout() -> void:
+	finish_resolution()

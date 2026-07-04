@@ -5,26 +5,55 @@
 [ext_resource type="PackedScene" uid="uid://bugkbr4528jdv" path="res://scenes/Assets/cabinetWall.tscn" id="2_c6sfa"]
 [ext_resource type="PackedScene" uid="uid://dbr1lqox8605y" path="res://scenes/Assets/prizeChute.tscn" id="3_jpwin"]
 [ext_resource type="PackedScene" uid="uid://cmd68cakaymg0" path="res://scenes/Assets/claw.tscn" id="5_42ncc"]
+[ext_resource type="Script" uid="uid://dmow26qnm5mpv" path="res://scripts/clawController.gd" id="6_d2p3p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
+size = Vector2(124, 371)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0srf"]
+size = Vector2(646, 87.5)
 
 [node name="root" type="Sprite2D" unique_id=1035922221]
+
+[node name="KillZone" type="Area2D" parent="." unique_id=2033197540]
+position = Vector2(-2, -2)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="KillZone" unique_id=1820535108]
+position = Vector2(71, 176.5)
+shape = SubResource("RectangleShape2D_d2p3p")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="KillZone" unique_id=24308122]
+position = Vector2(589, 178)
+shape = SubResource("RectangleShape2D_d2p3p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=565892024]
+position = Vector2(329, -45)
+shape = SubResource("RectangleShape2D_r0srf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="KillZone" unique_id=1541592484]
+position = Vector2(330, 402)
+shape = SubResource("RectangleShape2D_r0srf")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=302279949]
 position = Vector2(320, 180)
 
 [node name="prizeContainer" type="Node2D" parent="." unique_id=1425589497 node_paths=PackedStringArray("spawn_top_left", "spawn_bottom_right")]
+position = Vector2(0, -24)
 script = ExtResource("1_jpwin")
 blue_Scene = ExtResource("1_xr4xt")
 spawn_top_left = NodePath("PrizeSpawnTopLeft")
 spawn_bottom_right = NodePath("PrizeSpawnBottomRight")
 
 [node name="PrizeSpawnTopLeft" type="Marker2D" parent="prizeContainer" unique_id=1699542291]
-position = Vector2(80, 120)
+position = Vector2(152, 160)
 
 [node name="PrizeSpawnBottomRight" type="Marker2D" parent="prizeContainer" unique_id=105204545]
-position = Vector2(455, 300)
+position = Vector2(472, 336)
 
 [node name="blueLittleGuy" parent="prizeContainer" unique_id=923555866 instance=ExtResource("1_xr4xt")]
-position = Vector2(312, 304)
+position = Vector2(324, 282)
 
 [node name="clawSpawn" type="Marker2D" parent="." unique_id=601436855]
 position = Vector2(318, 31)
@@ -117,9 +146,44 @@ scale = Vector2(0.5, 0.32)
 z_index = 1
 position = Vector2(532, 347)
 scale = Vector2(2.46, 0.5)
+collision_layer = 0
+collision_mask = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1951429874]
 
 [node name="Claw" parent="." unique_id=1355383 instance=ExtResource("5_42ncc")]
 position = Vector2(319, 31)
 scale = Vector2(2, 2)
+
+[node name="CharacterBody2D" parent="Claw" index="0" unique_id=621652505 node_paths=PackedStringArray("grab_Area", "hold_point", "release_point", "chuteReleasePoint", "chuteArea", "resolutionTimer", "animation_player", "slipTimer")]
+collision_layer = 0
+script = ExtResource("6_d2p3p")
+grab_Area = NodePath("GrabArea")
+hold_point = NodePath("HoldPoint")
+release_point = NodePath("ReleasePoint")
+chuteReleasePoint = NodePath("../../ChuteReleasePoint")
+chuteArea = NodePath("../../PrizeChute")
+resolutionTimer = NodePath("../../ChuteReleasePoint/ResolutionTimer")
+animation_player = NodePath("../AnimationPlayer")
+slipTimer = NodePath("SlipTimer")
+
+[node name="ReleasePoint" type="Marker2D" parent="Claw/CharacterBody2D" index="5" unique_id=1456995759]
+position = Vector2(0, 11)
+
+[node name="SlipTimer" type="Timer" parent="Claw/CharacterBody2D" index="8" unique_id=2044250276]
+one_shot = true
+
+[node name="ChuteReleasePoint" type="Marker2D" parent="." unique_id=6313764]
+position = Vector2(530, 45)
+
+[node name="ResolutionTimer" type="Timer" parent="ChuteReleasePoint" unique_id=1910071531]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="body_entered" from="KillZone" to="prizeContainer" method="_on_kill_zone_body_entered"]
+[connection signal="body_entered" from="PrizeChute" to="Claw/CharacterBody2D" method="_on_prize_chute_body_entered"]
+[connection signal="timeout" from="Claw/CharacterBody2D/SlipTimer" to="Claw/CharacterBody2D" method="_on_slip_timer_timeout"]
+[connection signal="timeout" from="ChuteReleasePoint/ResolutionTimer" to="Claw/CharacterBody2D" method="_on_resolution_timer_timeout"]
+
+[editable path="prizeContainer/blueLittleGuy"]
+[editable path="Claw"]

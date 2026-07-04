@@ -1,17 +1,25 @@
 [gd_scene format=3 uid="uid://cetcbao7tx6gi"]
 
+[ext_resource type="PhysicsMaterial" uid="uid://cey07wum4elpl" path="res://scenes/Assets/prize_physicsMaterial.tres" id="1_3itqn"]
 [ext_resource type="Texture2D" uid="uid://b7kuiqvi6n2ob" path="res://art/prototypeSprites/littleBlueAlien.png" id="1_b3sa0"]
 [ext_resource type="Script" uid="uid://c07bqjscngw8d" path="res://scripts/blueLittleGuy.gd" id="1_bi2jb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uafsa"]
-radius = 14.285675
-height = 30.769234
+radius = 13.0
+height = 26.0
 
-[node name="RigidBody2D" type="RigidBody2D" unique_id=1158912329]
+[node name="RigidBody2D" type="RigidBody2D" unique_id=1158912329 groups=["prizes"]]
+collision_layer = 2
+collision_mask = 3
+physics_material_override = ExtResource("1_3itqn")
+continuous_cd = 2
+linear_damp = 0.6
+angular_damp = 1.5
 script = ExtResource("1_bi2jb")
 
 [node name="LittleBlueAlien" type="Sprite2D" parent="." unique_id=925512809]
 texture = ExtResource("1_b3sa0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=857238500]
+position = Vector2(-4, 1)
 shape = SubResource("CapsuleShape2D_uafsa")
