@@ -30,6 +30,7 @@ var held_prize_original_parent: Node = null
 var resolvingPrize: RigidBody2D = null
 
 signal prize_released(prize: RigidBody2D)
+signal attempt_finished
 var held_prize_original_layer: int
 var held_prize_original_mask: int
 @export_category("Animations")
@@ -37,6 +38,7 @@ var held_prize_original_mask: int
 signal claw_closed(claw: CharacterBody2D)
 
 var close_request_locked: bool = false
+var attemptsLocked: bool = false
 
 #Downwards cast checking for bottom of cabinet
 @export var bottom_detector: RayCast2D
@@ -108,6 +110,8 @@ func process_idle() -> void:
 		start_dropping()
 		
 func start_dropping() -> void:
+	if attemptsLocked:
+		return
 	#Prevent repeated input or timer signals from restarting an already triggered drop
 	if current_State != State.IDLE:
 		return
@@ -216,6 +220,7 @@ func finish_resolution() -> void:
 	resolvingPrize = null
 	close_request_locked = false
 	change_state(State.IDLE)
+	attempt_finished.emit()
 	
 	if attempt_timer != null:
 		attempt_timer.start()
@@ -380,7 +385,13 @@ func _ready() -> void:
 			_on_animation_finished
 		): 
 			animation_player.animation_finished.connect(_on_animation_finished)
-
+	#Connect the quota signal here
+	if not RunEconomy.quotaReached.is_connected(
+		_on_quota_reached
+	):
+		RunEconomy.quotaReached.connect(
+			_on_quota_reached
+		)
 func choose_nearest_candidate() -> RigidBody2D:
 	remove_invalid_candidates()
 	
@@ -476,7 +487,14 @@ func _on_prize_chute_body_entered(body: Node2D) -> void:
 		return
 		
 	finish_resolution()
-
-
+	
+func _on_quota_reached(
+	_earned: int, _quota: int
+) -> void:
+	attemptsLocked = true
+	
+	if attempt_timer != null:
+		attempt_timer.stop()
+		
 func _on_resolution_timer_timeout() -> void:
 	finish_resolution()

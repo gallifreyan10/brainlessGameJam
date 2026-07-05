@@ -3,13 +3,12 @@
 [ext_resource type="Script" uid="uid://cefhq42fy42xu" path="res://scripts/prize_container.gd" id="1_jpwin"]
 [ext_resource type="PackedScene" uid="uid://cetcbao7tx6gi" path="res://scenes/Assets/blueAlien.tscn" id="1_xr4xt"]
 [ext_resource type="PackedScene" uid="uid://bugkbr4528jdv" path="res://scenes/Assets/cabinetWall.tscn" id="2_c6sfa"]
-[ext_resource type="Resource" uid="uid://cd4ysrwhe6hq1" path="res://resources/levels/prototypeLevel.tres" id="3_4vovv"]
 [ext_resource type="PackedScene" uid="uid://dbr1lqox8605y" path="res://scenes/Assets/prizeChute.tscn" id="3_jpwin"]
+[ext_resource type="PackedScene" uid="uid://c3imhd4mx86dc" path="res://scenes/Assets/protoMineral.tscn" id="3_r0srf"]
 [ext_resource type="PackedScene" uid="uid://cmd68cakaymg0" path="res://scenes/Assets/claw.tscn" id="5_42ncc"]
 [ext_resource type="Script" uid="uid://c0kvwbm6ix6yu" path="res://scripts/prizeChute.gd" id="6_51rl1"]
 [ext_resource type="Script" uid="uid://dmow26qnm5mpv" path="res://scripts/clawController.gd" id="6_d2p3p"]
-[ext_resource type="Script" uid="uid://dowaivgkcjooy" path="res://scripts/economy_debug_hud.gd" id="7_4vovv"]
-[ext_resource type="Script" uid="uid://ba1unirjsml3l" path="res://scripts/sale_feedback.gd" id="8_7jc0o"]
+[ext_resource type="Script" uid="uid://dowaivgkcjooy" path="res://scenes/economy_debug_hud.gd" id="7_4vovv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
 size = Vector2(124, 371)
@@ -49,13 +48,18 @@ script = ExtResource("1_jpwin")
 blue_Scene = ExtResource("1_xr4xt")
 spawn_top_left = NodePath("PrizeSpawnTopLeft")
 spawn_bottom_right = NodePath("PrizeSpawnBottomRight")
-levelData = ExtResource("3_4vovv")
 
 [node name="PrizeSpawnTopLeft" type="Marker2D" parent="prizeContainer" unique_id=1699542291]
 position = Vector2(152, 160)
 
 [node name="PrizeSpawnBottomRight" type="Marker2D" parent="prizeContainer" unique_id=105204545]
 position = Vector2(472, 336)
+
+[node name="ProtoMineral" parent="prizeContainer" unique_id=13882485 groups=["minerals", "prizes"] instance=ExtResource("3_r0srf")]
+position = Vector2(230, 344)
+collision_layer = 2
+collision_mask = 3
+continuous_cd = 1
 
 [node name="blueLittleGuy" parent="prizeContainer" unique_id=923555866 instance=ExtResource("1_xr4xt")]
 position = Vector2(324, 282)
@@ -176,34 +180,6 @@ text = "Quota: 0/100"
 layout_mode = 2
 text = "No mineral sold"
 
-[node name="SaleFeedback" type="VBoxContainer" parent="CanvasLayer" unique_id=2048277214]
-offset_left = 585.0
-offset_top = 284.0
-offset_right = 625.0
-offset_bottom = 365.0
-script = ExtResource("8_7jc0o")
-
-[node name="MineralNameLabel" type="Label" parent="CanvasLayer/SaleFeedback" unique_id=2145885237]
-layout_mode = 2
-
-[node name="BreakdownLabel" type="Label" parent="CanvasLayer/SaleFeedback" unique_id=645029361]
-layout_mode = 2
-
-[node name="TotalLabel" type="Label" parent="CanvasLayer/SaleFeedback" unique_id=712939237]
-layout_mode = 2
-
-[node name="AlienIcon" type="TextureRect" parent="CanvasLayer/SaleFeedback" unique_id=438303149]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-expand_mode = 1
-stretch_mode = 5
-
-[node name="HideTimer" type="Timer" parent="CanvasLayer/SaleFeedback" unique_id=929046595]
-wait_time = 2.0
-one_shot = true
-
 [node name="Claw" parent="." unique_id=1355383 instance=ExtResource("5_42ncc")]
 position = Vector2(319, 31)
 scale = Vector2(2, 2)
@@ -247,10 +223,10 @@ default_color = Color(0.20511743, 0.20511743, 0.20511743, 1)
 [connection signal="body_entered" from="KillZone" to="prizeContainer" method="_on_kill_zone_body_entered"]
 [connection signal="body_entered" from="PrizeChute" to="PrizeChute" method="_on_body_entered"]
 [connection signal="body_entered" from="PrizeChute" to="Claw/CharacterBody2D" method="_on_prize_chute_body_entered"]
-[connection signal="attempt_finished" from="Claw/CharacterBody2D" to="prizeContainer" method="_on_attempt_finished"]
 [connection signal="timeout" from="Claw/CharacterBody2D/SlipTimer" to="Claw/CharacterBody2D" method="_on_slip_timer_timeout"]
 [connection signal="timeout" from="ChuteReleasePoint/ResolutionTimer" to="Claw/CharacterBody2D" method="_on_resolution_timer_timeout"]
 
+[editable path="prizeContainer/ProtoMineral"]
 [editable path="prizeContainer/blueLittleGuy"]
 [editable path="PrizeChute"]
 [editable path="Claw"]

@@ -1,49 +1,136 @@
 extends Node2D
+@export_category("Alien Spawning")
 @export var blue_Scene: PackedScene
-var rng = RandomNumberGenerator.new()
-var alienCount: int = rng.randi_range(1, 6)
+@export_range(1,10,1) var minimumAlienCount: int = 1
+@export_range(1,10,1) var maximumAlienCount: int = 6
+
+@export_category("Shared Spawn Area")
 @export var spawn_top_left: Marker2D
 @export var spawn_bottom_right: Marker2D
+@export var minimumSpawnSeparation: float = 28.0
+
+@export_category("Mineral Spawning")
+@export var levelData: LevelData
+@export var discoveryMultiplier: float = 1.0
+
+var rng := RandomNumberGenerator.new()
+var mineralRng := RandomNumberGenerator.new()
 var reset_count: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if not validate_spawn_area():
+		return
+	if levelData != null:
+		mineralRng.seed = levelData.testSeed
+		rng.seed = levelData.testSeed + 1
+	else:
+		mineralRng.randomize()
+		rng.randomize()
+		
 	spawnLittleGuys()
-
-
+	prepare_next_attempt()
+	
+func validate_spawn_area() -> bool:
+	if spawn_top_left == null:
+		push_error("PrizeSpawnTopLeft is not assigned.")
+		return false
+		
+	if spawn_bottom_right == null:
+		push_error("PrizeSpawnBottomRight is not assigned.")
+		return false
+		
+	return true
+	
 func spawnLittleGuys() -> void:
-	for index in alienCount:
+	if blue_Scene == null:
+		push_warning("No blue alien scene assigned.")
+		return
+	var minimumCount := mini(minimumAlienCount,maximumAlienCount)
+	var maximumCount := maxi(minimumAlienCount,maximumAlienCount)
+	
+	var alienCount := rng.randi_range(minimumCount,maximumCount)
+	
+	for index in range(alienCount):
 		spawnLittleGuy()
 		
 
 func spawnLittleGuy() -> void:
-	if blue_Scene == null:
-		push_error("No prizes have been spawned")
-		return
 		
 	var blue := blue_Scene.instantiate() as RigidBody2D
+	
+	if blue == null:
+		push_error("Blue alien scene root must be a RigidBody2D.")
+		return
+		
 	add_child(blue)
 	
-	var minimum_x := minf(
+	blue.position = get_clear_spawn_position(rng)
+	blue.rotation = rng.randf_range(-1.0, 1.0)
+
+func get_random_spawn_position(
+	generator: RandomNumberGenerator
+) -> Vector2:
+	var minimumX := minf(
 		spawn_top_left.position.x,
 		spawn_bottom_right.position.x
-		)
-	var maximum_x := maxf(
+	)
+	var maximumX := maxf(
 		spawn_top_left.position.x,
 		spawn_bottom_right.position.x
-		)
-	var minimum_y := minf(
-		spawn_top_left.position.y,spawn_bottom_right.position.y
-		)
-	var maximum_y := maxf(spawn_top_left.position.y,
-	spawn_bottom_right.position.y
+	)
+	var minimumY := minf(
+		spawn_top_left.position.y,
+		spawn_bottom_right.position.y
+	)
+	var maximumY := maxf(
+		spawn_top_left.position.y,
+		spawn_bottom_right.position.y
 	)
 	
-	blue.position = Vector2(randf_range(minimum_x,maximum_x),randf_range(minimum_y,maximum_y))
+	return Vector2(
+		generator.randf_range(minimumX,maximumX),
+		generator.randf_range(minimumY,maximumY)
+	)
+func get_clear_spawn_position(
+	generator: RandomNumberGenerator, ignoredPrize: RigidBody2D = null
+) -> Vector2:
+	var fallbackPosition := get_random_spawn_position(generator)
 	
-	blue.rotation = rng.randf_range(-1.0,1.0)
-
-
+	for attempt in range(12):
+		var candidate := get_random_spawn_position(
+			generator
+		)
+		fallbackPosition = candidate
+		
+		if is_spawn_position_clear(
+			candidate, ignoredPrize
+		):
+			return candidate
+	return fallbackPosition
+	
+func is_spawn_position_clear(
+	candidate: Vector2,
+	ignoredPrize: RigidBody2D = null
+) -> bool:
+	for child in get_children():
+		if not child is RigidBody2D:
+			continue
+			
+		var prize := child as RigidBody2D
+		
+		if prize == ignoredPrize:
+			continue
+		
+		if prize.is_queued_for_deletion():
+			continue
+			
+		if(
+			prize.position.distance_to(candidate)< minimumSpawnSeparation
+		):
+			return false
+	return true
+	
 func _on_kill_zone_body_entered(body: Node2D) -> void:
 	if not body is RigidBody2D:
 		return
@@ -64,24 +151,12 @@ func reset_prize(prize: RigidBody2D) -> void:
 	if prize.is_queued_for_deletion():
 		return
 	
-	var minimum_x := minf(spawn_top_left.global_position.x,
-	spawn_bottom_right.global_position.x)
-	
-	var maximum_x := maxf(spawn_top_left.global_position.x,
-	spawn_bottom_right.global_position.x)
-	
-	var minimum_y := minf(spawn_top_left.global_position.y,
-	spawn_bottom_right.global_position.y)
-	
-	var maximum_y := maxf(spawn_top_left.global_position.y,
-	spawn_bottom_right.global_position.y)
-	
 	prize.freeze = true
 	
-	prize.global_position = Vector2(
-		randf_range(minimum_x, maximum_x),
-		randf_range(minimum_y, maximum_y)
-	)
+	if prize is MineralPrize:
+		prize.position = get_clear_spawn_position(mineralRng,prize)
+	else:
+		prize.position = get_clear_spawn_position(rng,prize)
 	
 	prize.linear_velocity = Vector2.ZERO
 	prize.angular_velocity = 0.0
@@ -95,3 +170,115 @@ func reset_prize(prize: RigidBody2D) -> void:
 	
 	reset_count += 1
 	print("Escaped prizes reset: ", reset_count)
+
+func prepare_next_attempt() -> void:
+	if levelData == null:
+		push_error("Prize container has no LevelData.")
+		return
+		
+	var activeMinerals := get_active_minerals()
+	
+	if not levelData.persistentPrizeField:
+		for mineral in activeMinerals:
+			mineral.queue_free()
+			
+		activeMinerals.clear()
+		
+	var missingCount := maxi(
+		0,
+		levelData.targetMineralCount-activeMinerals.size()
+	)
+	
+	for index in range(missingCount):
+		spawn_mineral()
+		
+func get_active_minerals() -> Array[MineralPrize]:
+	var minerals: Array[MineralPrize] = []
+	for child in get_children():
+		if not child is MineralPrize:
+			continue
+			
+		var mineral := child as MineralPrize
+		
+		if mineral.is_queued_for_deletion():
+			continue
+			
+		minerals.append(mineral)
+		
+	return minerals
+	
+func spawn_mineral() -> void:
+	var mineralScene := choose_mineral_scene()
+	
+	if mineralScene == null:
+		push_warning("No Mineral Scene is avialable.")
+		return
+		
+	var mineral := mineralScene.instantiate() as MineralPrize
+	
+	if mineral == null:
+		push_error("Mineral scene root must use MineralPrize.")
+		return
+		
+	add_child(mineral)
+	
+	mineral.position = get_clear_spawn_position(mineralRng)
+	mineral.rotation = mineralRng.randf_range(-0.5,0.5)
+	
+func choose_mineral_scene() -> PackedScene:
+	if levelData == null:
+		return null
+		
+	if levelData.mineralTable.is_empty():
+		return null
+		
+	var totalWeight: float = 0.0
+	var lastValidScene: PackedScene = null
+	
+	for entry in levelData.mineralTable:
+		if entry == null:
+			continue
+			
+		if entry.mineralScene == null:
+			continue
+			
+		var effectiveWeight := entry.weight
+		
+		if entry.affectedByDiscovery:
+			effectiveWeight*=discoveryMultiplier
+			
+		if effectiveWeight <= 0.0:
+			continue
+			
+		totalWeight += effectiveWeight
+		lastValidScene = entry.mineralScene
+		
+	if totalWeight <= 0.0:
+		return null
+			
+	var roll := mineralRng.randf_range(0.0, totalWeight)
+		
+	for entry in levelData.mineralTable:
+		if entry == null:
+			continue
+				
+		if entry.mineralScene == null:
+			continue
+			
+		var effectiveWeight := entry.weight
+			
+		if entry.affectedByDiscovery:
+			effectiveWeight *= discoveryMultiplier
+				
+		if effectiveWeight <= 0.0:
+			continue
+				
+		roll -= effectiveWeight
+			
+		if roll <= 0.0:
+			return entry.mineralScene
+				
+	return lastValidScene
+	
+func _on_attempt_finished() -> void:
+	call_deferred("prepare_next_attempt")	

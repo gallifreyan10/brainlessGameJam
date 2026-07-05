@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MineralData" format=3 uid="uid://5di2uo7gcqh5"]
+
+[ext_resource type="Script" uid="uid://dsddbp08ie4bc" path="res://scripts/mineralData.gd" id="1_4flt8"]
+
+[resource]
+script = ExtResource("1_4flt8")
+mineral_id = &"protomineral"
+displayName = "Proto-Mineral"
+base_value = 10
+metadata/_custom_type_script = "uid://dsddbp08ie4bc"
