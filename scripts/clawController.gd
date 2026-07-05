@@ -43,6 +43,7 @@ var close_request_locked: bool = false
 
 #Visually connects cable
 @export var cable:Line2D
+@export var cableAttachPoint: Marker2D
 
 @export var current_State: State = State.IDLE
 
@@ -220,11 +221,14 @@ func finish_resolution() -> void:
 		attempt_timer.start()
 			
 func updateCable() -> void:
-	if cable == null or cable.get_point_count() < 2:
+	if cable == null or cableAttachPoint == null:
 		return
-		#The first Line2D point remains attached to the cabinet
-		#the second point follows the claw in the cable's local coordinates
-		cable.set_point_position(1,cable.to_local(global_position))
+		
+	if cable.get_point_count() < 2:
+		return
+	#The first Line2D point remains attached to the cabinet
+	#the second point follows the claw in the cable's local coordinates
+	cable.set_point_position(1,cable.to_local(cableAttachPoint.global_position))
 		
 func change_state(new_State: State) -> void:
 	if current_State == new_State:

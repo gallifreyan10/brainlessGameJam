@@ -155,7 +155,7 @@ collision_mask = 2
 position = Vector2(319, 31)
 scale = Vector2(2, 2)
 
-[node name="CharacterBody2D" parent="Claw" index="0" unique_id=621652505 node_paths=PackedStringArray("grab_Area", "hold_point", "release_point", "chuteReleasePoint", "chuteArea", "resolutionTimer", "animation_player", "cable", "cableAttachPoint", "slipTimer")]
+[node name="CharacterBody2D" parent="Claw" index="0" unique_id=621652505 node_paths=PackedStringArray("grab_Area", "hold_point", "release_point", "chuteReleasePoint", "chuteArea", "resolutionTimer", "animation_player", "cable", "slipTimer")]
 collision_layer = 0
 script = ExtResource("6_d2p3p")
 grab_Area = NodePath("GrabArea")
@@ -166,7 +166,6 @@ chuteArea = NodePath("../../PrizeChute")
 resolutionTimer = NodePath("../../ChuteReleasePoint/ResolutionTimer")
 animation_player = NodePath("../AnimationPlayer")
 cable = NodePath("../../cable")
-cableAttachPoint = NodePath("cableAttachPoint")
 slipTimer = NodePath("SlipTimer")
 
 [node name="ReleasePoint" type="Marker2D" parent="Claw/CharacterBody2D" index="5" unique_id=1456995759]
@@ -174,10 +173,6 @@ position = Vector2(0, 11)
 
 [node name="SlipTimer" type="Timer" parent="Claw/CharacterBody2D" index="8" unique_id=2044250276]
 one_shot = true
-
-[node name="cableAttachPoint" type="Marker2D" parent="Claw/CharacterBody2D" index="9" unique_id=1846019417]
-position = Vector2(0, -18)
-scale = Vector2(0.5, 0.5)
 
 [node name="ChuteReleasePoint" type="Marker2D" parent="." unique_id=6313764]
 position = Vector2(530, 45)
@@ -187,9 +182,12 @@ wait_time = 1.5
 one_shot = true
 
 [node name="cable" type="Line2D" parent="." unique_id=1560159245]
-z_index = 2
-points = PackedVector2Array(318, -5, 0, 0)
+position = Vector2(-25, -195)
+points = PackedVector2Array(353, -5, 0, 0)
 default_color = Color(0.20511743, 0.20511743, 0.20511743, 1)
+
+[node name="cableAttachPoint" type="Marker2D" parent="." unique_id=1846019417]
+position = Vector2(318, -13)
 
 [connection signal="body_entered" from="KillZone" to="prizeContainer" method="_on_kill_zone_body_entered"]
 [connection signal="body_entered" from="PrizeChute" to="Claw/CharacterBody2D" method="_on_prize_chute_body_entered"]
