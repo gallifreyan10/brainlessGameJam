@@ -392,6 +392,10 @@ func _ready() -> void:
 		RunEconomy.quotaReached.connect(
 			_on_quota_reached
 		)
+		
+	if not RunEconomy.levelStarted.is_connected(_on_level_started):
+		RunEconomy.levelStarted.connect(_on_level_started)
+		
 func choose_nearest_candidate() -> RigidBody2D:
 	remove_invalid_candidates()
 	
@@ -498,3 +502,13 @@ func _on_quota_reached(
 		
 func _on_resolution_timer_timeout() -> void:
 	finish_resolution()
+
+func _on_level_started(_quota: int) -> void:
+	attemptsLocked = false
+	
+	if(
+		attempt_timer != null
+	and current_State == State.IDLE
+	):
+		attempt_timer.start()
+		

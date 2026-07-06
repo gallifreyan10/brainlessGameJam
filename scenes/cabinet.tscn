@@ -1,15 +1,19 @@
 [gd_scene format=3 uid="uid://dapfs78ury1r8"]
 
 [ext_resource type="Script" uid="uid://cefhq42fy42xu" path="res://scripts/prize_container.gd" id="1_jpwin"]
+[ext_resource type="Script" uid="uid://bio3speujudqh" path="res://scripts/runManager.gd" id="1_x7n3p"]
 [ext_resource type="PackedScene" uid="uid://cetcbao7tx6gi" path="res://scenes/Assets/blueAlien.tscn" id="1_xr4xt"]
 [ext_resource type="PackedScene" uid="uid://bugkbr4528jdv" path="res://scenes/Assets/cabinetWall.tscn" id="2_c6sfa"]
+[ext_resource type="Script" uid="uid://bk1gkbcb461ts" path="res://scripts/levelData.gd" id="2_drrvb"]
 [ext_resource type="Resource" uid="uid://cd4ysrwhe6hq1" path="res://resources/levels/prototypeLevel.tres" id="3_4vovv"]
 [ext_resource type="PackedScene" uid="uid://dbr1lqox8605y" path="res://scenes/Assets/prizeChute.tscn" id="3_jpwin"]
+[ext_resource type="Resource" uid="uid://dknllghrphxrs" path="res://resources/levels/level2.tres" id="4_drrvb"]
 [ext_resource type="PackedScene" uid="uid://cmd68cakaymg0" path="res://scenes/Assets/claw.tscn" id="5_42ncc"]
 [ext_resource type="Script" uid="uid://c0kvwbm6ix6yu" path="res://scripts/prizeChute.gd" id="6_51rl1"]
 [ext_resource type="Script" uid="uid://dmow26qnm5mpv" path="res://scripts/clawController.gd" id="6_d2p3p"]
 [ext_resource type="Script" uid="uid://dowaivgkcjooy" path="res://scripts/economy_debug_hud.gd" id="7_4vovv"]
 [ext_resource type="Script" uid="uid://ba1unirjsml3l" path="res://scripts/sale_feedback.gd" id="8_7jc0o"]
+[ext_resource type="Script" uid="uid://cfymf3yi01w1x" path="res://scenes/level_complete_panel.gd" id="12_o2g1p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
 size = Vector2(124, 371)
@@ -18,6 +22,11 @@ size = Vector2(124, 371)
 size = Vector2(701, 87.5)
 
 [node name="root" type="Sprite2D" unique_id=1035922221]
+
+[node name="RunManager" type="Node" parent="." unique_id=1852464911 node_paths=PackedStringArray("prizeContainer")]
+script = ExtResource("1_x7n3p")
+levels = Array[ExtResource("2_drrvb")]([ExtResource("3_4vovv"), ExtResource("4_drrvb")])
+prizeContainer = NodePath("../prizeContainer")
 
 [node name="KillZone" type="Area2D" parent="." unique_id=2033197540]
 position = Vector2(-2, -2)
@@ -203,6 +212,34 @@ stretch_mode = 5
 [node name="HideTimer" type="Timer" parent="CanvasLayer/SaleFeedback" unique_id=929046595]
 wait_time = 2.0
 one_shot = true
+
+[node name="LevelCompletePanel" type="PanelContainer" parent="CanvasLayer" unique_id=1739182077 node_paths=PackedStringArray("runManager")]
+visible = false
+offset_left = 270.0
+offset_top = 131.0
+offset_right = 394.0
+offset_bottom = 251.0
+script = ExtResource("12_o2g1p")
+runManager = NodePath("../../RunManager")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/LevelCompletePanel" unique_id=1804771937]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=1455296043]
+layout_mode = 2
+text = "Level Complete!"
+
+[node name="EarningsLabel" type="Label" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=1317122354]
+layout_mode = 2
+text = " Earned : 0"
+
+[node name="ContinueButton" type="Button" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=1738080007]
+layout_mode = 2
+text = "Continue"
+
+[node name="ShopButton" type="Button" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=772285892]
+layout_mode = 2
+text = "Shop"
 
 [node name="Claw" parent="." unique_id=1355383 instance=ExtResource("5_42ncc")]
 position = Vector2(319, 31)

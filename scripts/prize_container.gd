@@ -22,6 +22,9 @@ func _ready() -> void:
 	if not validate_spawn_area():
 		return
 	if levelData != null:
+		for error in levelData.get_validation_errors():
+			push_warning(error)
+			
 		mineralRng.seed = levelData.testSeed
 		rng.seed = levelData.testSeed + 1
 	else:
@@ -242,7 +245,10 @@ func choose_mineral_scene() -> PackedScene:
 		if entry.mineralScene == null:
 			continue
 			
-		var effectiveWeight := entry.weight
+		if entry.mineralData == null:
+			continue
+			
+		var effectiveWeight := (entry.mineralData.spawn_weight)
 		
 		if entry.affectedByDiscovery:
 			effectiveWeight*=discoveryMultiplier
@@ -265,7 +271,12 @@ func choose_mineral_scene() -> PackedScene:
 		if entry.mineralScene == null:
 			continue
 			
-		var effectiveWeight := entry.weight
+		if entry.mineralData == null:
+			continue
+			
+		var effectiveWeight := (
+			entry.mineralData.spawn_weight
+		)
 			
 		if entry.affectedByDiscovery:
 			effectiveWeight *= discoveryMultiplier
@@ -282,3 +293,26 @@ func choose_mineral_scene() -> PackedScene:
 	
 func _on_attempt_finished() -> void:
 	call_deferred("prepare_next_attempt")	
+
+func load_level(newLevelData: LevelData) -> void:
+	if newLevelData == null:
+		push_error("Cannot load null LevelData.")
+		return
+	levelData = newLevelData
+	
+	for error in levelData.get_validation_errors():
+		push_warning(error)
+	mineralRng.seed = levelData.testSeed
+	rng.seed = levelData.testSeed + 1
+	
+	for mineral in get_active_minerals():
+		mineral.queue_free()
+		
+	call_deferred("_finish_level_load")
+	
+func _finish_level_load() -> void:
+	RunEconomy.start_level(
+		levelData.earningsQuota
+	)
+	
+	prepare_next_attempt()

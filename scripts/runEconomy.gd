@@ -7,6 +7,7 @@ signal mineral_banked(
 )
 
 signal moneyChanged(wallet:int)
+signal levelStarted(quota:int)
 
 signal quotaProgressChanged(
 	earnedThisLevel: int,
@@ -45,7 +46,7 @@ func capture_mineral(
 	var finalValue := maxi(
 		0,
 		roundi(
-			data.base_value
+			data.sale_value
 			* alien_multiplier
 			* suit_multiplier
 		)
@@ -79,3 +80,14 @@ func spend_money(amount:int) -> bool:
 	moneyChanged.emit(runMoney)
 	
 	return true
+func start_level(newQuota: int) -> void:
+	levelQuota = maxi(1, newQuota)
+	earnedQuotaProgress = 0
+	quotaWasReached = false
+	
+	quotaProgressChanged.emit(
+		earnedQuotaProgress,
+		levelQuota
+	)
+	
+	levelStarted.emit(levelQuota)

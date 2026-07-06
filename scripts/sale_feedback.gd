@@ -26,7 +26,7 @@ func _on_mineral_banked(
 	mineralNameLabel.text = data.displayName
 	
 	breakdownLabel.text = ("Base %d x Alien %.2f x Suit %.2f" %[
-		data.base_value,
+		data.sale_value,
 		alienMultiplier,
 		suitMultiplier
 		]
