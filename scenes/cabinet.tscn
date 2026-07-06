@@ -186,10 +186,10 @@ layout_mode = 2
 text = "No mineral sold"
 
 [node name="SaleFeedback" type="VBoxContainer" parent="CanvasLayer" unique_id=2048277214]
-offset_left = 585.0
-offset_top = 284.0
-offset_right = 625.0
-offset_bottom = 365.0
+offset_left = 412.0
+offset_top = -3.0
+offset_right = 452.0
+offset_bottom = 110.0
 script = ExtResource("8_7jc0o")
 
 [node name="MineralNameLabel" type="Label" parent="CanvasLayer/SaleFeedback" unique_id=2145885237]

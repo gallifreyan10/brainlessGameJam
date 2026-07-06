@@ -98,6 +98,10 @@ func _physics_process(delta: float) -> void:
 	
 
 func process_idle() -> void:
+	if attemptsLocked:
+		velocity = Vector2.ZERO
+		return
+	
 	#Player Control is only available when claw is idle
 	var direction := Input.get_axis("move_left","move_right")
 
