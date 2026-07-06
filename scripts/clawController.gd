@@ -222,7 +222,7 @@ func finish_resolution() -> void:
 	change_state(State.IDLE)
 	attempt_finished.emit()
 	
-	if attempt_timer != null:
+	if attempt_timer != null and not attemptsLocked:
 		attempt_timer.start()
 			
 func updateCable() -> void:
