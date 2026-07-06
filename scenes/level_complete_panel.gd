@@ -19,7 +19,7 @@ func _ready() -> void:
 		return
 		
 	runManager.levelCompleted.connect(_on_level_completed)
-	runManager.levelCompleted.connect(_on_level_started)
+	runManager.levelStarted.connect(_on_level_started)
 	runManager.shopRequested.connect(_on_shop_requested)
 	
 	continueButton.pressed.connect(
