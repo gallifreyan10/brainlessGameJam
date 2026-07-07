@@ -14,6 +14,9 @@
 [ext_resource type="Script" uid="uid://dowaivgkcjooy" path="res://scripts/economy_debug_hud.gd" id="7_4vovv"]
 [ext_resource type="Script" uid="uid://ba1unirjsml3l" path="res://scripts/sale_feedback.gd" id="8_7jc0o"]
 [ext_resource type="Script" uid="uid://cfymf3yi01w1x" path="res://scenes/level_complete_panel.gd" id="12_o2g1p"]
+[ext_resource type="Script" uid="uid://qbtcniq6266h" path="res://scripts/shopPanel.gd" id="13_ibd67"]
+[ext_resource type="Resource" uid="uid://c4kmgmplefl46" path="res://resources/basicSuit.tres" id="14_phyiw"]
+[ext_resource type="Script" uid="uid://bb1ibpt3k8ytn" path="res://scenes/run_failed_panel.gd" id="15_phyiw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
 size = Vector2(124, 371)
@@ -23,10 +26,11 @@ size = Vector2(701, 87.5)
 
 [node name="root" type="Sprite2D" unique_id=1035922221]
 
-[node name="RunManager" type="Node" parent="." unique_id=1852464911 node_paths=PackedStringArray("prizeContainer")]
+[node name="RunManager" type="Node" parent="." unique_id=1852464911 node_paths=PackedStringArray("prizeContainer", "clawController")]
 script = ExtResource("1_x7n3p")
 levels = Array[ExtResource("2_drrvb")]([ExtResource("3_4vovv"), ExtResource("4_drrvb")])
 prizeContainer = NodePath("../prizeContainer")
+clawController = NodePath("../Claw/CharacterBody2D")
 
 [node name="KillZone" type="Area2D" parent="." unique_id=2033197540]
 position = Vector2(-2, -2)
@@ -166,12 +170,13 @@ script = ExtResource("6_51rl1")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1951429874]
 
-[node name="EconomyDebugHUD" type="VBoxContainer" parent="CanvasLayer" unique_id=1398542342]
+[node name="EconomyDebugHUD" type="VBoxContainer" parent="CanvasLayer" unique_id=1398542342 node_paths=PackedStringArray("runManager")]
 offset_left = 9.0
 offset_top = 4.0
 offset_right = 132.0
 offset_bottom = 81.0
 script = ExtResource("7_4vovv")
+runManager = NodePath("../../RunManager")
 
 [node name="MoneyLabel" type="Label" parent="CanvasLayer/EconomyDebugHUD" unique_id=873156934]
 layout_mode = 2
@@ -184,6 +189,13 @@ text = "Quota: 0/100"
 [node name="SaleLabel" type="Label" parent="CanvasLayer/EconomyDebugHUD" unique_id=613652658]
 layout_mode = 2
 text = "No mineral sold"
+
+[node name="AttemptsLabel" type="Label" parent="CanvasLayer/EconomyDebugHUD" unique_id=653117933]
+layout_mode = 2
+
+[node name="CountdownLabel" type="Label" parent="CanvasLayer/EconomyDebugHUD" unique_id=709394461]
+layout_mode = 2
+text = "Time: 5.0"
 
 [node name="SaleFeedback" type="VBoxContainer" parent="CanvasLayer" unique_id=2048277214]
 offset_left = 412.0
@@ -241,11 +253,76 @@ text = "Continue"
 layout_mode = 2
 text = "Shop"
 
+[node name="ShopPanel" type="PanelContainer" parent="CanvasLayer" unique_id=789925739 node_paths=PackedStringArray("runManager")]
+visible = false
+offset_left = 231.0
+offset_top = 88.0
+offset_right = 409.0
+offset_bottom = 289.0
+script = ExtResource("13_ibd67")
+runManager = NodePath("../../RunManager")
+offeredSuit = ExtResource("14_phyiw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ShopPanel" unique_id=1803431874]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=818187837]
+layout_mode = 2
+text = "Shop"
+
+[node name="MoneyLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=455453150]
+layout_mode = 2
+
+[node name="OfferNameLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=1036804738]
+layout_mode = 2
+
+[node name="PriceLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=433929128]
+layout_mode = 2
+
+[node name="BuyButton" type="Button" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=555796731]
+layout_mode = 2
+text = "Buy"
+
+[node name="ContinueButton" type="Button" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=1136640569]
+layout_mode = 2
+text = "Save Money/Continue"
+
+[node name="StatusLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=2110119621]
+layout_mode = 2
+
+[node name="RunFailedPanel" type="PanelContainer" parent="CanvasLayer" unique_id=1130151050 node_paths=PackedStringArray("runManager")]
+visible = false
+offset_left = 249.0
+offset_top = 121.0
+offset_right = 395.0
+offset_bottom = 241.0
+script = ExtResource("15_phyiw")
+runManager = NodePath("../../RunManager")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/RunFailedPanel" unique_id=1567539791]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=1565168108]
+layout_mode = 2
+text = "Run Failed"
+
+[node name="MessageLabel" type="Label" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=40664713]
+layout_mode = 2
+text = "Quota not reached"
+
+[node name="NewRunButton" type="Button" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=17416925]
+layout_mode = 2
+text = "Start New Run"
+
+[node name="MainMenuButton" type="Button" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=547900442]
+layout_mode = 2
+text = "Main Menu"
+
 [node name="Claw" parent="." unique_id=1355383 instance=ExtResource("5_42ncc")]
 position = Vector2(319, 31)
 scale = Vector2(2, 2)
 
-[node name="CharacterBody2D" parent="Claw" index="0" unique_id=621652505 node_paths=PackedStringArray("grab_Area", "hold_point", "release_point", "chuteReleasePoint", "chuteArea", "resolutionTimer", "animation_player", "cable", "cableAttachPoint", "slipTimer")]
+[node name="CharacterBody2D" parent="Claw" index="0" unique_id=621652505 node_paths=PackedStringArray("grab_Area", "hold_point", "release_point", "chuteReleasePoint", "chuteArea", "resolutionTimer", "animation_player", "cable", "cableAttachPoint", "slipTimer", "runManager")]
 collision_layer = 0
 script = ExtResource("6_d2p3p")
 grab_Area = NodePath("GrabArea")
@@ -258,6 +335,7 @@ animation_player = NodePath("../AnimationPlayer")
 cable = NodePath("../../cable")
 cableAttachPoint = NodePath("cableAttachPoint")
 slipTimer = NodePath("SlipTimer")
+runManager = NodePath("../../RunManager")
 
 [node name="ReleasePoint" type="Marker2D" parent="Claw/CharacterBody2D" index="5" unique_id=1456995759]
 position = Vector2(0, 11)

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="MineralData" format=3 uid="uid://cbw23qpqgnm4d"]
+
+[ext_resource type="Script" uid="uid://dsddbp08ie4bc" path="res://scripts/mineralData.gd" id="1_w8knd"]
+[ext_resource type="Texture2D" uid="uid://dii8xbo5lt3qt" path="res://art/prototypeSprites/protomineral.png" id="2_n4aga"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bw7so"]
+size = Vector2(27, 23)
+
+[resource]
+script = ExtResource("1_w8knd")
+mineral_id = &"heavy_mineral"
+displayName = "Heavy Mineral"
+sprite = ExtResource("2_n4aga")
+collision_shape = SubResource("RectangleShape2D_bw7so")
+rarity = 2
+rarity_color = Color(0.26447684, 0.041665785, 0.33729082, 1)
+sale_value = 20
+weight = 2.0
+metadata/_custom_type_script = "uid://dsddbp08ie4bc"

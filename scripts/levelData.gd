@@ -10,6 +10,10 @@ class_name LevelData
 @export_range(1, 100000, 1) var earningsQuota: int = 30
 @export_range(1, 10, 1) var plannedAttemptLimit: int = 3
 
+@export_category("Difficulty")
+@export var difficultyCurve: DifficultyCurve
+@export var useExplicitQuota: bool = false
+
 
 func get_validation_errors() -> PackedStringArray:
 	var errors := PackedStringArray()
@@ -71,3 +75,23 @@ func get_validation_errors() -> PackedStringArray:
 			]
 		)
 	return errors
+
+func resolve_difficulty(
+	levelIndex: int
+) -> Dictionary:
+	if difficultyCurve == null:
+		return{
+			"quota": earningsQuota,
+			"common_multiplier": 1.0,
+			"rare_multiplier": 1.0,
+			"minimum_prize_weight": 0.5,
+			"maximum_prize_weight": 5.0,
+			"timer_multiplier": 1.0
+		}
+		
+	var resolved := difficultyCurve.resolve(levelIndex)
+	
+	if useExplicitQuota:
+		resolved["quota"] = earningsQuota
+		
+	return resolved

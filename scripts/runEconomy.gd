@@ -74,12 +74,16 @@ func capture_mineral(
 func spend_money(amount:int) -> bool:
 	if amount <= 0:
 		return false
-	if amount> runMoney:
+	if runMoney < amount:
 		return false
 	runMoney -= amount
 	moneyChanged.emit(runMoney)
 	
 	return true
+	
+func can_afford(amount: int) -> bool:
+	return runMoney >= amount
+	
 func start_level(newQuota: int) -> void:
 	levelQuota = maxi(1, newQuota)
 	earnedQuotaProgress = 0

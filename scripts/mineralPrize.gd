@@ -29,6 +29,7 @@ func setup(data: MineralData) -> void:
 		
 	if spriteNode != null:
 		spriteNode.texture = data.sprite
+		spriteNode.modulate = data.rarity_color
 		
 	if collisionNode != null:
 		collisionNode.shape = data.collision_shape

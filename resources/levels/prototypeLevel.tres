@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://cd4ysrwhe6hq1"]
 
+[ext_resource type="Resource" uid="uid://q6wi2brwrxvv" path="res://resources/defaultDifficulty.tres" id="1_s0t7k"]
 [ext_resource type="Script" uid="uid://bxput7ta4vpbu" path="res://scripts/mineralSpawnEntry.gd" id="1_w28g3"]
 [ext_resource type="Script" uid="uid://bk1gkbcb461ts" path="res://scripts/levelData.gd" id="2_m77id"]
 [ext_resource type="Resource" uid="uid://5di2uo7gcqh5" path="res://resources/minerals/protomineral.tres" id="2_s0t7k"]
@@ -14,4 +15,5 @@ metadata/_custom_type_script = "uid://bxput7ta4vpbu"
 [resource]
 script = ExtResource("2_m77id")
 mineralTable = Array[ExtResource("1_w28g3")]([SubResource("Resource_7n0fx")])
+difficultyCurve = ExtResource("1_s0t7k")
 metadata/_custom_type_script = "uid://bk1gkbcb461ts"

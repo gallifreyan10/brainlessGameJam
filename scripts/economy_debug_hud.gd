@@ -3,6 +3,9 @@ extends VBoxContainer
 @onready var moneyLabel: Label = $MoneyLabel
 @onready var quotaLabel: Label = $QuotaLabel
 @onready var saleLabel: Label = $SaleLabel
+@onready var attemptsLabel: Label = $AttemptsLabel
+@onready var countdownLabel: Label = $CountdownLabel
+@export var runManager: RunManager
 
 func _ready() -> void:
 	RunEconomy.moneyChanged.connect(_on_money_changed)
@@ -14,7 +17,12 @@ func _ready() -> void:
 		RunEconomy.earnedQuotaProgress,
 		RunEconomy.levelQuota
 	)
-
+	if runManager != null:
+		runManager.attemptsChanged.connect(_on_attempts_changed)
+		_on_attempts_changed(runManager.attemptsRemaining)
+		runManager.countdownChanged.connect(_on_countdown_changed)
+		runManager.countdownStopped.connect(_on_countdown_stopped)
+		
 func _on_money_changed(wallet: int) -> void:
 	moneyLabel.text = "Money %d" % wallet
 	pulse_label(moneyLabel)
@@ -46,3 +54,12 @@ func pulse_label(label:Label) -> void:
 		Vector2.ONE,
 		0.2
 	)
+func _on_attempts_changed(attemptsRemaining: int) -> void:
+	attemptsLabel.text = "Attempts %d" % attemptsRemaining
+
+func _on_countdown_changed(timeRemaining: float) -> void:
+	countdownLabel.text = "Time: %.1f" % timeRemaining
+	
+func _on_countdown_stopped() -> void:
+	print("HUD recieved countdownStopped")
+	countdownLabel.text = "Time: --" 

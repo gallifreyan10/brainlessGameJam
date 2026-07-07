@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SuitData" format=3 uid="uid://c4kmgmplefl46"]
+
+[ext_resource type="Script" uid="uid://d1mwwo1iilnab" path="res://scripts/suitData.gd" id="1_mo7pe"]
+
+[resource]
+script = ExtResource("1_mo7pe")
+suit_id = &"basic_suit"
+displayName = "Basic Suit"
+metadata/_custom_type_script = "uid://d1mwwo1iilnab"

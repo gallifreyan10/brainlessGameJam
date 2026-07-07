@@ -53,7 +53,8 @@ func _on_continue_pressed() -> void:
 	runManager.continue_to_next_level()
 	
 func _on_shop_pressed() -> void:
+	visible = false
 	runManager.open_shop()
 	
 func _on_shop_requested() -> void:
-	earningsLabel.text = "Shop coming later."
+	visible = false

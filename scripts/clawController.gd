@@ -56,11 +56,9 @@ var attemptsLocked: bool = false
 @export var maximum_slip_delay: float = 1.5
 
 @export var slipTimer: Timer
+@export var runManager: RunManager
 
 signal prize_Slipped(prize: RigidBody2D)
-
-
-
 
 signal position_changed(new_position: Vector2)
 signal state_changed(new_state: State)
@@ -116,6 +114,9 @@ func process_idle() -> void:
 func start_dropping() -> void:
 	if attemptsLocked:
 		return
+		
+	if runManager != null:
+		runManager.stop_attempt_countdown()
 	#Prevent repeated input or timer signals from restarting an already triggered drop
 	if current_State != State.IDLE:
 		return
@@ -400,6 +401,9 @@ func _ready() -> void:
 	if not RunEconomy.levelStarted.is_connected(_on_level_started):
 		RunEconomy.levelStarted.connect(_on_level_started)
 		
+	if runManager != null:
+		runManager.attemptsDepleted.connect(_on_attempts_depleted)
+		runManager.countdownExpired.connect(_on_countdown_expired)
 func choose_nearest_candidate() -> RigidBody2D:
 	remove_invalid_candidates()
 	
@@ -516,3 +520,11 @@ func _on_level_started(_quota: int) -> void:
 	):
 		attempt_timer.start()
 		
+func _on_attempts_depleted() -> void:
+	attemptsLocked = true
+	
+	if attempt_timer != null:
+		attempt_timer.stop()
+		
+func _on_countdown_expired() -> void:
+	start_dropping()

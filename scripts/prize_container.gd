@@ -17,6 +17,8 @@ var rng := RandomNumberGenerator.new()
 var mineralRng := RandomNumberGenerator.new()
 var reset_count: int = 0
 
+var activeDifficulty: Dictionary = {}
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if not validate_spawn_area():
@@ -225,6 +227,25 @@ func spawn_mineral() -> void:
 		
 	add_child(mineral)
 	
+	var minimumWeight := float(
+		activeDifficulty.get(
+			"minimum_prize_weight", 
+			0.5
+		)
+	)
+	
+	var maximumWeight := float(
+		activeDifficulty.get(
+			"maximum_prize_weight", 
+			5.0
+		)
+	)
+	
+	mineral.mass = clampf(
+		mineral.mass,
+		minimumWeight,
+		maximumWeight
+	)
 	mineral.position = get_clear_spawn_position(mineralRng)
 	mineral.rotation = mineralRng.randf_range(-0.5,0.5)
 	
@@ -248,11 +269,8 @@ func choose_mineral_scene() -> PackedScene:
 		if entry.mineralData == null:
 			continue
 			
-		var effectiveWeight := (entry.mineralData.spawn_weight)
+		var effectiveWeight := (get_effective_spawn_weight(entry))
 		
-		if entry.affectedByDiscovery:
-			effectiveWeight*=discoveryMultiplier
-			
 		if effectiveWeight <= 0.0:
 			continue
 			
@@ -275,12 +293,10 @@ func choose_mineral_scene() -> PackedScene:
 			continue
 			
 		var effectiveWeight := (
-			entry.mineralData.spawn_weight
+			get_effective_spawn_weight(entry)
 		)
 			
-		if entry.affectedByDiscovery:
-			effectiveWeight *= discoveryMultiplier
-				
+
 		if effectiveWeight <= 0.0:
 			continue
 				
@@ -294,11 +310,12 @@ func choose_mineral_scene() -> PackedScene:
 func _on_attempt_finished() -> void:
 	call_deferred("prepare_next_attempt")	
 
-func load_level(newLevelData: LevelData) -> void:
+func load_level(newLevelData: LevelData, resolvedDifficulty: Dictionary) -> void:
 	if newLevelData == null:
 		push_error("Cannot load null LevelData.")
 		return
 	levelData = newLevelData
+	activeDifficulty = resolvedDifficulty
 	
 	for error in levelData.get_validation_errors():
 		push_warning(error)
@@ -311,8 +328,47 @@ func load_level(newLevelData: LevelData) -> void:
 	call_deferred("_finish_level_load")
 	
 func _finish_level_load() -> void:
+	
+	var resolvedQuota := int(
+		activeDifficulty.get(
+			"quota",
+			levelData.earningsQuota
+		)
+	)
+	
 	RunEconomy.start_level(
 		levelData.earningsQuota
 	)
 	
 	prepare_next_attempt()
+
+func get_effective_spawn_weight(
+	entry: MineralSpawnEntry
+) -> float:
+	if entry == null or entry.mineralData == null:
+		return 0.0
+		
+	var effectiveWeight := (
+		entry.mineralData.spawn_weight
+	)
+	
+	match entry.mineralData.rarity:
+		MineralData.Rarity.COMMON:
+			effectiveWeight *= float(
+				activeDifficulty.get(
+					"common_multiplier",
+					1.0
+				)
+			)
+		
+		MineralData.Rarity.RARE:
+			effectiveWeight *= float(
+				activeDifficulty.get(
+					"rare_difficulty",
+					1.0
+				)
+			)
+	if entry.affectedByDiscovery:
+		effectiveWeight *= discoveryMultiplier
+		
+	return maxf(0.0, effectiveWeight)
