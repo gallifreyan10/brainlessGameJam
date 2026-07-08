@@ -26,8 +26,11 @@ var quotaWasReached: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func build_capture_context() -> Dictionary:
+	var alien_multiplier := AlienCollection.get_sale_value_multiplier()
+	
 	return{
-		"alien_multiplier": 1.0,
+		"base_multiplier": 1.0,
+		"alien_multiplier": alien_multiplier,
 		"suit_multiplier": 1.0,
 		"alien_icon": null
 	}
@@ -95,3 +98,7 @@ func start_level(newQuota: int) -> void:
 	)
 	
 	levelStarted.emit(levelQuota)
+
+func reset_run_money() -> void:
+	runMoney = 0
+	moneyChanged.emit(runMoney)

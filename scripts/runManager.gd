@@ -67,7 +67,7 @@ func start_level(levelIndex: int) -> void:
 	
 	var data := levels[currentLevelIndex]
 	
-	attemptsRemaining = data.plannedAttemptLimit
+	attemptsRemaining = data.plannedAttemptLimit + AlienCollection.get_extra_attempts()
 	attemptsChanged.emit(attemptsRemaining)
 	
 	var resolvedDifficulty := (
@@ -127,19 +127,28 @@ func open_shop() -> void:
 	stateChanged.emit(currentState)
 	shopRequested.emit()
 
-func buy_and_equip_suit(suit: SuitData) -> bool:
+func buy_and_equip_suit(suit: SuitData, price_override: int = -1) -> bool:
 	if currentState != RunState.SHOP:
 		return false
 		
 	if suit == null:
 		return false
+	
+	var finalPrice := suit.price
+	
+	if price_override >= 0:
+		finalPrice = price_override
 		
-	if not RunEconomy.spend_money(suit.price):
+	if not RunEconomy.spend_money(finalPrice):
 		return false
 	
-	if not ownedSuits.has(suit):
-		ownedSuits.append(suit)
+	if ownedSuits.has(suit):
+		equippedSuit = suit
+		suitEquipped.emit(equippedSuit)
+		return true
+	
 		
+	ownedSuits.append(suit)	
 	equippedSuit = suit
 	suitEquipped.emit(equippedSuit)
 	return true
@@ -220,6 +229,7 @@ func fail_level() -> void:
 	
 func start_new_run() -> void:
 	clear_run_suits()
+	RunEconomy.reset_run_money()
 	currentLevelIndex = 0
 	call_deferred("start_level", 0)
 
@@ -228,4 +238,3 @@ func clear_run_suits() -> void:
 	equippedSuit = null
 	suitsCleared.emit()
 	suitEquipped.emit(null)
-	

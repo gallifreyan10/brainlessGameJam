@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AlienData" format=3 uid="uid://dwkujifynfkpb"]
+
+[ext_resource type="Resource" uid="uid://oxxdx8fh2eub" path="res://resources/saleBonus.tres" id="1_fj3g4"]
+[ext_resource type="Script" uid="uid://bkfisr2cutesv" path="res://scripts/alienData.gd" id="1_v1ktj"]
+
+[resource]
+script = ExtResource("1_v1ktj")
+alien_id = &"Blue"
+displayName = "Blue Alien"
+description = "First Test Alien"
+ability = ExtResource("1_fj3g4")
+metadata/_custom_type_script = "uid://bkfisr2cutesv"

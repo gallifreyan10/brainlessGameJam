@@ -12,11 +12,13 @@
 [ext_resource type="Script" uid="uid://c0kvwbm6ix6yu" path="res://scripts/prizeChute.gd" id="6_51rl1"]
 [ext_resource type="Script" uid="uid://dmow26qnm5mpv" path="res://scripts/clawController.gd" id="6_d2p3p"]
 [ext_resource type="Script" uid="uid://dowaivgkcjooy" path="res://scripts/economy_debug_hud.gd" id="7_4vovv"]
+[ext_resource type="Resource" uid="uid://dwkujifynfkpb" path="res://resources/blueAlien.tres" id="7_mdcq5"]
 [ext_resource type="Script" uid="uid://ba1unirjsml3l" path="res://scripts/sale_feedback.gd" id="8_7jc0o"]
 [ext_resource type="Script" uid="uid://cfymf3yi01w1x" path="res://scenes/level_complete_panel.gd" id="12_o2g1p"]
 [ext_resource type="Script" uid="uid://qbtcniq6266h" path="res://scripts/shopPanel.gd" id="13_ibd67"]
 [ext_resource type="Resource" uid="uid://c4kmgmplefl46" path="res://resources/basicSuit.tres" id="14_phyiw"]
 [ext_resource type="Script" uid="uid://bb1ibpt3k8ytn" path="res://scenes/run_failed_panel.gd" id="15_phyiw"]
+[ext_resource type="Script" uid="uid://j5tsp06q7nku" path="res://scenes/helpPanel.gd" id="16_aklh0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
 size = Vector2(124, 371)
@@ -70,8 +72,9 @@ position = Vector2(152, 160)
 [node name="PrizeSpawnBottomRight" type="Marker2D" parent="prizeContainer" unique_id=105204545]
 position = Vector2(472, 336)
 
-[node name="blueLittleGuy" parent="prizeContainer" unique_id=923555866 instance=ExtResource("1_xr4xt")]
+[node name="blueLittleGuy" parent="prizeContainer" unique_id=923555866 groups=["aliens"] instance=ExtResource("1_xr4xt")]
 position = Vector2(324, 282)
+alien_data = ExtResource("7_mdcq5")
 
 [node name="clawSpawn" type="Marker2D" parent="." unique_id=601436855]
 position = Vector2(318, 31)
@@ -175,6 +178,7 @@ offset_left = 9.0
 offset_top = 4.0
 offset_right = 132.0
 offset_bottom = 81.0
+mouse_filter = 0
 script = ExtResource("7_4vovv")
 runManager = NodePath("../../RunManager")
 
@@ -202,6 +206,7 @@ offset_left = 412.0
 offset_top = -3.0
 offset_right = 452.0
 offset_bottom = 110.0
+mouse_filter = 0
 script = ExtResource("8_7jc0o")
 
 [node name="MineralNameLabel" type="Label" parent="CanvasLayer/SaleFeedback" unique_id=2145885237]
@@ -231,11 +236,13 @@ offset_left = 270.0
 offset_top = 131.0
 offset_right = 394.0
 offset_bottom = 251.0
+mouse_filter = 2
 script = ExtResource("12_o2g1p")
 runManager = NodePath("../../RunManager")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/LevelCompletePanel" unique_id=1804771937]
 layout_mode = 2
+mouse_filter = 0
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=1455296043]
 layout_mode = 2
@@ -259,12 +266,14 @@ offset_left = 231.0
 offset_top = 88.0
 offset_right = 409.0
 offset_bottom = 289.0
+mouse_filter = 2
 script = ExtResource("13_ibd67")
 runManager = NodePath("../../RunManager")
 offeredSuit = ExtResource("14_phyiw")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ShopPanel" unique_id=1803431874]
 layout_mode = 2
+mouse_filter = 0
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=818187837]
 layout_mode = 2
@@ -296,11 +305,13 @@ offset_left = 249.0
 offset_top = 121.0
 offset_right = 395.0
 offset_bottom = 241.0
+mouse_filter = 2
 script = ExtResource("15_phyiw")
 runManager = NodePath("../../RunManager")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/RunFailedPanel" unique_id=1567539791]
 layout_mode = 2
+mouse_filter = 0
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=1565168108]
 layout_mode = 2
@@ -318,6 +329,56 @@ text = "Start New Run"
 layout_mode = 2
 text = "Main Menu"
 
+[node name="HelpButton" type="Button" parent="CanvasLayer" unique_id=1989792946]
+offset_left = 20.0
+offset_top = 141.0
+offset_right = 64.0
+offset_bottom = 172.0
+text = "Help"
+
+[node name="HelpPanel" type="PanelContainer" parent="CanvasLayer" unique_id=1316446709 node_paths=PackedStringArray("helpButton")]
+visible = false
+custom_minimum_size = Vector2(300, 0)
+offset_left = 69.0
+offset_top = 3.0
+offset_right = 619.0
+offset_bottom = 373.0
+mouse_filter = 2
+script = ExtResource("16_aklh0")
+helpButton = NodePath("../HelpButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HelpPanel" unique_id=2143578196]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 0
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/HelpPanel/VBoxContainer" unique_id=1200168300]
+layout_mode = 2
+text = "How to Play"
+
+[node name="BodyLabel" type="Label" parent="CanvasLayer/HelpPanel/VBoxContainer" unique_id=1036248502]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Move the claw left and right before the timer reaches zero.
+
+When the timer reaches zero, the claw drops automatically. You can also drop early.
+
+Each Level gives you three attempts. An attempt is spent after the claw is returned to the top.
+
+Drop minerals into the prize chute to sell them. Sold minerals add money and increase quota progress to complete level.
+
+Reach the quota before attempts run out to complete the level.
+
+Between levels, you can spend money earned from the sold minerals on temporary suits or save it. Suits reset when a run fails.
+
+Suit abilities and equipped alien abilities are coming later."
+autowrap_mode = 3
+
+[node name="CloseButton" type="Button" parent="CanvasLayer/HelpPanel/VBoxContainer" unique_id=1320010215]
+layout_mode = 2
+text = "Close"
+
 [node name="Claw" parent="." unique_id=1355383 instance=ExtResource("5_42ncc")]
 position = Vector2(319, 31)
 scale = Vector2(2, 2)
@@ -325,6 +386,9 @@ scale = Vector2(2, 2)
 [node name="CharacterBody2D" parent="Claw" index="0" unique_id=621652505 node_paths=PackedStringArray("grab_Area", "hold_point", "release_point", "chuteReleasePoint", "chuteArea", "resolutionTimer", "animation_player", "cable", "cableAttachPoint", "slipTimer", "runManager")]
 collision_layer = 0
 script = ExtResource("6_d2p3p")
+horizontal_speed = 180.0
+drop_speed = 190.0
+return_speed = 190.0
 grab_Area = NodePath("GrabArea")
 hold_point = NodePath("HoldPoint")
 release_point = NodePath("ReleasePoint")

@@ -106,10 +106,12 @@ func process_idle() -> void:
 	velocity = Vector2(direction * horizontal_speed,0.0)
 	move_and_slide()
 	
-	var dropPressed = Input.is_action_just_pressed("drop_claw")
+	#var dropPressed = Input.is_action_just_pressed("drop_claw")
 	
-	if dropPressed == true:
-		start_dropping()
+	
+	#if dropPressed == true:
+		
+		#start_dropping()
 		
 func start_dropping() -> void:
 	if attemptsLocked:
@@ -528,3 +530,7 @@ func _on_attempts_depleted() -> void:
 		
 func _on_countdown_expired() -> void:
 	start_dropping()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("drop_claw"):
+		start_dropping()

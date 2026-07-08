@@ -1,11 +1,22 @@
-extends Node
+extends RigidBody2D
+class_name blueLittleGuy
+
+@export var alien_data: AlienData
 
 
-# Called when the node enters the scene tree for the first time.
+var _captured: bool = false
+
+func try_mark_captured() -> bool:
+	if _captured:
+		return false
+		
+	_captured = true
+	return true
+	
 func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	if alien_data == null:
+		push_warning("Alien has no AlienData.")
+		return
+		
+	for error in alien_data.get_validation_errors():
+		push_warning(error)

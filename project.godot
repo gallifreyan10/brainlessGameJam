@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 RunEconomy="*uid://bx5bhs1aavrrm"
+AlienCollection="*uid://c307i0vr53204"
 
 [display]
 

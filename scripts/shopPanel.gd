@@ -35,6 +35,7 @@ func _on_money_changed(_wallet: int) -> void:
 	_refresh()
 	
 func _refresh() -> void:
+	var price := get_discounted_price()
 	moneyLabel.text = "Money: %d" % RunEconomy.runMoney
 	
 	if offeredSuit == null:
@@ -44,14 +45,20 @@ func _refresh() -> void:
 		return
 		
 	offerNameLabel.text = offeredSuit.displayName
-	priceLabel.text = "Price: %d" % offeredSuit.price
-	buyButton.disabled = not RunEconomy.can_afford(offeredSuit.price)
+	priceLabel.text = "Price: %d" % price
+	
+	if runManager.ownedSuits.has(offeredSuit):
+		buyButton.text = "Owned"
+		buyButton.disabled = true
+	else:
+		buyButton.text = "Buy"
+		buyButton.disabled = not RunEconomy.can_afford(price)
 
 func _on_buy_pressed() -> void:
 	if offeredSuit == null:
 		return
 		
-	var bought := runManager.buy_and_equip_suit(offeredSuit)
+	var bought := runManager.buy_and_equip_suit(offeredSuit, get_discounted_price())
 	
 	if bought:
 		statusLabel.text = "Equipped %s!" % offeredSuit.displayName
@@ -63,3 +70,10 @@ func _on_buy_pressed() -> void:
 func _on_continue_pressed() -> void:
 	visible = false
 	runManager.leave_shop_and_continue()
+	
+func get_discounted_price() -> int:
+	if offeredSuit == null:
+		return 0
+		
+	var multiplier := AlienCollection.get_suit_price_multiplier()
+	return max(0, int(round(offeredSuit.price*multiplier)))

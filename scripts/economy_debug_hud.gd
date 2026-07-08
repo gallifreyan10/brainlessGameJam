@@ -61,5 +61,4 @@ func _on_countdown_changed(timeRemaining: float) -> void:
 	countdownLabel.text = "Time: %.1f" % timeRemaining
 	
 func _on_countdown_stopped() -> void:
-	print("HUD recieved countdownStopped")
 	countdownLabel.text = "Time: --" 
