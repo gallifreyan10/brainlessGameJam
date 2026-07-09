@@ -89,6 +89,33 @@ func get_extra_attempts() -> int:
 			
 	return extra_attempts
 
+func get_rare_alien_spawn_multiplier() -> float:
+	var multiplier := 1.0
+	
+	for ability in get_active_abilities():
+		if ability.ability_type == AlienAbility.AbilityType.BOOST_RARER_ALIEN_SPAWNS:
+			multiplier *= ability.magnitude
+			
+	return multiplier
+	
+func get_rare_mineral_spawn_multiplier() -> float:
+	var multiplier := 1.0
+	
+	for ability in get_active_abilities():
+		if ability.ability_type == AlienAbility.AbilityType.BOOST_RARE_MINERAL_SPAWNS:
+			multiplier *= ability.magnitude
+			
+	return multiplier
+	
+func get_grip_strength_multiplier() -> float:
+	var multiplier := 1.0
+	
+	for ability in get_active_abilities():
+		if ability.ability_type == AlienAbility.AbilityType.GRIP_STRENGTH:
+			multiplier *= ability.magnitude
+			
+	return multiplier
+	
 func find_alien_data_by_id(alien_id: StringName) -> AlienData:
 	var files := DirAccess.get_files_at(ALIEN_RESOURCE_FOLDER)
 	

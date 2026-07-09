@@ -124,7 +124,7 @@ func get_discounted_price(suit: SuitData) -> int:
 		return 0
 		
 	var multiplier := AlienCollection.get_suit_price_multiplier()
-	return max(0, int(round(suit.price*multiplier)))
+	return max(1, int(round(suit.price*multiplier)))
 	
 func _on_new_run_started() -> void:
 	repopulate_shop()

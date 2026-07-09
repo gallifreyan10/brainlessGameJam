@@ -4,7 +4,24 @@ extends CharacterBody2D
 @export var drop_speed: float = 120
 @export var return_speed: float = 150
 @export var maximum_drop_depth: float = 290
+var base_horizontal_speed: float
+var base_maximum_drop_depth: float
+var base_grab_area_scale: Vector2
+var max_second_chance_regrabs: int = 0
+var second_chance_regrabs_remaining: int = 0
+var blocks_cabinet_shake: bool = false
 
+@export_category("Tilt")
+
+@export var base_max_tilt_angle_degrees: float = 8.0
+@export var tilt_speed_degrees: float = 90.0
+@export var tilt_return_speed_degrees: float = 60.0
+@export var mouse_tilt_full_distance: float = 180.0
+@export var tilted_drop_horizontal_multiplier: float = 1.0
+
+var max_tilt_angle_degrees: float
+var current_tilt_degrees: float = 0.0
+var locked_drop_tilt_degrees: float = 0.0
 
 @export_category("Timing")
 @export var grabbing_duration: float = 0.75
@@ -106,13 +123,48 @@ func process_idle() -> void:
 	velocity = Vector2(direction * horizontal_speed,0.0)
 	move_and_slide()
 	
-	#var dropPressed = Input.is_action_just_pressed("drop_claw")
+	process_tilt_input(get_physics_process_delta_time())
+
+func process_tilt_input(delta: float) -> void:
+	var viewport_rect := get_viewport_rect()
+	var mouse_viewport_position := get_viewport().get_mouse_position()
+	var mouse_is_inside_window := viewport_rect.has_point(mouse_viewport_position)
 	
+	var controller_tilt_strength := Input.get_axis(
+		"tilt_left",
+		"tilt_right"
+	)
 	
-	#if dropPressed == true:
+	var final_tilt_strength := 0.0
+	
+	if absf(controller_tilt_strength) > 0.1:
+		final_tilt_strength = controller_tilt_strength
+	elif mouse_is_inside_window:
+		var mouse_position := get_global_mouse_position()
+		var mouse_offset_x := mouse_position.x - global_position.x
 		
-		#start_dropping()
-		
+		final_tilt_strength = -clampf(
+			mouse_offset_x / mouse_tilt_full_distance,
+			-1.0,
+			1.0
+		)
+	else:
+		final_tilt_strength = 0.0
+			
+	var target_tilt := final_tilt_strength * max_tilt_angle_degrees
+	
+	current_tilt_degrees = move_toward(
+		current_tilt_degrees,
+		target_tilt,
+		tilt_speed_degrees * delta
+	)
+	
+	rotation_degrees = current_tilt_degrees
+	
+func reset_tilt() -> void:
+	current_tilt_degrees = 0.0
+	rotation_degrees = 0.0
+	
 func start_dropping() -> void:
 	if attemptsLocked:
 		return
@@ -129,13 +181,20 @@ func start_dropping() -> void:
 		
 	if attempt_timer != null:
 		attempt_timer.stop()
-		
+	
+	locked_drop_tilt_degrees = current_tilt_degrees
+	second_chance_regrabs_remaining = max_second_chance_regrabs
 	change_state(State.DROPPING)
 	
 func process_dropping() -> void:
 	#Player controls are locked during drop
-	velocity.x = 0
-	velocity.y = drop_speed
+	var tilt_radians := deg_to_rad(locked_drop_tilt_degrees)
+	 
+	velocity.x = -sin(tilt_radians) * drop_speed * tilted_drop_horizontal_multiplier
+	velocity.y = cos(tilt_radians) * drop_speed
+	
+	rotation_degrees = locked_drop_tilt_degrees
+	
 	move_and_slide()
 	
 	position_changed.emit(global_position)
@@ -172,6 +231,7 @@ func process_returning() -> void:
 	if global_position.y <= starting_y:
 		global_position.y = starting_y
 		velocity = Vector2.ZERO
+		reset_tilt()
 		
 		if grab_Area != null:
 			grab_Area.set_deferred("monitoring", false)
@@ -329,8 +389,9 @@ func hold_selected_prize() -> void:
 		slipTimer.stop()
 		
 		if randf() < slipChance:
-			slipTimer.wait_time = randf_range(minimum_slip_delay,maximum_slip_delay)
-			slipTimer.start()
+			var grip_multiplier := AlienCollection.get_grip_strength_multiplier()
+			slipTimer.wait_time = randf_range(minimum_slip_delay,maximum_slip_delay) * grip_multiplier
+			start_slip_timer()
 			
 func release_held_prize(expect_chute_resolution: bool = true) -> void:
 	if slipTimer != null:
@@ -377,6 +438,14 @@ func release_held_prize(expect_chute_resolution: bool = true) -> void:
 	prize_released.emit(released_prize)
 	
 func _ready() -> void:
+	base_horizontal_speed = horizontal_speed
+	base_maximum_drop_depth = maximum_drop_depth
+	
+	if grab_Area != null:
+		base_grab_area_scale = grab_Area.scale
+	
+	max_tilt_angle_degrees = base_max_tilt_angle_degrees
+	
 	starting_y = global_position.y
 	
 	 #Connect the timeout through code if it's not already connected
@@ -406,6 +475,8 @@ func _ready() -> void:
 	if runManager != null:
 		runManager.attemptsDepleted.connect(_on_attempts_depleted)
 		runManager.countdownExpired.connect(_on_countdown_expired)
+		runManager.suitEquipped.connect(_on_suit_equipped)
+		apply_suit_modifiers(runManager.equippedSuit)
 func choose_nearest_candidate() -> RigidBody2D:
 	remove_invalid_candidates()
 	
@@ -483,6 +554,13 @@ func _on_slip_timer_timeout() -> void:
 	if not is_instance_valid(held_prize):
 		return
 		
+	if second_chance_regrabs_remaining > 0:
+		second_chance_regrabs_remaining -= 1
+		
+		print("Second Chance Suit saved: ", held_prize.name)
+		
+		start_slip_timer()
+		return	
 	#For now slipping happens while the claw rises
 	if current_State != State.RETURNING and current_State != State.MOVING_TO_CHUTE:
 		return
@@ -492,7 +570,20 @@ func _on_slip_timer_timeout() -> void:
 	release_held_prize(false)
 	prize_Slipped.emit(slipped_prize)
 
-
+func start_slip_timer() -> void:
+	if slipTimer == null:
+		return
+		
+	if held_prize == null:
+		return
+		
+	slipTimer.wait_time = randf_range(
+		minimum_slip_delay,
+		maximum_slip_delay
+	)
+	
+	slipTimer.start()
+	
 func _on_prize_chute_body_entered(body: Node2D) -> void:
 	if not is_instance_valid(resolvingPrize):
 		return
@@ -530,7 +621,49 @@ func _on_attempts_depleted() -> void:
 		
 func _on_countdown_expired() -> void:
 	start_dropping()
-
+	
+func _on_suit_equipped(suit: SuitData) -> void:
+	apply_suit_modifiers(suit)
+	
+func apply_suit_modifiers(suit: SuitData) -> void:
+	horizontal_speed = base_horizontal_speed
+	maximum_drop_depth = base_maximum_drop_depth
+	max_tilt_angle_degrees = base_max_tilt_angle_degrees
+	max_second_chance_regrabs = 0
+	blocks_cabinet_shake = false
+	
+	if grab_Area != null:
+		grab_Area.scale = base_grab_area_scale
+		
+	if suit == null:
+		return
+		
+	maximum_drop_depth += suit.drop_depth_bonus
+	horizontal_speed *= suit.horizontal_speed_multiplier
+	max_tilt_angle_degrees += suit.max_tilt_angle_bonus
+	max_second_chance_regrabs = suit.second_chance_regrabs
+	blocks_cabinet_shake = suit.blocks_cabinet_shake
+	
+	if grab_Area != null:
+		grab_Area.scale = base_grab_area_scale * suit.grab_area_scale_multiplier
+		
+	print(
+		"Applied suit: ",
+		suit.displayName,
+		" max drop: ",
+		maximum_drop_depth,
+		" horizontal speed: ",
+		horizontal_speed
+	)	
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("drop_claw"):
 		start_dropping()
+
+func is_protecte_from_cabinet_shake() -> bool:
+	return blocks_cabinet_shake
+	
+func apply_cabinet_shake_offset(offset: Vector2) -> void:
+	if blocks_cabinet_shake:
+		return
+		
+	global_position += offset

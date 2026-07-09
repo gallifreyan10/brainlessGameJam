@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_n0x52")
 ability_id = &"boostAliens_bonus"
-displayName = "Rare Alien Boost Ability"
+displayName = "Rare Alien Signal"
 description = "Increased chance to boost rare alien spawns"
 ability_type = 6
-magnitude = 1.25
+magnitude = 1.5
 metadata/_custom_type_script = "uid://dlfh286jcwey"

@@ -8,5 +8,5 @@ ability_id = &"mineralBoost_bonus"
 displayName = "Mineral Boost Ability"
 description = "Higher chance of boosted rare mineral spawns."
 ability_type = 4
-magnitude = 1.25
+magnitude = 1.5
 metadata/_custom_type_script = "uid://dlfh286jcwey"

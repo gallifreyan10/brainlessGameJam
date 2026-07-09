@@ -17,11 +17,16 @@
 [ext_resource type="Script" uid="uid://cfymf3yi01w1x" path="res://scripts/level_complete_panel.gd" id="12_o2g1p"]
 [ext_resource type="PackedScene" uid="uid://c4kuqjtbhod8x" path="res://ui/ActiveAbilitiesPanel.tscn" id="13_36xb5"]
 [ext_resource type="Script" uid="uid://qbtcniq6266h" path="res://scripts/shopPanel.gd" id="13_ibd67"]
-[ext_resource type="Resource" uid="uid://c4kmgmplefl46" path="res://resources/suits/basicSuit.tres" id="14_phyiw"]
+[ext_resource type="Resource" uid="uid://c4kmgmplefl46" path="res://resources/suits/pioneerSuit.tres" id="14_phyiw"]
 [ext_resource type="Script" uid="uid://bb1ibpt3k8ytn" path="res://scripts/run_failed_panel.gd" id="15_phyiw"]
 [ext_resource type="Script" uid="uid://j5tsp06q7nku" path="res://scripts/helpPanel.gd" id="16_aklh0"]
 [ext_resource type="Script" uid="uid://d1mwwo1iilnab" path="res://scripts/suitData.gd" id="17_36xb5"]
+[ext_resource type="Resource" uid="uid://cdptwsug8rmdv" path="res://resources/suits/magneticSuit.tres" id="19_e2wtf"]
 [ext_resource type="PackedScene" uid="uid://bdgcvno7wuldy" path="res://ui/alienCollection.tscn" id="19_ya8ot"]
+[ext_resource type="Resource" uid="uid://w8qurk7nesfk" path="res://resources/suits/acrobatSuit.tres" id="20_qd4s0"]
+[ext_resource type="Resource" uid="uid://b2o6w5ttitv6s" path="res://resources/suits/secondChanceSuit.tres" id="21_1qmrp"]
+[ext_resource type="Resource" uid="uid://crgil1yel8qr" path="res://resources/suits/emergencyStabilizerSuit.tres" id="22_t1oa4"]
+[ext_resource type="Script" uid="uid://bon7webpa85ca" path="res://scenes/owned_suits_panel.gd" id="25_t1oa4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
 size = Vector2(124, 371)
@@ -316,7 +321,7 @@ offset_bottom = 289.0
 mouse_filter = 2
 script = ExtResource("13_ibd67")
 runManager = NodePath("../../RunManager")
-suitCatalog = Array[ExtResource("17_36xb5")]([ExtResource("14_phyiw"), null, null])
+suitCatalog = Array[ExtResource("17_36xb5")]([ExtResource("14_phyiw"), ExtResource("19_e2wtf"), ExtResource("20_qd4s0"), ExtResource("21_1qmrp"), ExtResource("22_t1oa4")])
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ShopPanel" unique_id=1803431874]
 layout_mode = 2
@@ -432,6 +437,36 @@ offset_top = 214.0
 offset_right = 100.0
 offset_bottom = 245.0
 text = "Abilities"
+
+[node name="OwnedSuitsButton" type="Button" parent="CanvasLayer" unique_id=781249223]
+offset_left = 12.0
+offset_top = 254.0
+offset_right = 129.0
+offset_bottom = 285.0
+text = "Suit Inventory"
+
+[node name="OwnedSuitsPanel" type="PanelContainer" parent="CanvasLayer" unique_id=892049915 node_paths=PackedStringArray("runManager")]
+custom_minimum_size = Vector2(300, 0)
+offset_left = 219.0
+offset_top = 151.0
+offset_right = 519.0
+offset_bottom = 213.0
+script = ExtResource("25_t1oa4")
+runManager = NodePath("../../RunManager")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/OwnedSuitsPanel" unique_id=1850875643]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/OwnedSuitsPanel/VBoxContainer" unique_id=989789121]
+layout_mode = 2
+text = "Owned Suits"
+
+[node name="SuitList" type="VBoxContainer" parent="CanvasLayer/OwnedSuitsPanel/VBoxContainer" unique_id=2016784296]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="CanvasLayer/OwnedSuitsPanel/VBoxContainer" unique_id=1170830468]
+layout_mode = 2
+text = "Close"
 
 [node name="Claw" parent="." unique_id=1355383 instance=ExtResource("5_42ncc")]
 position = Vector2(319, 31)

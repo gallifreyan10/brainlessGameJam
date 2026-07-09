@@ -4,6 +4,9 @@
 
 [resource]
 script = ExtResource("1_mo7pe")
-suit_id = &"basic_suit"
-displayName = "Basic Suit"
+suit_id = &"pioneer_suit"
+displayName = "Pioneer Suit"
+price = 15
+drop_depth_bonus = 80.0
+horizontal_speed_multiplier = 0.75
 metadata/_custom_type_script = "uid://d1mwwo1iilnab"

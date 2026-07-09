@@ -240,3 +240,14 @@ func clear_run_suits() -> void:
 	equippedSuit = null
 	suitsCleared.emit()
 	suitEquipped.emit(null)
+
+func equip_owned_suit(suit: SuitData) -> bool:
+	if suit == null:
+		return false
+	
+	if not ownedSuits.has(suit):
+		return false
+		
+	equippedSuit = suit
+	suitEquipped.emit(equippedSuit)
+	return true

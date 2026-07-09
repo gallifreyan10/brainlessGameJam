@@ -19,6 +19,8 @@ var reset_count: int = 0
 
 var activeDifficulty: Dictionary = {}
 
+const ALIEN_RESOURCE_FOLDER := "res://resources/aliens/"
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if not validate_spawn_area():
@@ -49,7 +51,7 @@ func validate_spawn_area() -> bool:
 	
 func spawnLittleGuys() -> void:
 	if alien_Scene == null:
-		push_warning("No blue alien scene assigned.")
+		push_warning("No alien scene assigned.")
 		return
 	var minimumCount := mini(minimumAlienCount,maximumAlienCount)
 	var maximumCount := maxi(minimumAlienCount,maximumAlienCount)
@@ -62,17 +64,80 @@ func spawnLittleGuys() -> void:
 
 func spawnLittleGuy() -> void:
 		
-	var alien := alien_Scene.instantiate() as RigidBody2D
+	var alien := alien_Scene.instantiate() as AlienPrize
 	
 	if alien == null:
-		push_error("Alien scene root must be a RigidBody2D.")
+		push_error("Alien scene root must use AlienPrize.")
 		return
+		
+	var chosen_data := choose_alien_data()
+	
+	if chosen_data != null:
+		alien.alien_data = chosen_data
 		
 	add_child(alien)
 	
 	alien.position = get_clear_spawn_position(rng)
 	alien.rotation = rng.randf_range(-1.0, 1.0)
 
+func get_all_alien_data() -> Array[AlienData]:
+	var aliens: Array[AlienData] = []
+	var files := DirAccess.get_files_at(ALIEN_RESOURCE_FOLDER)
+	
+	for file_name in files:
+		if not file_name.ends_with(".tres"):
+			continue
+			
+		var path := ALIEN_RESOURCE_FOLDER + file_name
+		var resource := load(path)
+	
+		if resource is AlienData:
+			aliens.append(resource as AlienData)
+			
+	return aliens
+	
+func choose_alien_data() -> AlienData:
+	var aliens := get_all_alien_data()
+	
+	if aliens.is_empty():
+		return null
+		
+	var total_weight := 0.0
+	var last_valid_alien: AlienData = null
+	
+	for alien_data in aliens:
+		if alien_data == null:
+			continue
+			
+		var effective_weight := get_effective_alien_spawn_weight(alien_data)
+		
+		if effective_weight <= 0.0:
+			continue	
+			
+		total_weight += effective_weight
+		last_valid_alien = alien_data
+		
+	if total_weight <= 0.0:
+		return last_valid_alien
+		
+	var roll := rng.randf_range(0.0, total_weight)
+	
+	for alien_data in aliens:
+		if alien_data == null:
+			continue
+			
+		var effective_weight := get_effective_alien_spawn_weight(alien_data)
+		
+		if effective_weight <= 0.0:
+			continue
+			
+		roll -= effective_weight
+		
+		if roll <= 0.0:
+			return alien_data
+			
+	return last_valid_alien
+	
 func get_random_spawn_position(
 	generator: RandomNumberGenerator
 ) -> Vector2:
@@ -342,6 +407,18 @@ func _finish_level_load() -> void:
 	
 	prepare_next_attempt()
 
+func get_effective_alien_spawn_weight(alien_data: AlienData) -> float:
+	if alien_data == null:
+		return 0.0
+		
+	var effective_weight := alien_data.spawn_weight
+	
+	match alien_data.rarity:
+		AlienData.Rarity.RARE, AlienData.Rarity.EPIC, AlienData.Rarity.LEGENDARY, AlienData.Rarity.THECHOSEN:
+			effective_weight *= AlienCollection.get_rare_alien_spawn_multiplier()
+			
+	return maxf(0.0, effective_weight)
+	
 func get_effective_spawn_weight(
 	entry: MineralSpawnEntry
 ) -> float:
@@ -368,6 +445,9 @@ func get_effective_spawn_weight(
 					1.0
 				)
 			)
+			
+			effectiveWeight *= AlienCollection.get_rare_mineral_spawn_multiplier()
+			
 	if entry.affectedByDiscovery:
 		effectiveWeight *= discoveryMultiplier
 		

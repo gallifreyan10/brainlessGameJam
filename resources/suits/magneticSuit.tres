@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SuitData" format=3 uid="uid://cdptwsug8rmdv"]
+
+[ext_resource type="Script" uid="uid://d1mwwo1iilnab" path="res://scripts/suitData.gd" id="1_odgun"]
+
+[resource]
+script = ExtResource("1_odgun")
+suit_id = &"magnetic_suit"
+displayName = "Magnetic Suit"
+price = 18
+grab_area_scale_multiplier = 1.25
+metadata/_custom_type_script = "uid://d1mwwo1iilnab"

@@ -8,5 +8,5 @@ ability_id = &"attemptBooster_bonus"
 displayName = "Attempt Booster Ability"
 description = "Adds one more attempt for every alien of this kind collected."
 ability_type = 5
-magnitude = 1.25
+magnitude = 1.0
 metadata/_custom_type_script = "uid://dlfh286jcwey"
