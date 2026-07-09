@@ -81,90 +81,115 @@ position = Vector2(472, 336)
 position = Vector2(318, 31)
 
 [node name="CabinetWall" parent="." unique_id=1560813676 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(136, 56)
 scale = Vector2(0.5, 0.32)
 
 [node name="CabinetWall2" parent="." unique_id=1214076349 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(136, 168)
 scale = Vector2(0.5, 0.32)
 
 [node name="CabinetWall3" parent="." unique_id=361861103 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(136, 280)
 scale = Vector2(0.5, 0.32)
 
 [node name="CabinetWall4" parent="." unique_id=1070191200 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(136, 296)
 scale = Vector2(0.5, 0.32)
 
 [node name="CabinetWall5" parent="." unique_id=128228457 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(488, 139)
 scale = Vector2(0.5, 0.32)
+collision_layer = 32
+collision_mask = 32
 
 [node name="CabinetWall6" parent="." unique_id=694358223 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(488, 168)
 scale = Vector2(0.5, 0.32)
+collision_layer = 32
+collision_mask = 32
 
 [node name="CabinetWall7" parent="." unique_id=25730055 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(488, 280)
 scale = Vector2(0.5, 0.32)
+collision_layer = 32
+collision_mask = 32
 
 [node name="CabinetWall8" parent="." unique_id=964376761 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(488, 296)
 scale = Vector2(0.5, 0.32)
+collision_layer = 32
+collision_mask = 32
 
 [node name="CabinetWall9" parent="." unique_id=57404117 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(576, 56)
 scale = Vector2(0.5, 0.32)
 
 [node name="CabinetWall10" parent="." unique_id=1126289352 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(576, 168)
 scale = Vector2(0.5, 0.32)
 
 [node name="CabinetWall11" parent="." unique_id=2008990289 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(576, 280)
 scale = Vector2(0.5, 0.32)
 
 [node name="CabinetWall12" parent="." unique_id=358182783 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(576, 296)
 scale = Vector2(0.5, 0.32)
 
 [node name="CabinetWall13" parent="." unique_id=42287628 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(192, 352)
 rotation = -1.5707964
 scale = Vector2(0.5, 0.32)
 
 [node name="CabinetWall14" parent="." unique_id=1973275786 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(304, 352)
 rotation = -1.5707964
 scale = Vector2(0.5, 0.32)
 
 [node name="CabinetWall15" parent="." unique_id=374922236 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(416, 352)
 rotation = -1.5707964
 scale = Vector2(0.5, 0.32)
 
 [node name="CabinetWall16" parent="." unique_id=626909662 instance=ExtResource("2_c6sfa")]
+visible = false
 z_index = 1
 position = Vector2(432.00003, 352)
 rotation = -1.5707964
 scale = Vector2(0.5, 0.32)
 
 [node name="PrizeChute" parent="." unique_id=596256380 instance=ExtResource("3_jpwin")]
+visible = false
 z_index = 1
 position = Vector2(532, 347)
 scale = Vector2(2.46, 0.5)
@@ -190,7 +215,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ActiveAbilitiesPanel" parent="CanvasLayer" unique_id=1948541691 instance=ExtResource("13_36xb5")]
-visible = true
 offset_left = 318.0
 offset_top = 140.0
 offset_right = 326.0
@@ -293,8 +317,6 @@ mouse_filter = 2
 script = ExtResource("13_ibd67")
 runManager = NodePath("../../RunManager")
 suitCatalog = Array[ExtResource("17_36xb5")]([ExtResource("14_phyiw"), null, null])
-offeredSuit = ExtResource("14_phyiw")
-rerollCost = null
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ShopPanel" unique_id=1803431874]
 layout_mode = 2
