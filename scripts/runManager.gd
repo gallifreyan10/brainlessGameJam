@@ -21,6 +21,7 @@ signal countdownStarted(timeRemaining: float)
 signal countdownStopped
 signal countdownExpired
 signal runFailed(levelIndex: int, earned: int, quota: int)
+signal newRunStarted
 
 @export var levels: Array[LevelData] = []
 @export var prizeContainer: Node
@@ -231,6 +232,7 @@ func start_new_run() -> void:
 	clear_run_suits()
 	RunEconomy.reset_run_money()
 	currentLevelIndex = 0
+	newRunStarted.emit()
 	call_deferred("start_level", 0)
 
 func clear_run_suits() -> void:

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AlienData" format=3 uid="uid://dvdhc8v4ww8jc"]
+
+[ext_resource type="Resource" uid="uid://c7xat7afm3lu2" path="res://resources/abilities/suitDiscountBonus.tres" id="1_hsteb"]
+[ext_resource type="Script" uid="uid://bkfisr2cutesv" path="res://scripts/alienData.gd" id="2_rp15m"]
+[ext_resource type="Texture2D" uid="uid://b7kuiqvi6n2ob" path="res://art/prototypeSprites/littleBlueAlien.png" id="2_ub3da"]
+
+[resource]
+script = ExtResource("2_rp15m")
+alien_id = &"purple"
+displayName = "Pip"
+icon = ExtResource("2_ub3da")
+ability = ExtResource("1_hsteb")
+rarity = 3
+collection_slot = 3
+spawn_weight = 8.0
+metadata/_custom_type_script = "uid://bkfisr2cutesv"

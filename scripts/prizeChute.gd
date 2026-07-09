@@ -3,9 +3,9 @@ extends Area2D
 signal mineralCaptured(mineral: MineralPrize)
 
 func _on_body_entered(body: Node2D) -> void:
-	
-	if body is blueLittleGuy:
-		var alien := body as blueLittleGuy
+
+	if body is AlienPrize:
+		var alien := body as AlienPrize
 		
 		if alien.alien_data == null:
 			push_warning("Captured alien has no AlienData.")

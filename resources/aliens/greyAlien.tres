@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AlienData" format=3 uid="uid://cs5xoi3wdosk4"]
+
+[ext_resource type="Resource" uid="uid://oxxdx8fh2eub" path="res://resources/abilities/saleBonus.tres" id="1_42gn3"]
+[ext_resource type="Texture2D" uid="uid://b7kuiqvi6n2ob" path="res://art/prototypeSprites/littleBlueAlien.png" id="2_rl8wj"]
+[ext_resource type="Script" uid="uid://bkfisr2cutesv" path="res://scripts/alienData.gd" id="2_wniu3"]
+
+[resource]
+script = ExtResource("2_wniu3")
+alien_id = &"grey"
+displayName = "Greeble"
+icon = ExtResource("2_rl8wj")
+ability = ExtResource("1_42gn3")
+spawn_weight = 40.0
+metadata/_custom_type_script = "uid://bkfisr2cutesv"

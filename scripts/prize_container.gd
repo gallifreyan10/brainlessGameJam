@@ -1,6 +1,6 @@
 extends Node2D
 @export_category("Alien Spawning")
-@export var blue_Scene: PackedScene
+@export var alien_Scene: PackedScene
 @export_range(1,10,1) var minimumAlienCount: int = 1
 @export_range(1,10,1) var maximumAlienCount: int = 6
 
@@ -48,7 +48,7 @@ func validate_spawn_area() -> bool:
 	return true
 	
 func spawnLittleGuys() -> void:
-	if blue_Scene == null:
+	if alien_Scene == null:
 		push_warning("No blue alien scene assigned.")
 		return
 	var minimumCount := mini(minimumAlienCount,maximumAlienCount)
@@ -62,16 +62,16 @@ func spawnLittleGuys() -> void:
 
 func spawnLittleGuy() -> void:
 		
-	var blue := blue_Scene.instantiate() as RigidBody2D
+	var alien := alien_Scene.instantiate() as RigidBody2D
 	
-	if blue == null:
-		push_error("Blue alien scene root must be a RigidBody2D.")
+	if alien == null:
+		push_error("Alien scene root must be a RigidBody2D.")
 		return
 		
-	add_child(blue)
+	add_child(alien)
 	
-	blue.position = get_clear_spawn_position(rng)
-	blue.rotation = rng.randf_range(-1.0, 1.0)
+	alien.position = get_clear_spawn_position(rng)
+	alien.rotation = rng.randf_range(-1.0, 1.0)
 
 func get_random_spawn_position(
 	generator: RandomNumberGenerator

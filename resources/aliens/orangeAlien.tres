@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AlienData" format=3 uid="uid://dlsqbanc23nji"]
+
+[ext_resource type="Resource" uid="uid://bl3jyixqpdrn2" path="res://resources/abilities/boostMinerals.tres" id="1_g3525"]
+[ext_resource type="Script" uid="uid://bkfisr2cutesv" path="res://scripts/alienData.gd" id="2_3hi8x"]
+[ext_resource type="Texture2D" uid="uid://b7kuiqvi6n2ob" path="res://art/prototypeSprites/littleBlueAlien.png" id="2_nrmqm"]
+
+[resource]
+script = ExtResource("2_3hi8x")
+alien_id = &"orange"
+displayName = "Glorbo"
+icon = ExtResource("2_nrmqm")
+ability = ExtResource("1_g3525")
+rarity = 4
+collection_slot = 4
+spawn_weight = 2.0
+metadata/_custom_type_script = "uid://bkfisr2cutesv"

@@ -30,7 +30,7 @@ func get_validation_errors() -> Array[String]:
 	if ability_type == AbilityType.NONE:
 		errors.append("AlienAbility %s has AbilityType.NONE." % ability_id)
 		
-	if magnitude >= 0.0:
+	if magnitude <= 0.0:
 		errors.append("AlienAbility %s should have magnitude greater than 0." % ability_id)
 		
 	return errors

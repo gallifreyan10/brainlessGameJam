@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="AlienData" format=3 uid="uid://dwkujifynfkpb"]
+
+[ext_resource type="Resource" uid="uid://w6uu811734yl" path="res://resources/abilities/gripBonus.tres" id="1_1hjfc"]
+[ext_resource type="Script" uid="uid://bkfisr2cutesv" path="res://scripts/alienData.gd" id="2_1nkyh"]
+[ext_resource type="Texture2D" uid="uid://b7kuiqvi6n2ob" path="res://art/prototypeSprites/littleBlueAlien.png" id="2_milkr"]
+
+[resource]
+script = ExtResource("2_1nkyh")
+alien_id = &"Blue"
+displayName = "Nibby"
+icon = ExtResource("2_milkr")
+description = "Rare Commmon Blue star alien named Nibby"
+ability = ExtResource("1_1hjfc")
+rarity = 2
+collection_slot = 2
+spawn_weight = 15.0
+metadata/_custom_type_script = "uid://bkfisr2cutesv"

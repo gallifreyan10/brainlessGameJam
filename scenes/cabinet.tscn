@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cefhq42fy42xu" path="res://scripts/prize_container.gd" id="1_jpwin"]
 [ext_resource type="Script" uid="uid://bio3speujudqh" path="res://scripts/runManager.gd" id="1_x7n3p"]
-[ext_resource type="PackedScene" uid="uid://cetcbao7tx6gi" path="res://scenes/Assets/blueAlien.tscn" id="1_xr4xt"]
 [ext_resource type="PackedScene" uid="uid://bugkbr4528jdv" path="res://scenes/Assets/cabinetWall.tscn" id="2_c6sfa"]
 [ext_resource type="Script" uid="uid://bk1gkbcb461ts" path="res://scripts/levelData.gd" id="2_drrvb"]
 [ext_resource type="Resource" uid="uid://cd4ysrwhe6hq1" path="res://resources/levels/prototypeLevel.tres" id="3_4vovv"]
@@ -12,13 +11,17 @@
 [ext_resource type="Script" uid="uid://c0kvwbm6ix6yu" path="res://scripts/prizeChute.gd" id="6_51rl1"]
 [ext_resource type="Script" uid="uid://dmow26qnm5mpv" path="res://scripts/clawController.gd" id="6_d2p3p"]
 [ext_resource type="Script" uid="uid://dowaivgkcjooy" path="res://scripts/economy_debug_hud.gd" id="7_4vovv"]
-[ext_resource type="Resource" uid="uid://dwkujifynfkpb" path="res://resources/blueAlien.tres" id="7_mdcq5"]
+[ext_resource type="PackedScene" uid="uid://dw10x7muyr31q" path="res://scenes/Assets/AlienPrize.tscn" id="7_e2wtf"]
 [ext_resource type="Script" uid="uid://ba1unirjsml3l" path="res://scripts/sale_feedback.gd" id="8_7jc0o"]
-[ext_resource type="Script" uid="uid://cfymf3yi01w1x" path="res://scenes/level_complete_panel.gd" id="12_o2g1p"]
+[ext_resource type="Script" uid="uid://bp50higoc2rgb" path="res://scripts/canvas_layer.gd" id="11_3n8yu"]
+[ext_resource type="Script" uid="uid://cfymf3yi01w1x" path="res://scripts/level_complete_panel.gd" id="12_o2g1p"]
+[ext_resource type="PackedScene" uid="uid://c4kuqjtbhod8x" path="res://ui/ActiveAbilitiesPanel.tscn" id="13_36xb5"]
 [ext_resource type="Script" uid="uid://qbtcniq6266h" path="res://scripts/shopPanel.gd" id="13_ibd67"]
-[ext_resource type="Resource" uid="uid://c4kmgmplefl46" path="res://resources/basicSuit.tres" id="14_phyiw"]
-[ext_resource type="Script" uid="uid://bb1ibpt3k8ytn" path="res://scenes/run_failed_panel.gd" id="15_phyiw"]
-[ext_resource type="Script" uid="uid://j5tsp06q7nku" path="res://scenes/helpPanel.gd" id="16_aklh0"]
+[ext_resource type="Resource" uid="uid://c4kmgmplefl46" path="res://resources/suits/basicSuit.tres" id="14_phyiw"]
+[ext_resource type="Script" uid="uid://bb1ibpt3k8ytn" path="res://scripts/run_failed_panel.gd" id="15_phyiw"]
+[ext_resource type="Script" uid="uid://j5tsp06q7nku" path="res://scripts/helpPanel.gd" id="16_aklh0"]
+[ext_resource type="Script" uid="uid://d1mwwo1iilnab" path="res://scripts/suitData.gd" id="17_36xb5"]
+[ext_resource type="PackedScene" uid="uid://bdgcvno7wuldy" path="res://ui/alienCollection.tscn" id="19_ya8ot"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
 size = Vector2(124, 371)
@@ -61,20 +64,18 @@ position = Vector2(320, 180)
 [node name="prizeContainer" type="Node2D" parent="." unique_id=1425589497 node_paths=PackedStringArray("spawn_top_left", "spawn_bottom_right")]
 position = Vector2(0, -24)
 script = ExtResource("1_jpwin")
-blue_Scene = ExtResource("1_xr4xt")
+alien_Scene = ExtResource("7_e2wtf")
 spawn_top_left = NodePath("PrizeSpawnTopLeft")
 spawn_bottom_right = NodePath("PrizeSpawnBottomRight")
 levelData = ExtResource("3_4vovv")
+
+[node name="RigidBody2D" parent="prizeContainer" unique_id=1158912329 instance=ExtResource("7_e2wtf")]
 
 [node name="PrizeSpawnTopLeft" type="Marker2D" parent="prizeContainer" unique_id=1699542291]
 position = Vector2(152, 160)
 
 [node name="PrizeSpawnBottomRight" type="Marker2D" parent="prizeContainer" unique_id=105204545]
 position = Vector2(472, 336)
-
-[node name="blueLittleGuy" parent="prizeContainer" unique_id=923555866 groups=["aliens"] instance=ExtResource("1_xr4xt")]
-position = Vector2(324, 282)
-alien_data = ExtResource("7_mdcq5")
 
 [node name="clawSpawn" type="Marker2D" parent="." unique_id=601436855]
 position = Vector2(318, 31)
@@ -172,6 +173,28 @@ collision_mask = 2
 script = ExtResource("6_51rl1")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1951429874]
+script = ExtResource("11_3n8yu")
+
+[node name="AlienCollectionPanel" parent="CanvasLayer" unique_id=1208775010 instance=ExtResource("19_ya8ot")]
+custom_minimum_size = Vector2(420, 300)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.0
+offset_top = -150.0
+offset_right = 249.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ActiveAbilitiesPanel" parent="CanvasLayer" unique_id=1948541691 instance=ExtResource("13_36xb5")]
+visible = true
+offset_left = 318.0
+offset_top = 140.0
+offset_right = 326.0
+offset_bottom = 206.0
 
 [node name="EconomyDebugHUD" type="VBoxContainer" parent="CanvasLayer" unique_id=1398542342 node_paths=PackedStringArray("runManager")]
 offset_left = 9.0
@@ -269,32 +292,27 @@ offset_bottom = 289.0
 mouse_filter = 2
 script = ExtResource("13_ibd67")
 runManager = NodePath("../../RunManager")
+suitCatalog = Array[ExtResource("17_36xb5")]([ExtResource("14_phyiw"), null, null])
 offeredSuit = ExtResource("14_phyiw")
+rerollCost = null
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ShopPanel" unique_id=1803431874]
 layout_mode = 2
 mouse_filter = 0
 
-[node name="TitleLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=818187837]
-layout_mode = 2
-text = "Shop"
-
 [node name="MoneyLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=455453150]
 layout_mode = 2
 
-[node name="OfferNameLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=1036804738]
+[node name="OffersContainer" type="VBoxContainer" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=1963519881]
 layout_mode = 2
 
-[node name="PriceLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=433929128]
+[node name="RerollButton" type="Button" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=2123462111]
 layout_mode = 2
-
-[node name="BuyButton" type="Button" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=555796731]
-layout_mode = 2
-text = "Buy"
+text = "Reroll"
 
 [node name="ContinueButton" type="Button" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=1136640569]
 layout_mode = 2
-text = "Save Money/Continue"
+text = "Continue"
 
 [node name="StatusLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=2110119621]
 layout_mode = 2
@@ -379,6 +397,20 @@ autowrap_mode = 3
 layout_mode = 2
 text = "Close"
 
+[node name="CollectionButton" type="Button" parent="CanvasLayer" unique_id=640475432]
+offset_left = 15.0
+offset_top = 175.0
+offset_right = 100.0
+offset_bottom = 206.0
+text = "Collection"
+
+[node name="AbilitiesButton" type="Button" parent="CanvasLayer" unique_id=120047696]
+offset_left = 15.0
+offset_top = 214.0
+offset_right = 100.0
+offset_bottom = 245.0
+text = "Abilities"
+
 [node name="Claw" parent="." unique_id=1355383 instance=ExtResource("5_42ncc")]
 position = Vector2(319, 31)
 scale = Vector2(2, 2)
@@ -430,6 +462,5 @@ default_color = Color(0.20511743, 0.20511743, 0.20511743, 1)
 [connection signal="timeout" from="Claw/CharacterBody2D/SlipTimer" to="Claw/CharacterBody2D" method="_on_slip_timer_timeout"]
 [connection signal="timeout" from="ChuteReleasePoint/ResolutionTimer" to="Claw/CharacterBody2D" method="_on_resolution_timer_timeout"]
 
-[editable path="prizeContainer/blueLittleGuy"]
 [editable path="PrizeChute"]
 [editable path="Claw"]
