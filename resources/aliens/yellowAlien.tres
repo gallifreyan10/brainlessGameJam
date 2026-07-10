@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AlienData" format=3 uid="uid://r7727adli4wx"]
+
+[ext_resource type="Resource" uid="uid://c4tdcuo0drv2q" path="res://resources/abilities/boostAliens.tres" id="1_rglea"]
+[ext_resource type="Texture2D" uid="uid://b7kuiqvi6n2ob" path="res://art/prototypeSprites/littleBlueAlien.png" id="2_hbdy8"]
+[ext_resource type="Script" uid="uid://bkfisr2cutesv" path="res://scripts/alienData.gd" id="2_qwi74"]
+
+[resource]
+script = ExtResource("2_qwi74")
+alien_id = &"yellow"
+displayName = "Aster"
+icon = ExtResource("2_hbdy8")
+description = "First Test Alien"
+ability = ExtResource("1_rglea")
+collection_slot = 5
+metadata/_custom_type_script = "uid://bkfisr2cutesv"

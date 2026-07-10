@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://bfhw1clkomfdx"]
+
+[ext_resource type="Resource" uid="uid://q6wi2brwrxvv" path="res://resources/defaultDifficulty.tres" id="1_bum1n"]
+[ext_resource type="Script" uid="uid://bxput7ta4vpbu" path="res://scripts/mineralSpawnEntry.gd" id="2_les4x"]
+[ext_resource type="Resource" uid="uid://cbw23qpqgnm4d" path="res://resources/minerals/heavymineral.tres" id="3_uewmf"]
+[ext_resource type="PackedScene" uid="uid://cgnb8ke8plul7" path="res://scenes/Assets/heavyMineral.tscn" id="4_b4ag3"]
+[ext_resource type="Script" uid="uid://bk1gkbcb461ts" path="res://scripts/levelData.gd" id="5_wwxym"]
+
+[sub_resource type="Resource" id="Resource_7n0fx"]
+script = ExtResource("2_les4x")
+mineralScene = ExtResource("4_b4ag3")
+mineralData = ExtResource("3_uewmf")
+metadata/_custom_type_script = "uid://bxput7ta4vpbu"
+
+[resource]
+script = ExtResource("5_wwxym")
+mineralTable = Array[ExtResource("2_les4x")]([SubResource("Resource_7n0fx")])
+earningsQuota = 120
+difficultyCurve = ExtResource("1_bum1n")
+metadata/_custom_type_script = "uid://bk1gkbcb461ts"

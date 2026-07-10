@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SuitData" format=3 uid="uid://w8qurk7nesfk"]
+
+[ext_resource type="Script" uid="uid://d1mwwo1iilnab" path="res://scripts/suitData.gd" id="1_g6u1v"]
+
+[resource]
+script = ExtResource("1_g6u1v")
+suit_id = &"acrobat_suit"
+displayName = "Acrobat Suit"
+price = 20
+max_tilt_angle_bonus = 12.0
+metadata/_custom_type_script = "uid://d1mwwo1iilnab"

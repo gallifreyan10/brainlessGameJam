@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bdgcvno7wuldy"]
+
+[ext_resource type="Script" uid="uid://coimg6f6poojr" path="res://scripts/alien_collectionPanel.gd" id="1_ga3gn"]
+
+[node name="AlienCollectionPanel" type="PanelContainer" unique_id=1208775010]
+visible = false
+script = ExtResource("1_ga3gn")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=476062446]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1258717016]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=647104289]
+layout_mode = 2
+text = "Alien Collection"
+
+[node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1288898478]
+layout_mode = 2
+text = "Aliens Collected: 0/6"
+
+[node name="StackLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1845553284]
+layout_mode = 2
+text = "Total Alien Stacks: 0"
+
+[node name="SlotsGrid" type="GridContainer" parent="MarginContainer/VBoxContainer" unique_id=676333642]
+layout_mode = 2
+columns = 3
+
+[node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1826312534]
+layout_mode = 2
+text = "Close"

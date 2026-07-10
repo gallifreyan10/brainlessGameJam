@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AlienData" format=3 uid="uid://bdt0uih4axkln"]
+
+[ext_resource type="Resource" uid="uid://bwr4mmkyttmi6" path="res://resources/abilities/boostAttemptAmount.tres" id="1_lnpx3"]
+[ext_resource type="Script" uid="uid://bkfisr2cutesv" path="res://scripts/alienData.gd" id="2_7awfd"]
+[ext_resource type="Texture2D" uid="uid://b7kuiqvi6n2ob" path="res://art/prototypeSprites/littleBlueAlien.png" id="2_x8ji2"]
+
+[resource]
+script = ExtResource("2_7awfd")
+alien_id = &"darkGreen"
+displayName = "Momo"
+icon = ExtResource("2_x8ji2")
+ability = ExtResource("1_lnpx3")
+rarity = 1
+collection_slot = 1
+spawn_weight = 25.0
+metadata/_custom_type_script = "uid://bkfisr2cutesv"

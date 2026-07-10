@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="DifficultyCurve" format=3 uid="uid://q6wi2brwrxvv"]
+
+[ext_resource type="Script" uid="uid://b0rmsupwtyd2r" path="res://scripts/difficultyCurve.gd" id="1_pgo2f"]
+
+[resource]
+script = ExtResource("1_pgo2f")
+metadata/_custom_type_script = "uid://b0rmsupwtyd2r"
