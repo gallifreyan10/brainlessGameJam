@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c4kuqjtbhod8x"]
 
-[ext_resource type="Script" uid="uid://b1uuxovk1qo57" path="res://ui/active_abilities_panel.gd" id="1_n48bj"]
+[ext_resource type="Script" uid="uid://b1uuxovk1qo57" path="res://scripts/active_abilities_panel.gd" id="1_n48bj"]
 
 [node name="ActiveAbilitiesPanel" type="PanelContainer" unique_id=1948541691]
 visible = false

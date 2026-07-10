@@ -197,6 +197,8 @@ func process_dropping() -> void:
 	
 	move_and_slide()
 	
+	var hit_collision := get_slide_collision_count() > 0
+	
 	position_changed.emit(global_position)
 	 
 	var detector_hit := (
@@ -208,7 +210,7 @@ func process_dropping() -> void:
 		global_position.y >= starting_y + maximum_drop_depth
 	)
 	 #if max depth is reached or claw collides with bottom these conditions are triggered
-	if detector_hit or reached_maximum_depth:
+	if detector_hit or reached_maximum_depth or hit_collision:
 		velocity = Vector2.ZERO
 		request_close_claw()
 		change_state(State.GRABBING)
@@ -374,16 +376,14 @@ func hold_selected_prize() -> void:
 	held_prize_original_layer = held_prize.collision_layer
 	held_prize_original_mask = held_prize.collision_mask
 	
-	#preserve its world transform during reparting
-	var previous_transform := held_prize.global_transform
-	
 	#Disable normal physics while held
 	held_prize.freeze = true
 	held_prize.collision_layer = 0
 	held_prize.collision_mask = 0
 	
 	held_prize.reparent(hold_point)
-	held_prize.global_transform = previous_transform
+	held_prize.position = Vector2.ZERO
+	held_prize.rotation = 0.0
 	
 	if slipTimer != null:
 		slipTimer.stop()

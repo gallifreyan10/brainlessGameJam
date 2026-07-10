@@ -27,6 +27,7 @@ signal newRunStarted
 @export var prizeContainer: Node
 @export var clawController: Node
 @export var attemptCountdownDuration: float = 5.0
+@export var layoutManager: LayoutManager
 
 var attemptsCountdownRemaining: float = 0.0
 var countdownActive: bool = false
@@ -67,6 +68,10 @@ func start_level(levelIndex: int) -> void:
 	stateChanged.emit(currentState)
 	
 	var data := levels[currentLevelIndex]
+	
+	if layoutManager != null:
+		var layout := layoutManager.load_random_layout()
+		apply_layout_references(layout)
 	
 	attemptsRemaining = data.plannedAttemptLimit + AlienCollection.get_extra_attempts()
 	attemptsChanged.emit(attemptsRemaining)
@@ -251,3 +256,37 @@ func equip_owned_suit(suit: SuitData) -> bool:
 	equippedSuit = suit
 	suitEquipped.emit(equippedSuit)
 	return true
+
+func apply_layout_references(layout: Node) -> void:
+	if layout == null:
+		return
+		
+	var prize_chute := layout.get_node_or_null("PrizeChute") as Area2D
+	var chute_release_point := layout.get_node_or_null("ChuteReleasePoint") as Marker2D
+	var spawn_top_left := layout.get_node_or_null("PrizeSpawnTopLeft") as Marker2D
+	var spawn_bottom_right := layout.get_node_or_null("PrizeSpawnBottomRight") as Marker2D
+	var resolution_timer: Timer = null
+	
+	if chute_release_point != null:
+		resolution_timer = chute_release_point.get_node_or_null("ResolutionTimer") as Timer
+	
+	if prizeContainer != null:
+		prizeContainer.spawn_top_left = spawn_top_left
+		prizeContainer.spawn_bottom_right = spawn_bottom_right
+		
+	if clawController != null:
+		clawController.chuteArea = prize_chute
+		clawController.chuteReleasePoint = chute_release_point
+		clawController.resolutionTimer = resolution_timer
+		
+		if prize_chute != null:
+			var chute_callable := Callable(clawController, "_on_prize_chute_body_entered")
+			
+			if not prize_chute.body_entered.is_connected(chute_callable):
+				prize_chute.body_entered.connect(chute_callable)
+				
+		if resolution_timer != null:
+			var timer_callable := Callable(clawController, "_on_resolution_timer_timeout")
+			
+			if not resolution_timer.timeout.is_connected(timer_callable):
+				resolution_timer.timeout.connect(timer_callable)
