@@ -6,7 +6,8 @@ enum Rarity{
 	UNCOMMON,
 	RARE,
 	EPIC,
-	LEGENDARY
+	LEGENDARY,
+	THECHOSEN
 }
 
 @export_category("Identity")

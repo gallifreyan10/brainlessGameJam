@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://c7xat7afm3lu2" path="res://resources/abilities/suitDiscountBonus.tres" id="1_hsteb"]
 [ext_resource type="Script" uid="uid://bkfisr2cutesv" path="res://scripts/alienData.gd" id="2_rp15m"]
-[ext_resource type="Texture2D" uid="uid://b7kuiqvi6n2ob" path="res://art/prototypeSprites/littleBlueAlien.png" id="2_ub3da"]
+[ext_resource type="Texture2D" uid="uid://c13hvsygq2b6j" path="res://art/finalSprites/aliens/littlePurpleGuy.png" id="2_ub3da"]
 
 [resource]
 script = ExtResource("2_rp15m")

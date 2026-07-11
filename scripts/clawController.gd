@@ -39,7 +39,7 @@ var grab_candidates: Array[RigidBody2D] = []
 @export var resolutionTimer: Timer
 @export var release_impulse: float = 30.0
 @export var chuteMoveSpeed: float = 120.0
-@export var chuteArrivalTolerance: float = 2.0
+@export var chuteArrivalTolerance: float = 12.0
 
 #Selected prize that is picked up by the claw
 var held_prize: RigidBody2D = null
@@ -276,6 +276,13 @@ func process_moving_to_chute() -> void:
 	velocity.x = signf(difference) * chuteMoveSpeed
 	move_and_slide()
 	
+	if get_slide_collision_count() > 0:
+		push_warning("Claw hit wall near release point. Opening anyway.")
+		velocity = Vector2.ZERO
+		change_state(State.RELEASING)
+		
+		if animation_player != null:
+			animation_player.play(&"open_claw")
 func process_resolving() -> void:
 	velocity = Vector2.ZERO	
 	

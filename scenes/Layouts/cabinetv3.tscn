@@ -37,7 +37,7 @@ shape = SubResource("RectangleShape2D_r0srf")
 position = Vector2(320, 180)
 
 [node name="PrizeSpawnTopLeft" type="Marker2D" parent="." unique_id=1699542291]
-position = Vector2(152, 136)
+position = Vector2(171, 137)
 
 [node name="PrizeSpawnBottomRight" type="Marker2D" parent="." unique_id=105204545]
 position = Vector2(472, 312)
@@ -97,22 +97,16 @@ collision_mask = 32
 z_index = 1
 position = Vector2(220, 276)
 scale = Vector2(0.5, 0.32)
-collision_layer = 32
-collision_mask = 32
 
 [node name="CabinetWall20" parent="." unique_id=1299740391 instance=ExtResource("7_m2cws")]
 z_index = 1
 position = Vector2(220, 292)
 scale = Vector2(0.5, 0.32)
-collision_layer = 32
-collision_mask = 32
 
 [node name="CabinetWall23" parent="." unique_id=1313696632 instance=ExtResource("7_m2cws")]
 z_index = 1
 position = Vector2(295, 275)
 scale = Vector2(0.5, 0.32)
-collision_layer = 32
-collision_mask = 32
 
 [node name="CabinetWall24" parent="." unique_id=357885495 instance=ExtResource("7_m2cws")]
 z_index = 1
@@ -125,8 +119,6 @@ collision_mask = 32
 z_index = 1
 position = Vector2(345, 275)
 scale = Vector2(0.5, 0.32)
-collision_layer = 32
-collision_mask = 32
 
 [node name="CabinetWall28" parent="." unique_id=1281772607 instance=ExtResource("7_m2cws")]
 z_index = 1
@@ -139,15 +131,11 @@ collision_mask = 32
 z_index = 1
 position = Vector2(420, 274)
 scale = Vector2(0.5, 0.32)
-collision_layer = 32
-collision_mask = 32
 
 [node name="CabinetWall32" parent="." unique_id=246265127 instance=ExtResource("7_m2cws")]
 z_index = 1
 position = Vector2(420, 290)
 scale = Vector2(0.5, 0.32)
-collision_layer = 32
-collision_mask = 32
 
 [node name="CabinetWall9" parent="." unique_id=57404117 instance=ExtResource("7_m2cws")]
 z_index = 1

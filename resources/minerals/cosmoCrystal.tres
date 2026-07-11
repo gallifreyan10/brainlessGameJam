@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MineralData" format=3 uid="uid://cs8ea1urwb4un"]
+
+[ext_resource type="Script" uid="uid://dsddbp08ie4bc" path="res://scripts/mineralData.gd" id="1_rx3iw"]
+[ext_resource type="Texture2D" uid="uid://v8vqi33n0tdp" path="res://art/finalSprites/minerals/zenithStone.png" id="2_b3cd3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bw7so"]
+size = Vector2(27, 23)
+
+[resource]
+script = ExtResource("1_rx3iw")
+mineral_id = &"cosmoCrystal"
+displayName = "Cosmo Crystal"
+sprite = ExtResource("2_b3cd3")
+collision_shape = SubResource("RectangleShape2D_bw7so")
+rarity = 1
+sale_value = 20
+weight = 1.0
+metadata/_custom_type_script = "uid://dsddbp08ie4bc"

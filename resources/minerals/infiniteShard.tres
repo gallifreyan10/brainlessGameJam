@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MineralData" format=3 uid="uid://cbw23qpqgnm4d"]
+
+[ext_resource type="Script" uid="uid://dsddbp08ie4bc" path="res://scripts/mineralData.gd" id="1_7t2sg"]
+[ext_resource type="Texture2D" uid="uid://dwgul3gpn4ydk" path="res://art/finalSprites/minerals/infiniteShard.png" id="2_feqbl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bw7so"]
+size = Vector2(27, 23)
+
+[resource]
+script = ExtResource("1_7t2sg")
+mineral_id = &"infinite_Shard"
+displayName = "Infinite Shard"
+sprite = ExtResource("2_feqbl")
+collision_shape = SubResource("RectangleShape2D_bw7so")
+rarity = 3
+sale_value = 60
+weight = 2.0
+metadata/_custom_type_script = "uid://dsddbp08ie4bc"

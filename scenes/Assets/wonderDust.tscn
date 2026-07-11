@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://caibddgvv6hr2"]
+
+[ext_resource type="Script" uid="uid://bmhvwr6u7ahxy" path="res://scripts/mineralPrize.gd" id="1_x4uch"]
+[ext_resource type="Resource" uid="uid://babrtyd31w5gb" path="res://resources/minerals/wonderDust.tres" id="2_x4uch"]
+[ext_resource type="Texture2D" uid="uid://c5qm6sgfd716u" path="res://art/finalSprites/minerals/moonRock.png" id="3_8hkcj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2l2cw"]
+size = Vector2(27, 23)
+
+[node name="Wonderdust" type="RigidBody2D" unique_id=13882485 groups=["minerals", "prizes"]]
+collision_layer = 2
+collision_mask = 3
+continuous_cd = 1
+script = ExtResource("1_x4uch")
+mineral_data = ExtResource("2_x4uch")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=414361564]
+texture = ExtResource("3_8hkcj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1377275892]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_2l2cw")

@@ -35,8 +35,8 @@ func _ready() -> void:
 		mineralRng.randomize()
 		rng.randomize()
 		
-	spawnLittleGuys()
-	prepare_next_attempt()
+	#spawnLittleGuys()
+	#prepare_next_attempt()
 	
 func validate_spawn_area() -> bool:
 	if spawn_top_left == null:
@@ -142,26 +142,29 @@ func get_random_spawn_position(
 	generator: RandomNumberGenerator
 ) -> Vector2:
 	var minimumX := minf(
-		spawn_top_left.position.x,
-		spawn_bottom_right.position.x
+		spawn_top_left.global_position.x,
+		spawn_bottom_right.global_position.x
 	)
 	var maximumX := maxf(
-		spawn_top_left.position.x,
-		spawn_bottom_right.position.x
+		spawn_top_left.global_position.x,
+		spawn_bottom_right.global_position.x
 	)
 	var minimumY := minf(
-		spawn_top_left.position.y,
-		spawn_bottom_right.position.y
+		spawn_top_left.global_position.y,
+		spawn_bottom_right.global_position.y
 	)
 	var maximumY := maxf(
-		spawn_top_left.position.y,
-		spawn_bottom_right.position.y
+		spawn_top_left.global_position.y,
+		spawn_bottom_right.global_position.y
 	)
 	
-	return Vector2(
+	var global_spawn_position := Vector2(
 		generator.randf_range(minimumX,maximumX),
 		generator.randf_range(minimumY,maximumY)
 	)
+	
+	return to_local(global_spawn_position)
+	
 func get_clear_spawn_position(
 	generator: RandomNumberGenerator, ignoredPrize: RigidBody2D = null
 ) -> Vector2:
@@ -405,8 +408,14 @@ func _finish_level_load() -> void:
 		levelData.earningsQuota
 	)
 	
+	clear_aliens()
+	spawnLittleGuys()
 	prepare_next_attempt()
 
+func clear_aliens() -> void:
+	for child in get_children():
+		if child is AlienPrize:
+			child.queue_free()
 func get_effective_alien_spawn_weight(alien_data: AlienData) -> float:
 	if alien_data == null:
 		return 0.0

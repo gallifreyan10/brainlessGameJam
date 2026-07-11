@@ -2,12 +2,12 @@
 
 [ext_resource type="PhysicsMaterial" uid="uid://cey07wum4elpl" path="res://scenes/Assets/prize_physicsMaterial.tres" id="1_37223"]
 [ext_resource type="Script" uid="uid://cva1kc3qrv6tn" path="res://scripts/alienPrize.gd" id="2_u5fgf"]
-[ext_resource type="Texture2D" uid="uid://b7kuiqvi6n2ob" path="res://art/prototypeSprites/littleBlueAlien.png" id="3_5kk0b"]
 [ext_resource type="Resource" uid="uid://dwkujifynfkpb" path="res://resources/aliens/blueAlien.tres" id="3_f2x6p"]
+[ext_resource type="Texture2D" uid="uid://l8jwx5yofa57" path="res://art/finalSprites/aliens/blueLittleGuy.png" id="4_u5fgf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uafsa"]
 radius = 13.0
-height = 26.0
+height = 32.0
 
 [node name="RigidBody2D" type="RigidBody2D" unique_id=1158912329 groups=["aliens", "prizes"]]
 collision_layer = 2
@@ -20,8 +20,8 @@ script = ExtResource("2_u5fgf")
 alien_data = ExtResource("3_f2x6p")
 
 [node name="LittleBlueAlien" type="Sprite2D" parent="." unique_id=925512809]
-texture = ExtResource("3_5kk0b")
+texture = ExtResource("4_u5fgf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=857238500]
-position = Vector2(-4, 1)
+position = Vector2(1, -1)
 shape = SubResource("CapsuleShape2D_uafsa")

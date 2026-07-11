@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MineralData" format=3 uid="uid://ldxgdfj1twt2"]
+
+[ext_resource type="Script" uid="uid://dsddbp08ie4bc" path="res://scripts/mineralData.gd" id="1_pbvka"]
+[ext_resource type="Texture2D" uid="uid://c5qm6sgfd716u" path="res://art/finalSprites/minerals/moonRock.png" id="2_pbvka"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bw7so"]
+size = Vector2(27, 23)
+
+[resource]
+script = ExtResource("1_pbvka")
+mineral_id = &"moonRock"
+displayName = "Moon Rock"
+sprite = ExtResource("2_pbvka")
+collision_shape = SubResource("RectangleShape2D_bw7so")
+rarity = 4
+sale_value = 90
+weight = 2.0
+metadata/_custom_type_script = "uid://dsddbp08ie4bc"

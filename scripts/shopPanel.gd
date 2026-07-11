@@ -61,11 +61,17 @@ func _refresh() -> void:
 func create_offer_row(suit: SuitData) -> Control:
 	var row := HBoxContainer.new()
 	
+	var iconRect := TextureRect.new()
 	var nameLabel := Label.new()
 	var priceLabel := Label.new()
 	var buyButton := Button.new()
 	
 	var price := get_discounted_price(suit)
+	
+	iconRect.texture = suit.icon
+	iconRect.custom_minimum_size = Vector2(48,48)
+	iconRect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	iconRect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	
 	nameLabel.text = suit.displayName
 	priceLabel.text = "%d" % price
@@ -85,6 +91,7 @@ func create_offer_row(suit: SuitData) -> Control:
 		
 	buyButton.pressed.connect(func() -> void: _on_buy_pressed(suit))
 	
+	row.add_child(iconRect)
 	row.add_child(nameLabel)
 	row.add_child(priceLabel)
 	row.add_child(buyButton)

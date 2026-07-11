@@ -74,8 +74,6 @@ spawn_top_left = NodePath("PrizeSpawnTopLeft")
 spawn_bottom_right = NodePath("PrizeSpawnBottomRight")
 levelData = ExtResource("3_qggm4")
 
-[node name="RigidBody2D" parent="prizeContainer" unique_id=1158912329 instance=ExtResource("6_tow03")]
-
 [node name="PrizeSpawnTopLeft" type="Marker2D" parent="prizeContainer" unique_id=1699542291]
 position = Vector2(152, 160)
 

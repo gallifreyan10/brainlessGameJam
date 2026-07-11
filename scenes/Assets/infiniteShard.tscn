@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://ck7ia8qrj1c46"]
+
+[ext_resource type="Script" uid="uid://bmhvwr6u7ahxy" path="res://scripts/mineralPrize.gd" id="1_kn5hl"]
+[ext_resource type="Resource" uid="uid://cbw23qpqgnm4d" path="res://resources/minerals/infiniteShard.tres" id="2_h0ola"]
+[ext_resource type="Texture2D" uid="uid://dwgul3gpn4ydk" path="res://art/finalSprites/minerals/infiniteShard.png" id="3_kn5hl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2l2cw"]
+size = Vector2(14, 17)
+
+[node name="infiniteShard" type="RigidBody2D" unique_id=13882485 groups=["minerals", "prizes"]]
+collision_layer = 2
+collision_mask = 3
+continuous_cd = 1
+script = ExtResource("1_kn5hl")
+mineral_data = ExtResource("2_h0ola")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=414361564]
+texture = ExtResource("3_kn5hl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1377275892]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_2l2cw")

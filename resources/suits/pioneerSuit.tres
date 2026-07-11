@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="SuitData" format=3 uid="uid://c4kmgmplefl46"]
 
+[ext_resource type="Texture2D" uid="uid://d0c0rbd612f0g" path="res://art/finalSprites/suits/PioneerSuit.png" id="1_cpc8l"]
 [ext_resource type="Script" uid="uid://d1mwwo1iilnab" path="res://scripts/suitData.gd" id="1_mo7pe"]
 
 [resource]
@@ -7,6 +8,7 @@ script = ExtResource("1_mo7pe")
 suit_id = &"pioneer_suit"
 displayName = "Pioneer Suit"
 price = 15
+icon = ExtResource("1_cpc8l")
 drop_depth_bonus = 80.0
 horizontal_speed_multiplier = 0.75
 metadata/_custom_type_script = "uid://d1mwwo1iilnab"

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AlienData" format=3 uid="uid://cs5xoi3wdosk4"]
 
 [ext_resource type="Resource" uid="uid://oxxdx8fh2eub" path="res://resources/abilities/saleBonus.tres" id="1_42gn3"]
-[ext_resource type="Texture2D" uid="uid://b7kuiqvi6n2ob" path="res://art/prototypeSprites/littleBlueAlien.png" id="2_rl8wj"]
+[ext_resource type="Texture2D" uid="uid://c3c0skytlpmoi" path="res://art/finalSprites/aliens/littleGreyGuy.png" id="2_rl8wj"]
 [ext_resource type="Script" uid="uid://bkfisr2cutesv" path="res://scripts/alienData.gd" id="2_wniu3"]
 
 [resource]

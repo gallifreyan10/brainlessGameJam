@@ -37,10 +37,10 @@ shape = SubResource("RectangleShape2D_r0srf")
 position = Vector2(320, 180)
 
 [node name="PrizeSpawnTopLeft" type="Marker2D" parent="." unique_id=1699542291]
-position = Vector2(233, 159)
+position = Vector2(250, 159)
 
 [node name="PrizeSpawnBottomRight" type="Marker2D" parent="." unique_id=105204545]
-position = Vector2(566, 347)
+position = Vector2(551, 332)
 
 [node name="clawSpawn" type="Marker2D" parent="." unique_id=601436855]
 position = Vector2(318, 31)

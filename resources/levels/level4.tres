@@ -2,19 +2,59 @@
 
 [ext_resource type="Resource" uid="uid://q6wi2brwrxvv" path="res://resources/defaultDifficulty.tres" id="1_bum1n"]
 [ext_resource type="Script" uid="uid://bxput7ta4vpbu" path="res://scripts/mineralSpawnEntry.gd" id="2_les4x"]
-[ext_resource type="Resource" uid="uid://cbw23qpqgnm4d" path="res://resources/minerals/heavymineral.tres" id="3_uewmf"]
-[ext_resource type="PackedScene" uid="uid://cgnb8ke8plul7" path="res://scenes/Assets/heavyMineral.tscn" id="4_b4ag3"]
+[ext_resource type="Resource" uid="uid://5di2uo7gcqh5" path="res://resources/minerals/astroQuartz.tres" id="3_qlbyt"]
+[ext_resource type="PackedScene" uid="uid://c3imhd4mx86dc" path="res://scenes/Assets/astroQuartz.tscn" id="4_nfkls"]
+[ext_resource type="Resource" uid="uid://cs8ea1urwb4un" path="res://resources/minerals/cosmoCrystal.tres" id="5_u2fby"]
 [ext_resource type="Script" uid="uid://bk1gkbcb461ts" path="res://scripts/levelData.gd" id="5_wwxym"]
+[ext_resource type="PackedScene" uid="uid://cmutf1a0qu5jr" path="res://scenes/Assets/cosmoCrystal.tscn" id="6_thnac"]
+[ext_resource type="Resource" uid="uid://cbw23qpqgnm4d" path="res://resources/minerals/infiniteShard.tres" id="7_phgu1"]
+[ext_resource type="PackedScene" uid="uid://ck7ia8qrj1c46" path="res://scenes/Assets/infiniteShard.tscn" id="8_srrnq"]
+[ext_resource type="Resource" uid="uid://ldxgdfj1twt2" path="res://resources/minerals/moonRock.tres" id="9_8si3c"]
+[ext_resource type="PackedScene" uid="uid://cgnb8ke8plul7" path="res://scenes/Assets/moonRock.tscn" id="10_vpylb"]
+[ext_resource type="Resource" uid="uid://babrtyd31w5gb" path="res://resources/minerals/wonderDust.tres" id="11_nw56n"]
+[ext_resource type="PackedScene" uid="uid://caibddgvv6hr2" path="res://scenes/Assets/wonderDust.tscn" id="12_rq77s"]
+[ext_resource type="Resource" uid="uid://id6vum4yfec" path="res://resources/minerals/zenithStone.tres" id="13_pdi5x"]
+[ext_resource type="PackedScene" uid="uid://dsmj7o5k2y334" path="res://scenes/Assets/zenithStone.tscn" id="14_moeid"]
 
 [sub_resource type="Resource" id="Resource_7n0fx"]
 script = ExtResource("2_les4x")
-mineralScene = ExtResource("4_b4ag3")
-mineralData = ExtResource("3_uewmf")
+mineralScene = ExtResource("4_nfkls")
+mineralData = ExtResource("3_qlbyt")
+metadata/_custom_type_script = "uid://bxput7ta4vpbu"
+
+[sub_resource type="Resource" id="Resource_8si3c"]
+script = ExtResource("2_les4x")
+mineralScene = ExtResource("6_thnac")
+mineralData = ExtResource("5_u2fby")
+metadata/_custom_type_script = "uid://bxput7ta4vpbu"
+
+[sub_resource type="Resource" id="Resource_vpylb"]
+script = ExtResource("2_les4x")
+mineralScene = ExtResource("8_srrnq")
+mineralData = ExtResource("7_phgu1")
+metadata/_custom_type_script = "uid://bxput7ta4vpbu"
+
+[sub_resource type="Resource" id="Resource_j576s"]
+script = ExtResource("2_les4x")
+mineralScene = ExtResource("10_vpylb")
+mineralData = ExtResource("9_8si3c")
+metadata/_custom_type_script = "uid://bxput7ta4vpbu"
+
+[sub_resource type="Resource" id="Resource_so3ft"]
+script = ExtResource("2_les4x")
+mineralScene = ExtResource("12_rq77s")
+mineralData = ExtResource("11_nw56n")
+metadata/_custom_type_script = "uid://bxput7ta4vpbu"
+
+[sub_resource type="Resource" id="Resource_5m7t8"]
+script = ExtResource("2_les4x")
+mineralScene = ExtResource("14_moeid")
+mineralData = ExtResource("13_pdi5x")
 metadata/_custom_type_script = "uid://bxput7ta4vpbu"
 
 [resource]
 script = ExtResource("5_wwxym")
-mineralTable = Array[ExtResource("2_les4x")]([SubResource("Resource_7n0fx")])
+mineralTable = Array[ExtResource("2_les4x")]([SubResource("Resource_7n0fx"), SubResource("Resource_8si3c"), SubResource("Resource_vpylb"), SubResource("Resource_j576s"), SubResource("Resource_so3ft"), SubResource("Resource_5m7t8")])
 earningsQuota = 90
 difficultyCurve = ExtResource("1_bum1n")
 metadata/_custom_type_script = "uid://bk1gkbcb461ts"

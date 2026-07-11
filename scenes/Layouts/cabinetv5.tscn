@@ -41,10 +41,10 @@ shape = SubResource("RectangleShape2D_r0srf")
 position = Vector2(320, 180)
 
 [node name="PrizeSpawnTopLeft" type="Marker2D" parent="." unique_id=1699542291]
-position = Vector2(160, 86)
+position = Vector2(228, 90)
 
 [node name="PrizeSpawnBottomRight" type="Marker2D" parent="." unique_id=105204545]
-position = Vector2(341, 286)
+position = Vector2(322, 268)
 
 [node name="clawSpawn" type="Marker2D" parent="." unique_id=601436855]
 position = Vector2(318, 31)
@@ -78,24 +78,18 @@ z_index = 1
 position = Vector2(373, 250.99998)
 rotation = 0.43633232
 scale = Vector2(0.5, 0.32)
-collision_layer = 32
-collision_mask = 32
 
 [node name="CabinetWall6" parent="." unique_id=694358223 instance=ExtResource("7_kciqa")]
 z_index = 1
 position = Vector2(419, 152.00002)
 rotation = 0.43633232
 scale = Vector2(0.5, 0.32)
-collision_layer = 32
-collision_mask = 32
 
 [node name="CabinetWall7" parent="." unique_id=25730055 instance=ExtResource("7_kciqa")]
 z_index = 1
 position = Vector2(434.00003, 122.000015)
 rotation = 0.43633232
 scale = Vector2(0.5, 0.32)
-collision_layer = 32
-collision_mask = 32
 
 [node name="CabinetWall8" parent="." unique_id=964376761 instance=ExtResource("7_kciqa")]
 z_index = 1
@@ -144,7 +138,7 @@ collision_mask = 2
 script = ExtResource("9_2ufsb")
 
 [node name="ChuteReleasePoint" type="Marker2D" parent="." unique_id=6313764]
-position = Vector2(497, 55)
+position = Vector2(508, 20)
 
 [node name="ResolutionTimer" type="Timer" parent="ChuteReleasePoint" unique_id=1910071531]
 wait_time = 1.5
