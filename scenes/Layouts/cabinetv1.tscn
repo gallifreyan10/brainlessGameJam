@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://dapfs78ury1r8"]
+[gd_scene format=3 uid="uid://o8thk3yme5x5"]
 
-[ext_resource type="PackedScene" uid="uid://bugkbr4528jdv" path="res://scenes/Assets/cabinetWall.tscn" id="7_agmhq"]
-[ext_resource type="PackedScene" uid="uid://dbr1lqox8605y" path="res://scenes/Assets/prizeChute.tscn" id="8_o2qrj"]
-[ext_resource type="Script" uid="uid://c0kvwbm6ix6yu" path="res://scripts/prizeChute.gd" id="9_mmlb4"]
+[ext_resource type="PackedScene" uid="uid://bugkbr4528jdv" path="res://scenes/Assets/cabinetWall.tscn" id="10_mfp4v"]
+[ext_resource type="PackedScene" uid="uid://dbr1lqox8605y" path="res://scenes/Assets/prizeChute.tscn" id="11_2pplj"]
+[ext_resource type="Script" uid="uid://c0kvwbm6ix6yu" path="res://scripts/prizeChute.gd" id="12_d7op2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
 size = Vector2(124, 371)
@@ -37,116 +37,116 @@ shape = SubResource("RectangleShape2D_r0srf")
 position = Vector2(320, 180)
 
 [node name="PrizeSpawnTopLeft" type="Marker2D" parent="." unique_id=1699542291]
-position = Vector2(250, 145)
+position = Vector2(170, 121)
 
 [node name="PrizeSpawnBottomRight" type="Marker2D" parent="." unique_id=105204545]
-position = Vector2(540, 270)
+position = Vector2(455, 251)
 
 [node name="clawSpawn" type="Marker2D" parent="." unique_id=601436855]
 position = Vector2(318, 31)
 
-[node name="CabinetWall" parent="." unique_id=1560813676 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall" parent="." unique_id=1560813676 instance=ExtResource("10_mfp4v")]
 z_index = 1
 position = Vector2(136, 56)
 scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall2" parent="." unique_id=1214076349 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall2" parent="." unique_id=1214076349 instance=ExtResource("10_mfp4v")]
 z_index = 1
 position = Vector2(136, 168)
 scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall3" parent="." unique_id=361861103 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall3" parent="." unique_id=361861103 instance=ExtResource("10_mfp4v")]
 z_index = 1
 position = Vector2(136, 280)
 scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall4" parent="." unique_id=1070191200 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall4" parent="." unique_id=1070191200 instance=ExtResource("10_mfp4v")]
 z_index = 1
 position = Vector2(136, 296)
 scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall5" parent="." unique_id=128228457 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall5" parent="." unique_id=128228457 instance=ExtResource("10_mfp4v")]
 z_index = 1
-position = Vector2(224, 141)
+position = Vector2(488, 139)
 scale = Vector2(0.5, 0.32)
 collision_layer = 32
 collision_mask = 32
 
-[node name="CabinetWall6" parent="." unique_id=694358223 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall6" parent="." unique_id=694358223 instance=ExtResource("10_mfp4v")]
 z_index = 1
-position = Vector2(224, 170)
+position = Vector2(488, 168)
 scale = Vector2(0.5, 0.32)
 collision_layer = 32
 collision_mask = 32
 
-[node name="CabinetWall7" parent="." unique_id=25730055 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall7" parent="." unique_id=25730055 instance=ExtResource("10_mfp4v")]
 z_index = 1
-position = Vector2(224, 282)
+position = Vector2(488, 280)
 scale = Vector2(0.5, 0.32)
 collision_layer = 32
 collision_mask = 32
 
-[node name="CabinetWall8" parent="." unique_id=964376761 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall8" parent="." unique_id=964376761 instance=ExtResource("10_mfp4v")]
 z_index = 1
-position = Vector2(224, 298)
+position = Vector2(488, 296)
 scale = Vector2(0.5, 0.32)
 collision_layer = 32
 collision_mask = 32
 
-[node name="CabinetWall9" parent="." unique_id=57404117 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall9" parent="." unique_id=57404117 instance=ExtResource("10_mfp4v")]
 z_index = 1
 position = Vector2(576, 56)
 scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall10" parent="." unique_id=1126289352 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall10" parent="." unique_id=1126289352 instance=ExtResource("10_mfp4v")]
 z_index = 1
 position = Vector2(576, 168)
 scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall11" parent="." unique_id=2008990289 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall11" parent="." unique_id=2008990289 instance=ExtResource("10_mfp4v")]
 z_index = 1
 position = Vector2(576, 280)
 scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall12" parent="." unique_id=358182783 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall12" parent="." unique_id=358182783 instance=ExtResource("10_mfp4v")]
 z_index = 1
 position = Vector2(576, 296)
 scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall13" parent="." unique_id=42287628 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall13" parent="." unique_id=42287628 instance=ExtResource("10_mfp4v")]
 z_index = 1
-position = Vector2(280, 354)
+position = Vector2(192, 352)
 rotation = -1.5707964
 scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall14" parent="." unique_id=1973275786 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall14" parent="." unique_id=1973275786 instance=ExtResource("10_mfp4v")]
 z_index = 1
-position = Vector2(392, 354)
+position = Vector2(304, 352)
 rotation = -1.5707964
 scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall15" parent="." unique_id=374922236 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall15" parent="." unique_id=374922236 instance=ExtResource("10_mfp4v")]
 z_index = 1
-position = Vector2(504, 354)
+position = Vector2(416, 352)
 rotation = -1.5707964
 scale = Vector2(0.5, 0.32)
 
-[node name="CabinetWall16" parent="." unique_id=626909662 instance=ExtResource("7_agmhq")]
+[node name="CabinetWall16" parent="." unique_id=626909662 instance=ExtResource("10_mfp4v")]
 z_index = 1
-position = Vector2(520, 354)
+position = Vector2(432.00003, 352)
 rotation = -1.5707964
 scale = Vector2(0.5, 0.32)
 
-[node name="PrizeChute" parent="." unique_id=596256380 instance=ExtResource("8_o2qrj")]
+[node name="PrizeChute" parent="." unique_id=596256380 instance=ExtResource("11_2pplj")]
 z_index = 1
-position = Vector2(179, 346)
+position = Vector2(532, 347)
 scale = Vector2(2.46, 0.5)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("9_mmlb4")
+script = ExtResource("12_d7op2")
 
 [node name="ChuteReleasePoint" type="Marker2D" parent="." unique_id=6313764]
-position = Vector2(174, 79)
+position = Vector2(530, 45)
 
 [node name="ResolutionTimer" type="Timer" parent="ChuteReleasePoint" unique_id=1910071531]
 wait_time = 1.5

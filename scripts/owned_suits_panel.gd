@@ -44,9 +44,15 @@ func create_suit_row(suit: SuitData) -> Control:
 	
 	var name_label := Label.new()
 	var equip_button := Button.new()
+	var iconRect := TextureRect.new()
 	
 	name_label.text = suit.displayName
 	name_label.custom_minimum_size = Vector2(160,0)
+	
+	iconRect.texture = suit.icon
+	iconRect.custom_minimum_size = Vector2(48,48)
+	iconRect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	iconRect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	
 	if runManager.equippedSuit == suit:
 		equip_button.text = "Equipped"
@@ -60,6 +66,7 @@ func create_suit_row(suit: SuitData) -> Control:
 		refresh()
 	)
 	
+	row.add_child(iconRect)
 	row.add_child(name_label)
 	row.add_child(equip_button)
 	

@@ -314,8 +314,13 @@ func spawn_mineral() -> void:
 		minimumWeight,
 		maximumWeight
 	)
+	mineral.freeze = true
 	mineral.position = get_clear_spawn_position(mineralRng)
-	mineral.rotation = mineralRng.randf_range(-0.5,0.5)
+	mineral.rotation = 0.0
+	mineral.linear_velocity = Vector2.ZERO
+	mineral.angular_velocity = 0.0
+	
+	call_deferred("_unfreeze_prize", mineral)
 	
 func choose_mineral_scene() -> PackedScene:
 	if levelData == null:
@@ -378,6 +383,13 @@ func choose_mineral_scene() -> PackedScene:
 func _on_attempt_finished() -> void:
 	call_deferred("prepare_next_attempt")	
 
+func _unfreeze_prize(prize: RigidBody2D) -> void:
+	if not is_instance_valid(prize):
+		return
+		
+	prize.freeze = false
+	prize.sleeping = false
+	
 func load_level(newLevelData: LevelData, resolvedDifficulty: Dictionary) -> void:
 	if newLevelData == null:
 		push_error("Cannot load null LevelData.")

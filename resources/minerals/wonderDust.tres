@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="MineralData" format=3 uid="uid://babrtyd31w5gb"]
 
 [ext_resource type="Script" uid="uid://dsddbp08ie4bc" path="res://scripts/mineralData.gd" id="1_64ufx"]
-[ext_resource type="Texture2D" uid="uid://v8vqi33n0tdp" path="res://art/finalSprites/minerals/zenithStone.png" id="2_e3efw"]
+[ext_resource type="Texture2D" uid="uid://drkm0nv5e81k6" path="res://art/finalSprites/minerals/wonderdust.png" id="2_64ufx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bw7so"]
 size = Vector2(27, 23)
@@ -10,7 +10,7 @@ size = Vector2(27, 23)
 script = ExtResource("1_64ufx")
 mineral_id = &"wonderDust"
 displayName = "Wonder Dust"
-sprite = ExtResource("2_e3efw")
+sprite = ExtResource("2_64ufx")
 collision_shape = SubResource("RectangleShape2D_bw7so")
 rarity = 2
 sale_value = 40

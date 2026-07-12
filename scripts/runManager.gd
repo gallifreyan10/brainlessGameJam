@@ -70,7 +70,12 @@ func start_level(levelIndex: int) -> void:
 	var data := levels[currentLevelIndex]
 	
 	if layoutManager != null:
-		var layout := layoutManager.load_random_layout()
+		var layout : Node = null
+		if levelIndex == 0:
+			layout = layoutManager.load_layout(0)
+		else:
+			layout = layoutManager.load_random_layout()
+			
 		apply_layout_references(layout)
 	
 	attemptsRemaining = data.plannedAttemptLimit + AlienCollection.get_extra_attempts()
@@ -266,6 +271,7 @@ func apply_layout_references(layout: Node) -> void:
 	var spawn_top_left := layout.get_node_or_null("PrizeSpawnTopLeft") as Marker2D
 	var spawn_bottom_right := layout.get_node_or_null("PrizeSpawnBottomRight") as Marker2D
 	var resolution_timer: Timer = null
+	var cable := layout.get_node_or_null("cable") as Line2D
 	
 	if chute_release_point != null:
 		resolution_timer = chute_release_point.get_node_or_null("ResolutionTimer") as Timer
@@ -278,6 +284,7 @@ func apply_layout_references(layout: Node) -> void:
 		clawController.chuteArea = prize_chute
 		clawController.chuteReleasePoint = chute_release_point
 		clawController.resolutionTimer = resolution_timer
+		clawController.cable = cable
 		
 		if prize_chute != null:
 			var chute_callable := Callable(clawController, "_on_prize_chute_body_entered")

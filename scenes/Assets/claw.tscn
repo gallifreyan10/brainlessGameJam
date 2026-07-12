@@ -1,20 +1,21 @@
 [gd_scene format=3 uid="uid://cmd68cakaymg0"]
 
-[ext_resource type="Texture2D" uid="uid://cy8ngknj3jd3p" path="res://art/prototypeSprites/claw1.png" id="2_o5voo"]
+[ext_resource type="Texture2D" uid="uid://c3d5sxinbuvpu" path="res://art/finalSprites/claw.png" id="2_vi25o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o5voo"]
-size = Vector2(9.5, 8.5)
+size = Vector2(7.75, 8.25)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ksno"]
-radius = 4.0
-height = 18.0
+radius = 2.0
+height = 14.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o5voo"]
-radius = 4.0
-height = 18.0
+radius = 2.0
+height = 14.0
 
 [sub_resource type="Animation" id="Animation_o5voo"]
 length = 0.001
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -22,7 +23,7 @@ tracks/0/path = NodePath("CharacterBody2D/LeftArmPivot:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.0009999999),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
@@ -34,70 +35,70 @@ tracks/1/path = NodePath("CharacterBody2D/LeftArmPivot/LeftArmSprite:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.0009999999),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-13.000001, -3)]
+"values": [Vector2(-12.000001, 11.999996), Vector2(-9, -18)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CharacterBody2D/RightArmPivot:rotation")
+tracks/2/path = NodePath("CharacterBody2D/LeftArmCollision:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.0009999999),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.0]
+"values": [Vector2(-9, -18), Vector2(-9, -18)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CharacterBody2D/RightArmPivot/RightArmSprite:position")
+tracks/3/path = NodePath("CharacterBody2D/RightArmPivot:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(15.999999, -3)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("CharacterBody2D/LeftArmCollision:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.0009999999),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CharacterBody2D/RightArmPivot/RightArmSprite:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.0009999999),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(19, 3.9999962), Vector2(7.000001, -18)]
+}
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CharacterBody2D/LeftArmCollision:position")
+tracks/5/path = NodePath("CharacterBody2D/RightArmCollision:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.0009999999),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-14, 2)]
+"values": [Vector2(8, -18), Vector2(8, -18)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("CharacterBody2D/RightArmCollision:position")
+tracks/6/path = NodePath("CharacterBody2D/LeftArmCollision:rotation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(15, 1)]
+"values": [0.0]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -114,7 +115,7 @@ tracks/7/keys = {
 
 [sub_resource type="Animation" id="Animation_vi25o"]
 resource_name = "close_claw"
-length = 0.3
+length = 0.36666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -122,7 +123,7 @@ tracks/0/path = NodePath("CharacterBody2D/LeftArmPivot:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.36666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, -0.43633232]
@@ -130,38 +131,38 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterBody2D/LeftArmPivot/LeftArmSprite:position")
+tracks/1/path = NodePath("CharacterBody2D/RightArmPivot:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-12.000001, -3), Vector2(-9.546767, -5.555109)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CharacterBody2D/RightArmPivot:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.36666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 0.43633232]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CharacterBody2D/RightArmPivot/RightArmSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(18, 3.999998), Vector2(16.191399, -3.1366625)]
+}
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CharacterBody2D/RightArmPivot/RightArmSprite:position")
+tracks/3/path = NodePath("CharacterBody2D/LeftArmCollision:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.36666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(15, -3), Vector2(11.782002, -5.4940376)]
+"values": [Vector2(-9, -18), Vector2(-6.999999, -18)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -170,7 +171,7 @@ tracks/4/path = NodePath("CharacterBody2D/LeftArmCollision:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.36666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, -0.43633232]
@@ -178,38 +179,38 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CharacterBody2D/LeftArmCollision:position")
+tracks/5/path = NodePath("CharacterBody2D/RightArmCollision:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.36666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-13, 2), Vector2(-11, 4.0000005)]
+"values": [Vector2(7, -17), Vector2(5, -17)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("CharacterBody2D/RightArmCollision:position")
+tracks/6/path = NodePath("CharacterBody2D/RightArmCollision:rotation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.36666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(15, 1), Vector2(10.999998, 3.9999998)]
+"values": [0.0, 0.43633232]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("CharacterBody2D/RightArmCollision:rotation")
+tracks/7/path = NodePath("CharacterBody2D/LeftArmPivot/LeftArmSprite:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.36666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.0, 0.43633232]
+"values": [Vector2(-12.000001, 11.999996), Vector2(-14, 6)]
 }
 
 [sub_resource type="Animation" id="Animation_8ksno"]
@@ -237,7 +238,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-9.546767, -5.555109), Vector2(-13, -3)]
+"values": [Vector2(-14.134497, 6.6495075), Vector2(-12.000001, 11.999996)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -258,10 +259,10 @@ tracks/3/path = NodePath("CharacterBody2D/RightArmPivot/RightArmSprite:position"
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0.03333333, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(11.782002, -5.4940376), Vector2(16, -3)]
+"values": [Vector2(16, -3), Vector2(18, 3.999998)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -273,7 +274,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-11, 4.0000005), Vector2(-14, 1)]
+"values": [Vector2(-6.999998, -17.000002), Vector2(-9, -17)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -297,7 +298,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(10.999998, 2.9999995), Vector2(16, 1)]
+"values": [Vector2(3.999998, -17.000002), Vector2(7, -17)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -324,48 +325,50 @@ _data = {
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=621652505]
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=2091351576]
-position = Vector2(0, -3)
-texture = ExtResource("2_o5voo")
+position = Vector2(-1, -28)
+texture = ExtResource("2_vi25o")
 region_enabled = true
-region_rect = Rect2(7, 0, 16, 32)
+region_rect = Rect2(6.6833553, 0, 18.911833, 16.872107)
 
 [node name="LeftArmPivot" type="Node2D" parent="CharacterBody2D" unique_id=1840481059]
+position = Vector2(3.0000012, -29.999996)
 
 [node name="LeftArmSprite" type="Sprite2D" parent="CharacterBody2D/LeftArmPivot" unique_id=402214849]
-position = Vector2(-13.000001, -3)
+position = Vector2(-12.000001, 11.999996)
 scale = Vector2(1.0000001, 1.0000001)
-texture = ExtResource("2_o5voo")
+texture = ExtResource("2_vi25o")
 region_enabled = true
-region_rect = Rect2(0, 0, 10, 32)
+region_rect = Rect2(4.5038414, 43.05935, 6.1930656, 16.345634)
 
 [node name="RightArmPivot" type="Node2D" parent="CharacterBody2D" unique_id=329555529]
+position = Vector2(-11.999999, -21.999998)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="RightArmSprite" type="Sprite2D" parent="CharacterBody2D/RightArmPivot" unique_id=442661541]
-position = Vector2(15.999999, -3)
-texture = ExtResource("2_o5voo")
+position = Vector2(19, 3.9999962)
+texture = ExtResource("2_vi25o")
 region_enabled = true
-region_rect = Rect2(19, 0, 16, 32)
+region_rect = Rect2(20, 75.14673, 9, 16.58693)
 
 [node name="GrabArea" type="Area2D" parent="CharacterBody2D" unique_id=935614972]
-position = Vector2(0, 9)
+position = Vector2(-1, 9)
 collision_layer = 0
 collision_mask = 2
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/GrabArea" unique_id=1660981821]
-position = Vector2(0, 1)
+position = Vector2(0, -25)
 shape = SubResource("RectangleShape2D_o5voo")
 
 [node name="HoldPoint" type="Marker2D" parent="CharacterBody2D" unique_id=2054188710]
 position = Vector2(0, 10)
 
 [node name="LeftArmCollision" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1473932137]
-position = Vector2(-14, 2)
+position = Vector2(-9, -18)
 shape = SubResource("CapsuleShape2D_8ksno")
 
 [node name="RightArmCollision" type="CollisionShape2D" parent="CharacterBody2D" unique_id=171661933]
-position = Vector2(15, 1)
+position = Vector2(8, -18)
 shape = SubResource("CapsuleShape2D_o5voo")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=325207629]
