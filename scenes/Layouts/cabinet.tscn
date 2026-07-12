@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://bfhw1clkomfdx" path="res://resources/levels/level5.tres" id="7_vpy7u"]
 [ext_resource type="Script" uid="uid://bp50higoc2rgb" path="res://scripts/canvas_layer.gd" id="10_kett4"]
 [ext_resource type="PackedScene" uid="uid://bdgcvno7wuldy" path="res://ui/alienCollection.tscn" id="11_vpy7u"]
+[ext_resource type="Theme" uid="uid://b114m23cil3i0" path="res://resources/default_ui_theme.tres" id="12_kett4"]
 [ext_resource type="PackedScene" uid="uid://c4kuqjtbhod8x" path="res://ui/ActiveAbilitiesPanel.tscn" id="12_qw4m0"]
 [ext_resource type="Script" uid="uid://dowaivgkcjooy" path="res://scripts/economy_debug_hud.gd" id="13_0i0pt"]
 [ext_resource type="Script" uid="uid://ba1unirjsml3l" path="res://scripts/sale_feedback.gd" id="14_5x1oe"]
@@ -25,20 +26,25 @@
 [ext_resource type="Script" uid="uid://bb1ibpt3k8ytn" path="res://scripts/run_failed_panel.gd" id="23_vec61"]
 [ext_resource type="Script" uid="uid://j5tsp06q7nku" path="res://scripts/helpPanel.gd" id="24_p8sw1"]
 [ext_resource type="Script" uid="uid://bon7webpa85ca" path="res://scripts/owned_suits_panel.gd" id="25_2453e"]
+[ext_resource type="Script" uid="uid://daale7juaodk4" path="res://scripts/settingsPanel.gd" id="26_v7ofj"]
 [ext_resource type="PackedScene" uid="uid://cmd68cakaymg0" path="res://scenes/Assets/claw.tscn" id="26_w3p3t"]
 [ext_resource type="Script" uid="uid://dmow26qnm5mpv" path="res://scripts/clawController.gd" id="27_ufegr"]
 [ext_resource type="Script" uid="uid://d0iq5k305ql3h" path="res://scripts/layoutManager.gd" id="28_r815q"]
+[ext_resource type="Script" uid="uid://djxyuln6bjtj7" path="res://scripts/quotaCompleteFeedback.gd" id="28_vpy7u"]
 [ext_resource type="PackedScene" uid="uid://dapfs78ury1r8" path="res://scenes/Layouts/cabinetv2.tscn" id="29_hosw5"]
 [ext_resource type="PackedScene" uid="uid://o8thk3yme5x5" path="res://scenes/Layouts/cabinetv1.tscn" id="29_v7ofj"]
 [ext_resource type="PackedScene" uid="uid://klrsmy2ni0wy" path="res://scenes/Layouts/cabinetv3.tscn" id="30_v7ofj"]
 [ext_resource type="PackedScene" uid="uid://8yj1llkc651j" path="res://scenes/Layouts/cabinetv4.tscn" id="31_kj04f"]
 [ext_resource type="PackedScene" uid="uid://bopsol2as6rds" path="res://scenes/Layouts/cabinetv5.tscn" id="32_kett4"]
+[ext_resource type="Script" uid="uid://dofirwqkhaadw" path="res://scripts/pauseController.gd" id="35_kj04f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
 size = Vector2(124, 371)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0srf"]
 size = Vector2(701, 87.5)
+
+[sub_resource type="Theme" id="Theme_vpy7u"]
 
 [node name="root" type="Sprite2D" unique_id=1035922221]
 
@@ -74,7 +80,7 @@ shape = SubResource("RectangleShape2D_r0srf")
 position = Vector2(320, 180)
 
 [node name="prizeContainer" type="Node2D" parent="." unique_id=1425589497 node_paths=PackedStringArray("spawn_top_left", "spawn_bottom_right")]
-position = Vector2(0, -24)
+position = Vector2(348, 282)
 script = ExtResource("5_1rkfa")
 alien_Scene = ExtResource("6_r815q")
 spawn_top_left = NodePath("")
@@ -89,7 +95,7 @@ position = Vector2(318, 31)
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1951429874]
 script = ExtResource("10_kett4")
 
-[node name="AlienCollectionPanel" parent="CanvasLayer" unique_id=1208775010 instance=ExtResource("11_vpy7u")]
+[node name="AlienCollectionPanel" parent="CanvasLayer" unique_id=1208775010 node_paths=PackedStringArray("runManager") instance=ExtResource("11_vpy7u")]
 custom_minimum_size = Vector2(420, 300)
 anchors_preset = 8
 anchor_left = 0.5
@@ -102,12 +108,16 @@ offset_right = 249.0
 offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("12_kett4")
+runManager = NodePath("../../RunManager")
 
-[node name="ActiveAbilitiesPanel" parent="CanvasLayer" unique_id=1948541691 instance=ExtResource("12_qw4m0")]
+[node name="ActiveAbilitiesPanel" parent="CanvasLayer" unique_id=1948541691 node_paths=PackedStringArray("runManager") instance=ExtResource("12_qw4m0")]
 offset_left = 318.0
 offset_top = 140.0
 offset_right = 326.0
 offset_bottom = 206.0
+theme = ExtResource("12_kett4")
+runManager = NodePath("../../RunManager")
 
 [node name="EconomyDebugHUD" type="VBoxContainer" parent="CanvasLayer" unique_id=1398542342 node_paths=PackedStringArray("runManager")]
 offset_left = 9.0
@@ -143,6 +153,7 @@ offset_top = -3.0
 offset_right = 452.0
 offset_bottom = 110.0
 mouse_filter = 0
+theme = ExtResource("12_kett4")
 script = ExtResource("14_5x1oe")
 
 [node name="MineralNameLabel" type="Label" parent="CanvasLayer/SaleFeedback" unique_id=2145885237]
@@ -173,6 +184,7 @@ offset_top = 131.0
 offset_right = 394.0
 offset_bottom = 251.0
 mouse_filter = 2
+theme = SubResource("Theme_vpy7u")
 script = ExtResource("15_bqxv4")
 runManager = NodePath("../../RunManager")
 
@@ -198,11 +210,12 @@ text = "Shop"
 
 [node name="ShopPanel" type="PanelContainer" parent="CanvasLayer" unique_id=789925739 node_paths=PackedStringArray("runManager")]
 visible = false
-offset_left = 231.0
-offset_top = 88.0
-offset_right = 409.0
-offset_bottom = 289.0
+offset_left = 259.0
+offset_top = 9.0
+offset_right = 437.0
+offset_bottom = 210.0
 mouse_filter = 2
+theme = ExtResource("12_kett4")
 script = ExtResource("16_kcbrs")
 runManager = NodePath("../../RunManager")
 suitCatalog = Array[ExtResource("17_hbbfd")]([ExtResource("18_dyodi"), ExtResource("19_6dklo"), ExtResource("20_ntwkj"), ExtResource("21_0agwy"), ExtResource("22_nyn87")])
@@ -210,9 +223,6 @@ suitCatalog = Array[ExtResource("17_hbbfd")]([ExtResource("18_dyodi"), ExtResour
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ShopPanel" unique_id=1803431874]
 layout_mode = 2
 mouse_filter = 0
-
-[node name="MoneyLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=455453150]
-layout_mode = 2
 
 [node name="OffersContainer" type="VBoxContainer" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=1963519881]
 layout_mode = 2
@@ -265,7 +275,7 @@ offset_right = 64.0
 offset_bottom = 172.0
 text = "Help"
 
-[node name="HelpPanel" type="PanelContainer" parent="CanvasLayer" unique_id=1316446709 node_paths=PackedStringArray("helpButton")]
+[node name="HelpPanel" type="PanelContainer" parent="CanvasLayer" unique_id=1316446709 node_paths=PackedStringArray("helpButton", "runManager")]
 visible = false
 custom_minimum_size = Vector2(300, 0)
 offset_left = 69.0
@@ -273,8 +283,10 @@ offset_top = 3.0
 offset_right = 619.0
 offset_bottom = 373.0
 mouse_filter = 2
+theme = ExtResource("12_kett4")
 script = ExtResource("24_p8sw1")
 helpButton = NodePath("../HelpButton")
+runManager = NodePath("../../RunManager")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HelpPanel" unique_id=2143578196]
 layout_mode = 2
@@ -291,17 +303,21 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Move the claw left and right before the timer reaches zero.
 
-When the timer reaches zero, the claw drops automatically. You can also drop early.
+Aim the claw tilt with the mouse, or use the controller right stick.
 
-Each Level gives you three attempts. An attempt is spent after the claw is returned to the top.
+Drop early when ready, or wait for the timer to drop automatically.
 
-Drop minerals into the prize chute to sell them. Sold minerals add money and increase quota progress to complete level.
+Each level gives you limited attempts. Attempts are spent after the claw returns to the top.
 
-Reach the quota before attempts run out to complete the level.
+Drop minerals into the prize chute to earn Wallet and fill the Quota.
 
-Between levels, you can spend money earned from the sold minerals on temporary suits or save it. Suits reset when a run fails.
+Reach the Quota before attempts run out to complete the level.
 
-Suit abilities and equipped alien abilities are coming later."
+Between levels, spend Wallet on temporary suits. Suits reset when a run fails.
+
+Aliens are permanent upgrades. Collect repeat aliens to stack their abilities.
+
+Use Collection, Abilities, Suits, Help, and Settings panels to manage your run."
 autowrap_mode = 3
 
 [node name="CloseButton" type="Button" parent="CanvasLayer/HelpPanel/VBoxContainer" unique_id=1320010215]
@@ -330,11 +346,13 @@ offset_bottom = 285.0
 text = "Suit Inventory"
 
 [node name="OwnedSuitsPanel" type="PanelContainer" parent="CanvasLayer" unique_id=892049915 node_paths=PackedStringArray("runManager")]
+visible = false
 custom_minimum_size = Vector2(300, 0)
 offset_left = 219.0
 offset_top = 151.0
 offset_right = 519.0
 offset_bottom = 213.0
+theme = ExtResource("12_kett4")
 script = ExtResource("25_2453e")
 runManager = NodePath("../../RunManager")
 
@@ -351,6 +369,142 @@ layout_mode = 2
 [node name="CloseButton" type="Button" parent="CanvasLayer/OwnedSuitsPanel/VBoxContainer" unique_id=1170830468]
 layout_mode = 2
 text = "Close"
+
+[node name="SettingsPanel" type="PanelContainer" parent="CanvasLayer" unique_id=7482773 node_paths=PackedStringArray("settingsButton", "runManager")]
+visible = false
+offset_left = 139.0
+offset_top = 1.0
+offset_right = 499.0
+offset_bottom = 363.0
+theme = ExtResource("12_kett4")
+script = ExtResource("26_v7ofj")
+settingsButton = NodePath("../../../../../../../../../../@WindowWrapper@10775/@ScriptEditor@10774/@VBoxContainer@9989/@HSplitContainer@9992/@VBoxContainer@10018/@TabContainer@10021/@ScriptTextEditor@286228/@VSplitContainer@286230/@CodeTextEditor@286231/@HBoxContainer@286035/@Button@286038")
+runManager = NodePath("../../RunManager")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SettingsPanel" unique_id=2140580532]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SettingsPanel" unique_id=1995948895]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer" unique_id=343900441]
+layout_mode = 2
+text = "Settings"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/SettingsPanel/VBoxContainer" unique_id=1246293889]
+custom_minimum_size = Vector2(360, 300)
+layout_mode = 2
+
+[node name="SettingsContent" type="VBoxContainer" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer" unique_id=981517854]
+layout_mode = 2
+
+[node name="MasterVolumeLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=892303319]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=816950368]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="MusicVolumeLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=209061924]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=552814508]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="SFXVolumeLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1826683817]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=664827748]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="WindowModeLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=959797652]
+layout_mode = 2
+text = "Window Mode"
+
+[node name="WindowModeOption" type="OptionButton" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=664402891]
+layout_mode = 2
+
+[node name="ResolutionLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=521934518]
+layout_mode = 2
+text = "Resolution"
+
+[node name="ResolutionOption" type="OptionButton" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=820162048]
+layout_mode = 2
+
+[node name="VSyncCheck" type="CheckBox" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=695527627]
+layout_mode = 2
+text = "VSync"
+
+[node name="ScaleLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1916305358]
+layout_mode = 2
+text = "Screen Scale"
+
+[node name="ScaleOption" type="OptionButton" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=564625801]
+layout_mode = 2
+
+[node name="LargeTextCheck" type="CheckBox" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=499552085]
+layout_mode = 2
+text = "Large Text"
+
+[node name="ReduceMotionCheck" type="CheckBox" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1309671216]
+layout_mode = 2
+text = "Reduce Motion"
+
+[node name="HighContrastCheck" type="CheckBox" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1128658440]
+layout_mode = 2
+text = "High Contrast"
+
+[node name="CloseButton" type="Button" parent="CanvasLayer/SettingsPanel/VBoxContainer" unique_id=1433783906]
+layout_mode = 2
+text = "Close"
+
+[node name="QuotaCompleteFeedback" type="Control" parent="CanvasLayer" unique_id=1276531992 node_paths=PackedStringArray("runManager")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("28_vpy7u")
+runManager = NodePath("../../RunManager")
+
+[node name="FlashOverlay" type="ColorRect" parent="CanvasLayer/QuotaCompleteFeedback" unique_id=1815763478]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 0.007843138, 0)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/QuotaCompleteFeedback" unique_id=482684351]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SuccessBanner" type="Label" parent="CanvasLayer/QuotaCompleteFeedback/CenterContainer" unique_id=393927751]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "QUOTA COMPLETE!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Claw" parent="." unique_id=1355383 instance=ExtResource("26_w3p3t")]
 position = Vector2(318, 65)
@@ -393,6 +547,60 @@ scale = Vector2(0.5, 0.5)
 [node name="LayoutManager" type="Node2D" parent="." unique_id=1483436705]
 script = ExtResource("28_r815q")
 layouts = Array[PackedScene]([ExtResource("29_v7ofj"), ExtResource("29_hosw5"), ExtResource("30_v7ofj"), ExtResource("31_kj04f"), ExtResource("32_kett4")])
+
+[node name="PauseController" type="CanvasLayer" parent="." unique_id=1031572088 node_paths=PackedStringArray("settingsPanel", "runManager")]
+process_mode = 3
+layer = 20
+script = ExtResource("35_kj04f")
+settingsPanel = NodePath("../CanvasLayer/SettingsPanel")
+runManager = NodePath("../RunManager")
+
+[node name="PauseMenu" type="Control" parent="PauseController" unique_id=1453874411]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 284.0
+offset_top = 90.0
+offset_right = 324.0
+offset_bottom = 130.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PauseController/PauseMenu" unique_id=725886246]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseController/PauseMenu/MarginContainer" unique_id=1143541682]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=1448226141]
+layout_mode = 2
+text = "Paused"
+
+[node name="ResumeButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=2135690849]
+layout_mode = 2
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=243395431]
+layout_mode = 2
+text = "Settings"
+
+[node name="RestartRunButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=2146362254]
+layout_mode = 2
+text = "Restart Run"
+
+[node name="ReturnToTitleButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=1470979763]
+layout_mode = 2
+text = " Return to Title"
+
+[node name="QuitConfirmPanel" type="Control" parent="PauseController" unique_id=1378808546]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_top = 167.0
+offset_right = 124.0
+offset_bottom = 167.0
 
 [connection signal="body_entered" from="KillZone" to="prizeContainer" method="_on_kill_zone_body_entered"]
 [connection signal="attempt_finished" from="Claw/CharacterBody2D" to="prizeContainer" method="_on_attempt_finished"]

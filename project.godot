@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="BrainlessGameJam"
-run/main_scene="uid://dgcdj2grystud"
+run/main_scene="uid://0o1s2ryoypp1"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 RunEconomy="*uid://bx5bhs1aavrrm"
 AlienCollection="*uid://c307i0vr53204"
+PlayerProgress="*uid://fbo5iohpj1rm"
+gameSettings="*uid://cfrqsi163l88c"
 
 [display]
 
@@ -66,6 +68,12 @@ tilt_left={
 tilt_right={
 "deadzone": 0.2,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":1.0,"script":null)
+]
+}
+pause_game={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":5,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
 

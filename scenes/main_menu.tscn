@@ -1,0 +1,144 @@
+[gd_scene format=3 uid="uid://0o1s2ryoypp1"]
+
+[ext_resource type="Script" uid="uid://btpo4ve7dff25" path="res://scripts/main_menu.gd" id="1_ekxnf"]
+[ext_resource type="Script" uid="uid://daale7juaodk4" path="res://scripts/settingsPanel.gd" id="1_l6cm7"]
+
+[node name="MainMenu" type="Control" unique_id=226517398]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ekxnf")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=553239035]
+layout_mode = 0
+offset_left = 232.0
+offset_top = 84.0
+offset_right = 415.0
+offset_bottom = 256.0
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1613416304]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer" unique_id=1285223181]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1485417602]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1956848883]
+layout_mode = 2
+text = "Alien Claw Machine"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=895022127]
+layout_mode = 2
+text = "Start Run"
+
+[node name="SettingsButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=112784031]
+layout_mode = 2
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1871106272]
+layout_mode = 2
+text = "Quit"
+
+[node name="SettingsPanel" type="PanelContainer" parent="." unique_id=36727625 node_paths=PackedStringArray("settingsButton")]
+layout_mode = 0
+offset_left = 139.0
+offset_top = 1.0
+offset_right = 499.0
+offset_bottom = 363.0
+script = ExtResource("1_l6cm7")
+settingsButton = NodePath("../CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel" unique_id=1609770636]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel" unique_id=802478818]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="SettingsPanel/VBoxContainer" unique_id=2031142681]
+layout_mode = 2
+text = "Settings"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SettingsPanel/VBoxContainer" unique_id=568700548]
+custom_minimum_size = Vector2(360, 300)
+layout_mode = 2
+
+[node name="SettingsContent" type="VBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer" unique_id=1246263794]
+layout_mode = 2
+
+[node name="MasterVolumeLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1726885196]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1031992019]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="MusicVolumeLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=782442757]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1206869296]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="SFXVolumeLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=768113710]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=851596257]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="WindowModeLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=576124838]
+layout_mode = 2
+text = "Window Mode"
+
+[node name="WindowModeOption" type="OptionButton" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=388531895]
+layout_mode = 2
+
+[node name="ResolutionLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=707036815]
+layout_mode = 2
+text = "Resolution"
+
+[node name="ResolutionOption" type="OptionButton" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1968893772]
+layout_mode = 2
+
+[node name="VSyncCheck" type="CheckBox" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1156663355]
+layout_mode = 2
+text = "VSync"
+
+[node name="ScaleLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=2118550699]
+layout_mode = 2
+text = "Screen Scale"
+
+[node name="ScaleOption" type="OptionButton" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1645623600]
+layout_mode = 2
+
+[node name="LargeTextCheck" type="CheckBox" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1782083979]
+layout_mode = 2
+text = "Large Text"
+
+[node name="ReduceMotionCheck" type="CheckBox" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=823586423]
+layout_mode = 2
+text = "Reduce Motion"
+
+[node name="HighContrastCheck" type="CheckBox" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1738598963]
+layout_mode = 2
+text = "High Contrast"
+
+[node name="CloseButton" type="Button" parent="SettingsPanel/VBoxContainer" unique_id=2142607761]
+layout_mode = 2
+text = "Close"

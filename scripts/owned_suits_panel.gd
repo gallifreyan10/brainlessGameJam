@@ -19,11 +19,22 @@ func _ready() -> void:
 	refresh()
 	
 func open() -> void:
+	if visible:
+		return
+
+	if runManager != null:
+		runManager.request_ui_timer_pause()
+
 	visible = true
-	refresh()
 	
 func close() -> void:
+	if not visible:
+		return
+	
 	visible = false
+	
+	if runManager != null:
+		runManager.release_ui_timer_pause()
 	
 func refresh() -> void:
 	for child in suit_list.get_children():

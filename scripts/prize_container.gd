@@ -309,11 +309,15 @@ func spawn_mineral() -> void:
 		)
 	)
 	
-	mineral.mass = clampf(
-		mineral.mass,
-		minimumWeight,
-		maximumWeight
-	)
+	if mineral.mineral_data != null:
+		mineral.mass = clampf(
+			mineral.mineral_data.weight,
+			minimumWeight,
+			maximumWeight
+		)
+	else:
+		push_warning("Spawnede mineral is missing MineralData.")
+		
 	mineral.freeze = true
 	mineral.position = get_clear_spawn_position(mineralRng)
 	mineral.rotation = 0.0
@@ -417,7 +421,7 @@ func _finish_level_load() -> void:
 	)
 	
 	RunEconomy.start_level(
-		levelData.earningsQuota
+		resolvedQuota
 	)
 	
 	clear_aliens()
@@ -451,7 +455,9 @@ func get_effective_spawn_weight(
 	)
 	
 	match entry.mineralData.rarity:
-		MineralData.Rarity.COMMON:
+		MineralData.Rarity.COMMON,\
+		MineralData.Rarity.UNCOMMON,\
+		MineralData.Rarity.RARE:
 			effectiveWeight *= float(
 				activeDifficulty.get(
 					"common_multiplier",
@@ -459,10 +465,10 @@ func get_effective_spawn_weight(
 				)
 			)
 		
-		MineralData.Rarity.RARE:
+		_:
 			effectiveWeight *= float(
 				activeDifficulty.get(
-					"rare_difficulty",
+					"rare_multiplier",
 					1.0
 				)
 			)

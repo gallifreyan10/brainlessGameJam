@@ -3,6 +3,7 @@ extends PanelContainer
 @onready var summary_label: Label = $MarginContainer/VBoxContainer/SummaryLabel
 @onready var ability_list: VBoxContainer = $MarginContainer/VBoxContainer/AbilityList
 @onready var close_button: Button = $MarginContainer/VBoxContainer/CloseButton
+@export var runManager: RunManager
 
 const ALIEN_RESOURCE_FOLDER := "res://resources/aliens/"
 
@@ -13,11 +14,22 @@ func _ready() -> void:
 	refresh()
 
 func open() -> void:
+	if visible:
+		return
+
+	if runManager != null:
+		runManager.request_ui_timer_pause()
+
 	visible = true
-	refresh()
 	
 func close() -> void:
+	if not visible:
+		return
+	
 	visible = false
+	
+	if runManager != null:
+		runManager.release_ui_timer_pause()
 	
 func refresh() -> void:
 	for child in ability_list.get_children():

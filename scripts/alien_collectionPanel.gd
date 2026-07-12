@@ -4,6 +4,7 @@ extends PanelContainer
 @onready var close_button: Button = $MarginContainer/VBoxContainer/CloseButton
 @onready var progress_label: Label = $MarginContainer/VBoxContainer/ProgressLabel
 @onready var stack_label: Label = $MarginContainer/VBoxContainer/StackLabel
+@export var runManager: RunManager
 
 const ALIEN_RESOURCE_FOLDER := "res://resources/aliens/"
 
@@ -13,10 +14,18 @@ func _ready() -> void:
 	refresh()
 
 func open() -> void:
+	if visible:
+		return
+
+	if runManager != null:
+		runManager.request_ui_timer_pause()
+
 	visible = true
-	refresh()
 
 func close() -> void:
+	if runManager != null:
+		runManager.release_ui_timer_pause()
+		
 	visible = false
 	
 func refresh() -> void:

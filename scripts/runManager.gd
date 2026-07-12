@@ -26,7 +26,7 @@ signal newRunStarted
 @export var levels: Array[LevelData] = []
 @export var prizeContainer: Node
 @export var clawController: Node
-@export var attemptCountdownDuration: float = 5.0
+@export var attemptCountdownDuration: float = 15.0
 @export var layoutManager: LayoutManager
 
 var attemptsCountdownRemaining: float = 0.0
@@ -38,6 +38,9 @@ var completedLevelEarnings: int = 0
 var equippedSuit: SuitData = null
 var ownedSuits: Array[SuitData] = []
 var attemptsRemaining: int = 0
+var currentAttemptCountdownDuration: float = 15.0
+var ui_timer_pause_count: int = 0
+var countdown_was_active_before_ui_pause:bool = false
 
 signal suitsCleared
 
@@ -57,6 +60,7 @@ func start_level(levelIndex: int) -> void:
 	if levelIndex < 0 or levelIndex >= levels.size():
 		currentState = RunState.RUN_COMPLETE
 		stateChanged.emit(currentState)
+		PlayerProgress.record_run_completed()
 		return
 		
 	if prizeContainer == null:
@@ -64,6 +68,7 @@ func start_level(levelIndex: int) -> void:
 		return
 		
 	currentLevelIndex = levelIndex
+	PlayerProgress.record_level_reached(currentLevelIndex+1)
 	currentState = RunState.RUNNING
 	stateChanged.emit(currentState)
 	
@@ -94,12 +99,15 @@ func start_level(levelIndex: int) -> void:
 		]
 	)
 	
+	currentAttemptCountdownDuration = attemptCountdownDuration * float(resolvedDifficulty.get("timer_multiplier", 1.0))
+	
 	prizeContainer.load_level(
 		data,
 		resolvedDifficulty
 	)
 	levelStarted.emit(currentLevelIndex, data)
 	start_attempt_countdown()
+	
 func _on_quota_reached(
 	earned: int,
 	_quota: int
@@ -144,7 +152,12 @@ func buy_and_equip_suit(suit: SuitData, price_override: int = -1) -> bool:
 		
 	if suit == null:
 		return false
-	
+		
+	if ownedSuits.has(suit):
+		equippedSuit = suit
+		suitEquipped.emit(equippedSuit)
+		return true
+		
 	var finalPrice := suit.price
 	
 	if price_override >= 0:
@@ -153,12 +166,6 @@ func buy_and_equip_suit(suit: SuitData, price_override: int = -1) -> bool:
 	if not RunEconomy.spend_money(finalPrice):
 		return false
 	
-	if ownedSuits.has(suit):
-		equippedSuit = suit
-		suitEquipped.emit(equippedSuit)
-		return true
-	
-		
 	ownedSuits.append(suit)	
 	equippedSuit = suit
 	suitEquipped.emit(equippedSuit)
@@ -218,7 +225,7 @@ func start_attempt_countdown() -> void:
 	if attemptsRemaining <= 0:
 		return
 		
-	attemptsCountdownRemaining = attemptCountdownDuration
+	attemptsCountdownRemaining = currentAttemptCountdownDuration
 	countdownActive = true
 	countdownStarted.emit(attemptsCountdownRemaining)
 	countdownChanged.emit(attemptsCountdownRemaining)
@@ -236,9 +243,12 @@ func fail_level() -> void:
 	
 	currentState = RunState.LEVEL_FAILED
 	stateChanged.emit(currentState)
+	
+	PlayerProgress.record_run_failed()
 	runFailed.emit(currentLevelIndex,RunEconomy.earnedQuotaProgress,RunEconomy.levelQuota)
 	
 func start_new_run() -> void:
+	PlayerProgress.record_run_started()
 	clear_run_suits()
 	RunEconomy.reset_run_money()
 	currentLevelIndex = 0
@@ -297,3 +307,39 @@ func apply_layout_references(layout: Node) -> void:
 			
 			if not resolution_timer.timeout.is_connected(timer_callable):
 				resolution_timer.timeout.connect(timer_callable)
+				
+func request_ui_timer_pause() -> void:
+	ui_timer_pause_count += 1
+	
+	if ui_timer_pause_count == 1:
+		countdown_was_active_before_ui_pause = countdownActive
+		stop_attempt_countdown()
+		
+func release_ui_timer_pause() -> void:
+	ui_timer_pause_count = maxi(0, ui_timer_pause_count - 1)
+	
+	if ui_timer_pause_count > 0:
+		return
+		
+	if (
+		countdown_was_active_before_ui_pause
+		and currentState == RunState.RUNNING
+		and attemptsRemaining > 0
+	):
+		resume_attempt_countdown_from_current_time()
+		
+	countdown_was_active_before_ui_pause = false
+	
+func resume_attempt_countdown_from_current_time() -> void:
+	if currentState != RunState.RUNNING:
+		return
+	
+	if attemptsRemaining <= 0:
+		return
+		
+	if attemptsCountdownRemaining <= 0.0:
+		return
+		
+	countdownActive = true
+	countdownStarted.emit(attemptsCountdownRemaining)
+	countdownChanged.emit(attemptsCountdownRemaining)
