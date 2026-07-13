@@ -26,7 +26,7 @@ var quotaWasReached: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func build_capture_context() -> Dictionary:
-	var alien_multiplier := AlienCollection.get_sale_value_multiplier()
+	var alien_multiplier : float = AlienCollection.get_sale_value_multiplier()
 	
 	return{
 		"base_multiplier": 1.0,
