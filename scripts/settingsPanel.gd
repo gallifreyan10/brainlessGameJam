@@ -51,7 +51,7 @@ func _setup_options() -> void:
 	resolutionOption.clear()
 	
 	for i in gameSettings.RESOLUTIONS.size():
-		var resolution := gameSettings.RESOLUTIONS[i]
+		var resolution : Vector2i = gameSettings.RESOLUTIONS[i]
 		resolutionOption.add_item(
 			"%d x %d" %[resolution.x, resolution.y],
 			i

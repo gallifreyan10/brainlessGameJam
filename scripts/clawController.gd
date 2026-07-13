@@ -396,7 +396,7 @@ func hold_selected_prize() -> void:
 		slipTimer.stop()
 		
 		if randf() < slipChance:
-			var grip_multiplier := AlienCollection.get_grip_strength_multiplier()
+			var grip_multiplier : float = AlienCollection.get_grip_strength_multiplier()
 			slipTimer.wait_time = randf_range(minimum_slip_delay,maximum_slip_delay) * grip_multiplier
 			start_slip_timer()
 			

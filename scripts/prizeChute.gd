@@ -38,7 +38,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if not mineral.try_mark_captured():
 		return
 		
-	var context := RunEconomy.build_capture_context()
+	var context : Dictionary = RunEconomy.build_capture_context()
 	
 	#Economy recieves the mineral before it is removed
 	RunEconomy.capture_mineral(mineral.mineral_data, context)

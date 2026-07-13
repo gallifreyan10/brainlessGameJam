@@ -47,7 +47,7 @@ func refresh() -> void:
 		if alien_data.ability == null:
 			continue
 			
-		var stack_count := AlienCollection.get_alien_stack_count(alien_data.alien_id)
+		var stack_count :int = AlienCollection.get_alien_stack_count(alien_data.alien_id)
 		
 		if stack_count <= 0:
 			continue

@@ -99,8 +99,8 @@ func create_slot(alien_data: AlienData) -> Control:
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	stack_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	
-	var collected := AlienCollection.has_alien(alien_data.alien_id)
-	var stack_count := AlienCollection.get_alien_stack_count(alien_data.alien_id)
+	var collected : bool = AlienCollection.has_alien(alien_data.alien_id)
+	var stack_count : int = AlienCollection.get_alien_stack_count(alien_data.alien_id)
 	
 	if alien_data.icon != null:
 		icon_rect.texture = alien_data.icon

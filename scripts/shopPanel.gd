@@ -72,10 +72,10 @@ func create_offer_row(suit: SuitData) -> Control:
 	var priceLabel := Label.new()
 	var buyButton := Button.new()
 	
-	var price := get_discounted_price(suit)
-	var owned := runManager.ownedSuits.has(suit)
-	var equipped := runManager.equippedSuit == suit
-	var affordable := RunEconomy.can_afford(price)
+	var price : int = get_discounted_price(suit)
+	var owned : bool = runManager.ownedSuits.has(suit)
+	var equipped : bool= runManager.equippedSuit == suit
+	var affordable : bool = RunEconomy.can_afford(price)
 	
 	iconRect.texture = suit.icon
 	iconRect.custom_minimum_size = Vector2(48,48)
@@ -160,11 +160,11 @@ func _on_buy_pressed(suit: SuitData) -> void:
 		_refresh()
 		return
 	
-	var wallet_before := RunEconomy.runMoney	
+	var wallet_before : int = RunEconomy.runMoney	
 	var bought := runManager.buy_and_equip_suit(suit, price)
 	
 	if bought:
-		var wallet_after := RunEconomy.runMoney
+		var wallet_after : int = RunEconomy.runMoney
 		statusLabel.text = "Bought %s for %d. Wallet: %d → %d" % [
 			suit.displayName,
 			price,
@@ -195,7 +195,7 @@ func get_discounted_price(suit: SuitData) -> int:
 	if suit == null:
 		return 0
 		
-	var multiplier := AlienCollection.get_suit_price_multiplier()
+	var multiplier : float = AlienCollection.get_suit_price_multiplier()
 	return max(1, int(round(suit.price*multiplier)))
 	
 func _on_new_run_started() -> void:
