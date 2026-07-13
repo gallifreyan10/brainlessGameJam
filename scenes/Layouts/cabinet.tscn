@@ -79,12 +79,10 @@ shape = SubResource("RectangleShape2D_r0srf")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=302279949]
 position = Vector2(320, 180)
 
-[node name="prizeContainer" type="Node2D" parent="." unique_id=1425589497 node_paths=PackedStringArray("spawn_top_left", "spawn_bottom_right")]
+[node name="prizeContainer" type="Node2D" parent="." unique_id=1425589497]
 position = Vector2(348, 282)
 script = ExtResource("5_1rkfa")
 alien_Scene = ExtResource("6_r815q")
-spawn_top_left = NodePath("")
-spawn_bottom_right = NodePath("")
 levelData = ExtResource("3_3s4k1")
 
 [node name="RigidBody2D" parent="prizeContainer" unique_id=1158912329 instance=ExtResource("6_r815q")]
@@ -370,7 +368,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Close"
 
-[node name="SettingsPanel" type="PanelContainer" parent="CanvasLayer" unique_id=7482773 node_paths=PackedStringArray("settingsButton", "runManager")]
+[node name="SettingsPanel" type="PanelContainer" parent="CanvasLayer" unique_id=7482773 node_paths=PackedStringArray("runManager")]
 visible = false
 offset_left = 139.0
 offset_top = 1.0
@@ -378,7 +376,6 @@ offset_right = 499.0
 offset_bottom = 363.0
 theme = ExtResource("12_kett4")
 script = ExtResource("26_v7ofj")
-settingsButton = NodePath("../../../../../../../../../../@WindowWrapper@10775/@ScriptEditor@10774/@VBoxContainer@9989/@HSplitContainer@9992/@VBoxContainer@10018/@TabContainer@10021/@ScriptTextEditor@286228/@VSplitContainer@286230/@CodeTextEditor@286231/@HBoxContainer@286035/@Button@286038")
 runManager = NodePath("../../RunManager")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SettingsPanel" unique_id=2140580532]
@@ -510,7 +507,7 @@ vertical_alignment = 1
 position = Vector2(318, 65)
 scale = Vector2(2, 2)
 
-[node name="CharacterBody2D" parent="Claw" index="0" unique_id=621652505 node_paths=PackedStringArray("grab_Area", "hold_point", "release_point", "chuteReleasePoint", "chuteArea", "resolutionTimer", "animation_player", "cable", "cableAttachPoint", "slipTimer", "runManager")]
+[node name="CharacterBody2D" parent="Claw" index="0" unique_id=621652505 node_paths=PackedStringArray("grab_Area", "hold_point", "release_point", "animation_player", "cableAttachPoint", "slipTimer", "runManager")]
 collision_layer = 0
 script = ExtResource("27_ufegr")
 horizontal_speed = 180.0
@@ -519,11 +516,7 @@ return_speed = 190.0
 grab_Area = NodePath("GrabArea")
 hold_point = NodePath("HoldPoint")
 release_point = NodePath("ReleasePoint")
-chuteReleasePoint = NodePath("")
-chuteArea = NodePath("")
-resolutionTimer = NodePath("")
 animation_player = NodePath("../AnimationPlayer")
-cable = NodePath("")
 cableAttachPoint = NodePath("cableAttachPoint")
 slipTimer = NodePath("SlipTimer")
 runManager = NodePath("../../RunManager")
