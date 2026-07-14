@@ -15,9 +15,34 @@ extends PanelContainer
 @onready var largeTextCheck: CheckBox = $VBoxContainer/ScrollContainer/SettingsContent/LargeTextCheck
 @onready var reduceMotionCheck: CheckBox = $VBoxContainer/ScrollContainer/SettingsContent/ReduceMotionCheck
 @onready var highContrastCheck: CheckBox = $VBoxContainer/ScrollContainer/SettingsContent/HighContrastCheck
+@onready var titleLabel: Label = $VBoxContainer/TitleLabel
+const TITLE_COLOR := Color("#FFD36A")
 
 func _ready() -> void:
 	visible = false
+	custom_minimum_size = Vector2(360, 320)
+	anchor_left = 0.5
+	anchor_top = 0.5
+	anchor_right = 0.5
+	anchor_bottom = 0.5
+	offset_left = -180.0
+	offset_top = -160.0
+	offset_right = 180.0
+	offset_bottom = 160.0
+	
+	var vbox := $VBoxContainer
+	vbox.add_theme_constant_override("separation", 6)
+	titleLabel.add_theme_color_override("font_color", TITLE_COLOR)
+	titleLabel.add_theme_font_size_override("font_size", 14)
+	
+	var scroll_container := $VBoxContainer/ScrollContainer
+	scroll_container.custom_minimum_size = Vector2(300, 220)
+	
+	var settings_content := $VBoxContainer/ScrollContainer/SettingsContent
+	settings_content.add_theme_constant_override("separation", 4)
+	
+	closeButton.custom_minimum_size = Vector2(140, 28)
+	closeButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	
 	if settingsButton != null:
 		settingsButton.pressed.connect(_on_settings_pressed)

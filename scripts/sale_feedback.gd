@@ -1,10 +1,13 @@
 extends VBoxContainer
 
-@onready var mineralNameLabel: Label = $MineralNameLabel
+@onready var mineralIcon: TextureRect = $HeaderRow/MineralIcon
+@onready var mineralNameLabel: Label = $HeaderRow/MineralNameLabel
 @onready var breakdownLabel: Label = $BreakdownLabel
 @onready var totalLabel: Label = $TotalLabel
 @onready var alienIcon: TextureRect = $AlienIcon
 @onready var hideTimer: Timer = $HideTimer
+const DETAIL_COLOR := Color("#7CFFD6")
+var original_position : Vector2
 
 func _ready() -> void:
 	RunEconomy.mineral_banked.connect(
@@ -14,6 +17,8 @@ func _ready() -> void:
 	hideTimer.timeout.connect(_on_hide_timer_timeout)
 	
 	visible = false
+	mineralNameLabel.add_theme_color_override("font_color", DETAIL_COLOR)
+	original_position = position
 	
 func _on_mineral_banked(
 	data: MineralData,
@@ -24,13 +29,18 @@ func _on_mineral_banked(
 	var suitMultiplier: float = float(context.get("suit_multiplier", 1.0))
 	
 	mineralNameLabel.text = data.displayName
+	mineralIcon.texture = data.sprite
 	
-	breakdownLabel.text = ("Base %d x Alien %.2f x Suit %.2f" %[
-		data.sale_value,
-		alienMultiplier,
-		suitMultiplier
-		]
-	)
+	var bonus_lines: Array[String] = []
+	
+	if not is_equal_approx(alienMultiplier, 1.0):
+		bonus_lines.append("Alien Bonus x%.2f" % alienMultiplier)
+		
+	if not is_equal_approx(suitMultiplier, 1.0):
+		bonus_lines.append("Suit Bonus x%.2f" % suitMultiplier)
+	
+	breakdownLabel.text = "\n".join(bonus_lines)
+	breakdownLabel.visible = not bonus_lines.is_empty()
 	
 	totalLabel.text = "+%d money" % finalValue
 	
@@ -53,6 +63,9 @@ func _on_mineral_banked(
 	modulate.a = 1.0
 	scale = Vector2(1.1,1.1)
 	
+	position = original_position + Vector2(0,8)
+	var target_position := original_position
+	
 	var tween := create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(
@@ -68,6 +81,12 @@ func _on_mineral_banked(
 		0.2
 	)
 	
+	tween.tween_property(
+		self,
+		"position",
+		target_position, 
+		0.25
+	)
 	hideTimer.start()
 	
 func _on_hide_timer_timeout() -> void:

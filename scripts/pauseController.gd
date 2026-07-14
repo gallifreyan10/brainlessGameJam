@@ -10,11 +10,42 @@ extends CanvasLayer
 @onready var restartButton: Button = $PauseMenu/MarginContainer/VBoxContainer/RestartRunButton
 @onready var titleButton: Button = $PauseMenu/MarginContainer/VBoxContainer/ReturnToTitleButton
 @onready var quitConfirmPanel: Control = $QuitConfirmPanel
+@onready var titleLabel: Label = $PauseMenu/MarginContainer/VBoxContainer/TitleLabel
 
 var is_paused: bool = false
+const TITLE_COLOR := Color("#FFD36A")
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	pauseMenu.custom_minimum_size = Vector2(300, 220)
+	pauseMenu.anchor_left = 0.5
+	pauseMenu.anchor_top = 0.5
+	pauseMenu.anchor_right = 0.5
+	pauseMenu.anchor_bottom = 0.5
+	pauseMenu.offset_left = -150.0
+	pauseMenu.offset_top = -110.0
+	pauseMenu.offset_right = 150.0
+	pauseMenu.offset_bottom = 110.0
+	
+	var margin_container := $PauseMenu/MarginContainer
+	margin_container.add_theme_constant_override("margin_left", 24)
+	margin_container.add_theme_constant_override("margin_right", 24)
+	margin_container.add_theme_constant_override("margin_top", 24)
+	margin_container.add_theme_constant_override("margin_bottom", 24)
+	
+	var vbox := $PauseMenu/MarginContainer/VBoxContainer
+	vbox.add_theme_constant_override("separation", 8)
+	titleLabel.add_theme_color_override("font_color", TITLE_COLOR)
+	titleLabel.add_theme_font_size_override("font_size", 14)
+	
+	resumeButton.custom_minimum_size = Vector2(140, 28)
+	settingsButton.custom_minimum_size = Vector2(140, 28)
+	restartButton.custom_minimum_size = Vector2(140, 28)
+	titleButton.custom_minimum_size = Vector2(140, 28)
+	resumeButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	settingsButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	restartButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	titleButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	
 	pauseMenu.visible = false
 	quitConfirmPanel.visible = false

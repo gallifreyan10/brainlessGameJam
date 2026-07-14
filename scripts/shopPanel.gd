@@ -7,14 +7,50 @@ extends PanelContainer
 @export var offerCount: int = 3
 var rng := RandomNumberGenerator.new()
 var purchase_in_progress: bool = false
+const TITLE_COLOR := Color("#FFD36A")
+const DETAIL_COLOR := Color("#7CFFD6")
 
 @onready var offersContainer: VBoxContainer = $VBoxContainer/OffersContainer
 @onready var rerollButton: Button = $VBoxContainer/RerollButton
 @onready var continueButton: Button = $VBoxContainer/ContinueButton
 @onready var statusLabel: Label = $VBoxContainer/StatusLabel
+@onready var contentBox: VBoxContainer = $VBoxContainer
 
 func _ready() -> void:
 	visible = false
+	_set_panel_rect(Vector2(460, 310), Vector2(150, 30))
+	_wrap_content_in_margin(34)
+	
+	var title_label := Label.new()
+	title_label.text = "Suit Shop"
+	title_label.add_theme_color_override("font_color", TITLE_COLOR)
+	title_label.add_theme_font_size_override("font_size", 14)
+	contentBox.add_child(title_label)
+	contentBox.move_child(title_label, 0)
+	
+	contentBox.add_theme_constant_override("separation", 6)
+	
+	var scroll := ScrollContainer.new()
+	scroll.name = "OffersScroll"
+	scroll.custom_minimum_size = Vector2(360, 160)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
+	var offers_index := offersContainer.get_index()
+	contentBox.remove_child(offersContainer)
+	contentBox.add_child(scroll)
+	contentBox.move_child(scroll, offers_index)
+	scroll.add_child(offersContainer)
+	
+	offersContainer.custom_minimum_size = Vector2(360, 160)
+	
+	rerollButton.custom_minimum_size = Vector2(130, 28)
+	continueButton.custom_minimum_size = Vector2(130, 28)
+	rerollButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	continueButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	statusLabel.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	statusLabel.custom_minimum_size = Vector2(360, 0)
+	
 	rng.randomize()
 
 	if runManager == null:
@@ -29,6 +65,9 @@ func _ready() -> void:
 	
 	rerollButton.pressed.connect(_on_reroll_pressed)
 	continueButton.pressed.connect(_on_continue_pressed)
+	UIStyleHelper.apply_hologram_button_style(rerollButton)
+	UIStyleHelper.apply_hologram_button_style(continueButton)
+	
 
 	repopulate_shop()
 	_refresh()
@@ -63,6 +102,8 @@ func _refresh() -> void:
 
 func create_offer_row(suit: SuitData) -> Control:
 	var row := HBoxContainer.new()
+	row.custom_minimum_size = Vector2(350, 72)
+	row.add_theme_constant_override("separation", 6)
 	
 	var iconRect := TextureRect.new()
 	var textBox := VBoxContainer.new()
@@ -83,8 +124,8 @@ func create_offer_row(suit: SuitData) -> Control:
 	iconRect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	
 	nameLabel.text = suit.displayName
-	nameLabel.add_theme_font_size_override("font_size", 16)
-	nameLabel.add_theme_color_override("font_color", Color("000000ff"))
+	nameLabel.add_theme_font_size_override("font_size", 10)
+	nameLabel.add_theme_color_override("font_color", DETAIL_COLOR)
 	stateLabel.text = get_suit_state_text(suit)
 	buffLabel.text = get_suit_buff_text(suit)
 	
@@ -93,10 +134,19 @@ func create_offer_row(suit: SuitData) -> Control:
 	else:
 		priceLabel.text = "Price: %d" % price
 		
-	textBox.custom_minimum_size = Vector2(180, 0)
+	textBox.custom_minimum_size = Vector2(230, 0)
+	textBox.add_theme_constant_override("separation", 1)
 	buffLabel.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	nameLabel.custom_minimum_size = Vector2(150,0)
-	priceLabel.custom_minimum_size = Vector2(70,0)
+	buffLabel.add_theme_font_size_override("font_size", 8)
+	stateLabel.add_theme_font_size_override("font_size", 8)
+	priceLabel.add_theme_font_size_override("font_size", 8)
+	nameLabel.custom_minimum_size = Vector2(170,0)
+	priceLabel.custom_minimum_size = Vector2(130,0)
+	
+	buyButton.custom_minimum_size = Vector2(70, 28)
+	buyButton.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	buyButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	UIStyleHelper.apply_hologram_button_style(buyButton)
 	
 	if equipped:
 		buyButton.text = "Equipped"
@@ -287,11 +337,38 @@ func get_purchase_reason(suit: SuitData) -> String:
 		
 	var price := get_discounted_price(suit)
 	
-	if RunEconomy.can_afford(price):
-		return "Need %d more wallet. Quota progress is not affected." % (price - RunEconomy.runMoney)
+	if not RunEconomy.can_afford(price):
+		return "Need %d more wallet." % (price - RunEconomy.runMoney)
 		
 	return "Spends %d wallet. Remaining wallet: %d." % [
 		price,
 		RunEconomy.runMoney - price
 	]
+
+func _set_panel_rect(panel_size: Vector2, top_left: Vector2) -> void:
+	custom_minimum_size = panel_size
+	anchor_left = 0.0
+	anchor_top = 0.0
+	anchor_right = 0.0
+	anchor_bottom = 0.0
+	offset_left = top_left.x
+	offset_top = top_left.y
+	offset_right = top_left.x + panel_size.x
+	offset_bottom = top_left.y + panel_size.y
+
+func _wrap_content_in_margin(padding: int) -> void:
+	if contentBox.get_parent() is MarginContainer:
+		return
+	
+	var margin_container := MarginContainer.new()
+	margin_container.name = "RuntimeMargin"
+	margin_container.add_theme_constant_override("margin_left", padding)
+	margin_container.add_theme_constant_override("margin_right", padding)
+	margin_container.add_theme_constant_override("margin_top", padding)
+	margin_container.add_theme_constant_override("margin_bottom", padding)
+	
+	remove_child(contentBox)
+	add_child(margin_container)
+	margin_container.set_anchors_preset(Control.PRESET_FULL_RECT)
+	margin_container.add_child(contentBox)
 		

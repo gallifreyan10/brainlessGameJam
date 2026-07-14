@@ -4,11 +4,44 @@ extends PanelContainer
 @onready var close_button: Button = $MarginContainer/VBoxContainer/CloseButton
 @onready var progress_label: Label = $MarginContainer/VBoxContainer/ProgressLabel
 @onready var stack_label: Label = $MarginContainer/VBoxContainer/StackLabel
+@onready var title_label: Label = $MarginContainer/VBoxContainer/TitleLabel
 @export var runManager: RunManager
 
 const ALIEN_RESOURCE_FOLDER := "res://resources/aliens/"
+const TITLE_COLOR := Color("#FFD36A")
+const DETAIL_COLOR := Color("#7CFFD6")
 
 func _ready() -> void:
+	custom_minimum_size = Vector2(400, 250)
+	anchor_left = 0.5
+	anchor_top = 0.5
+	anchor_right = 0.5
+	anchor_bottom = 0.5
+	offset_left = -200.0
+	offset_top = -125.0
+	offset_right = 200.0
+	offset_bottom = 125.0
+	
+	var margin_container := $MarginContainer
+	margin_container.add_theme_constant_override("margin_left", 18)
+	margin_container.add_theme_constant_override("margin_right", 18)
+	margin_container.add_theme_constant_override("margin_top", 18)
+	margin_container.add_theme_constant_override("margin_bottom", 18)
+	
+	var vbox := $MarginContainer/VBoxContainer
+	vbox.add_theme_constant_override("separation", 3)
+	title_label.add_theme_color_override("font_color", TITLE_COLOR)
+	title_label.add_theme_font_size_override("font_size", 14)
+	
+	slots_grid.columns = 3
+	slots_grid.add_theme_constant_override("h_separation", 8)
+	slots_grid.add_theme_constant_override("v_separation", 4)
+	
+	close_button.custom_minimum_size = Vector2(120,24)
+	close_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	UIStyleHelper.apply_hologram_button_style(close_button)
+	
+	
 	close_button.pressed.connect(_on_close_pressed)
 	AlienCollection.alien_collected.connect(_on_alien_collected)
 	refresh()
@@ -84,14 +117,20 @@ func _sort_by_collection_slot(a: AlienData,b: AlienData) -> bool:
 	
 func create_slot(alien_data: AlienData) -> Control:
 	var slot := VBoxContainer.new()
-	slot.custom_minimum_size = Vector2(120,90)
+	slot.custom_minimum_size = Vector2(86,82)
+	slot.alignment = BoxContainer.ALIGNMENT_CENTER
+	slot.add_theme_constant_override("separation", 0)
 	
 	var icon_rect := TextureRect.new()
 	var name_label := Label.new()
 	var status_label := Label.new()
 	var stack_label := Label.new()
 	
-	icon_rect.custom_minimum_size = Vector2(64,64)
+	name_label.add_theme_font_size_override("font_size",8)
+	status_label.add_theme_font_size_override("font_size",7)
+	stack_label.add_theme_font_size_override("font_size", 7)
+	
+	icon_rect.custom_minimum_size = Vector2(28,28)
 	icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	
@@ -110,6 +149,7 @@ func create_slot(alien_data: AlienData) -> Control:
 	if collected:
 		icon_rect.modulate = Color.WHITE
 		name_label.text = alien_data.displayName
+		name_label.add_theme_color_override("font_color", DETAIL_COLOR)
 		status_label.text = "Collected"
 		stack_label.text = "Stacks %d" % stack_count
 	else:

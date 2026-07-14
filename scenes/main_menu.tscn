@@ -2,21 +2,107 @@
 
 [ext_resource type="Script" uid="uid://btpo4ve7dff25" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Script" uid="uid://daale7juaodk4" path="res://scripts/settingsPanel.gd" id="1_l6cm7"]
+[ext_resource type="AudioStream" uid="uid://b4vjhv4ihwb1m" path="res://audio/music/menu.wav" id="2_5dd4i"]
+[ext_resource type="Texture2D" uid="uid://dh7275vsekg2i" path="res://art/backgrounds/spacePack/Blue Version/blue-preview.png" id="2_bqqt6"]
+[ext_resource type="Texture2D" uid="uid://c0gl4u41nwnlc" path="res://art/ui/hologramInterface/Card X1/Card X1.png" id="3_tbmy8"]
+[ext_resource type="Texture2D" uid="uid://kpgkxhsdv724" path="res://art/ui/hologramInterface/Button 1/Button Normal.png" id="4_jk1qb"]
+[ext_resource type="Texture2D" uid="uid://dmi45bvmeqcj2" path="res://art/ui/hologramInterface/Button 3/Active.png" id="5_5dd4i"]
+[ext_resource type="Texture2D" uid="uid://b55ppf0txoln5" path="res://art/ui/hologramInterface/Button 1/Button Hover.png" id="6_lgwnu"]
+[ext_resource type="Texture2D" uid="uid://d3crnk2numnk2" path="res://art/ui/hologramInterface/Button 1/Button Disable.png" id="7_flqon"]
+[ext_resource type="Texture2D" uid="uid://gt0ylsspjgdb" path="res://art/ui/hologramInterface/Button 1/Button Active.png" id="8_flqon"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jk1qb"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1ajci"]
+texture = ExtResource("4_jk1qb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7b55j"]
+texture = ExtResource("5_5dd4i")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5pajh"]
+texture = ExtResource("6_lgwnu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j7ex8"]
+texture = ExtResource("7_flqon")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a8gd2"]
+texture = ExtResource("4_jk1qb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hstxw"]
+texture = ExtResource("8_flqon")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8egab"]
+texture = ExtResource("6_lgwnu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gw5y6"]
+texture = ExtResource("7_flqon")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_svtp6"]
+texture = ExtResource("4_jk1qb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1dfpl"]
+texture = ExtResource("8_flqon")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qywvv"]
+texture = ExtResource("6_lgwnu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3wgol"]
+texture = ExtResource("7_flqon")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1acrt"]
+texture = ExtResource("3_tbmy8")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+expand_margin_left = 16.0
+expand_margin_top = 16.0
+expand_margin_right = 16.0
+expand_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_engjn"]
+texture = ExtResource("4_jk1qb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6h3lr"]
+texture = ExtResource("8_flqon")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dj67d"]
+texture = ExtResource("6_lgwnu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6vcge"]
+texture = ExtResource("7_flqon")
 
 [node name="MainMenu" type="Control" unique_id=226517398]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_ekxnf")
+menu_music = ExtResource("2_5dd4i")
+
+[node name="Background" type="TextureRect" parent="." unique_id=990149438]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bqqt6")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=553239035]
 layout_mode = 0
-offset_left = 232.0
-offset_top = 84.0
-offset_right = 415.0
-offset_bottom = 256.0
+offset_left = 157.0
+offset_top = 121.0
+offset_right = 489.0
+offset_bottom = 293.0
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1613416304]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jk1qb")
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer" unique_id=1285223181]
 layout_mode = 2
@@ -31,27 +117,43 @@ theme_override_constants/separation = 8
 
 [node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1956848883]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.8737718, 0.7247337, 0, 1)
+theme_override_font_sizes/font_size = 32
 text = "Alien Claw Machine"
 horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=895022127]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_1ajci")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_7b55j")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5pajh")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_j7ex8")
 text = "Start Run"
 
 [node name="SettingsButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=112784031]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_a8gd2")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hstxw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_8egab")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_gw5y6")
 text = "Settings"
 
 [node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1871106272]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_svtp6")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_1dfpl")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qywvv")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_3wgol")
 text = "Quit"
 
 [node name="SettingsPanel" type="PanelContainer" parent="." unique_id=36727625 node_paths=PackedStringArray("settingsButton")]
+visible = false
 layout_mode = 0
 offset_left = 139.0
 offset_top = 1.0
 offset_right = 499.0
 offset_bottom = 363.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_1acrt")
 script = ExtResource("1_l6cm7")
 settingsButton = NodePath("../CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton")
 
@@ -71,6 +173,8 @@ layout_mode = 2
 
 [node name="SettingsContent" type="VBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer" unique_id=1246263794]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="MasterVolumeLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1726885196]
 layout_mode = 2
@@ -141,4 +245,8 @@ text = "High Contrast"
 
 [node name="CloseButton" type="Button" parent="SettingsPanel/VBoxContainer" unique_id=2142607761]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_engjn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6h3lr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_dj67d")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_6vcge")
 text = "Close"

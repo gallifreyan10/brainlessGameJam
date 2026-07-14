@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://dgcdj2grystud"]
 
+[ext_resource type="Script" uid="uid://cgfbbvr0tdr75" path="res://scenes/Layouts/level_music_player.gd" id="1_bsucm"]
 [ext_resource type="Script" uid="uid://bio3speujudqh" path="res://scripts/runManager.gd" id="1_dc740"]
 [ext_resource type="Script" uid="uid://bk1gkbcb461ts" path="res://scripts/levelData.gd" id="2_5d133"]
+[ext_resource type="AudioStream" uid="uid://cmu60556ptmtm" path="res://audio/music/mainLevelTrack.wav" id="2_dn1wf"]
 [ext_resource type="Resource" uid="uid://cd4ysrwhe6hq1" path="res://resources/levels/prototypeLevel.tres" id="3_3s4k1"]
 [ext_resource type="Resource" uid="uid://dknllghrphxrs" path="res://resources/levels/level2.tres" id="4_782ej"]
 [ext_resource type="Script" uid="uid://cefhq42fy42xu" path="res://scripts/prize_container.gd" id="5_1rkfa"]
@@ -14,18 +16,33 @@
 [ext_resource type="Theme" uid="uid://b114m23cil3i0" path="res://resources/default_ui_theme.tres" id="12_kett4"]
 [ext_resource type="PackedScene" uid="uid://c4kuqjtbhod8x" path="res://ui/ActiveAbilitiesPanel.tscn" id="12_qw4m0"]
 [ext_resource type="Script" uid="uid://dowaivgkcjooy" path="res://scripts/economy_debug_hud.gd" id="13_0i0pt"]
+[ext_resource type="Texture2D" uid="uid://kgj5dcr0xig2" path="res://art/ui/hologramInterface/Card X4/Card X8.png" id="13_5x1oe"]
+[ext_resource type="Texture2D" uid="uid://c6o0rx0pnw20j" path="res://art/ui/hologramInterface/Card X2/Card X2.png" id="13_qw4m0"]
 [ext_resource type="Script" uid="uid://ba1unirjsml3l" path="res://scripts/sale_feedback.gd" id="14_5x1oe"]
 [ext_resource type="Script" uid="uid://cfymf3yi01w1x" path="res://scripts/level_complete_panel.gd" id="15_bqxv4"]
 [ext_resource type="Script" uid="uid://qbtcniq6266h" path="res://scripts/shopPanel.gd" id="16_kcbrs"]
 [ext_resource type="Script" uid="uid://d1mwwo1iilnab" path="res://scripts/suitData.gd" id="17_hbbfd"]
+[ext_resource type="Texture2D" uid="uid://bnkt8fplvnlcp" path="res://resources/coin_frame_0.tres" id="17_w3p3t"]
 [ext_resource type="Resource" uid="uid://c4kmgmplefl46" path="res://resources/suits/pioneerSuit.tres" id="18_dyodi"]
+[ext_resource type="Texture2D" uid="uid://gogjelfdk21d" path="res://resources/coin_frame_1.tres" id="18_ufegr"]
 [ext_resource type="Resource" uid="uid://cdptwsug8rmdv" path="res://resources/suits/magneticSuit.tres" id="19_6dklo"]
+[ext_resource type="Texture2D" uid="uid://d2p13tw0ul3n" path="res://resources/coin_frame_2.tres" id="19_bsucm"]
+[ext_resource type="Texture2D" uid="uid://kpgkxhsdv724" path="res://art/ui/hologramInterface/Button 1/Button Normal.png" id="19_hbbfd"]
+[ext_resource type="Texture2D" uid="uid://dbdtjk3fssu0u" path="res://resources/coin_frame_3.tres" id="20_dn1wf"]
+[ext_resource type="Texture2D" uid="uid://gt0ylsspjgdb" path="res://art/ui/hologramInterface/Button 1/Button Active.png" id="20_dyodi"]
 [ext_resource type="Resource" uid="uid://w8qurk7nesfk" path="res://resources/suits/acrobatSuit.tres" id="20_ntwkj"]
 [ext_resource type="Resource" uid="uid://b2o6w5ttitv6s" path="res://resources/suits/secondChanceSuit.tres" id="21_0agwy"]
+[ext_resource type="Texture2D" uid="uid://b55ppf0txoln5" path="res://art/ui/hologramInterface/Button 1/Button Hover.png" id="21_6dklo"]
+[ext_resource type="Texture2D" uid="uid://c4ee8gyy85yt4" path="res://resources/coin_frame_4.tres" id="21_b87se"]
+[ext_resource type="Texture2D" uid="uid://2lyut6vurgbg" path="res://resources/coin_frame_5.tres" id="22_1qatd"]
+[ext_resource type="Texture2D" uid="uid://d3crnk2numnk2" path="res://art/ui/hologramInterface/Button 1/Button Disable.png" id="22_ntwkj"]
 [ext_resource type="Resource" uid="uid://crgil1yel8qr" path="res://resources/suits/emergencyStabilizerSuit.tres" id="22_nyn87"]
+[ext_resource type="Texture2D" uid="uid://buponarukh13h" path="res://resources/coin_frame_6.tres" id="23_0xvq0"]
 [ext_resource type="Script" uid="uid://bb1ibpt3k8ytn" path="res://scripts/run_failed_panel.gd" id="23_vec61"]
+[ext_resource type="Texture2D" uid="uid://cab102q37gxcv" path="res://resources/coin_frame_7.tres" id="24_ogw0j"]
 [ext_resource type="Script" uid="uid://j5tsp06q7nku" path="res://scripts/helpPanel.gd" id="24_p8sw1"]
 [ext_resource type="Script" uid="uid://bon7webpa85ca" path="res://scripts/owned_suits_panel.gd" id="25_2453e"]
+[ext_resource type="Texture2D" uid="uid://c2vrk1uhxfhh6" path="res://resources/coin_frame_8.tres" id="25_jsd7a"]
 [ext_resource type="Script" uid="uid://daale7juaodk4" path="res://scripts/settingsPanel.gd" id="26_v7ofj"]
 [ext_resource type="PackedScene" uid="uid://cmd68cakaymg0" path="res://scenes/Assets/claw.tscn" id="26_w3p3t"]
 [ext_resource type="Script" uid="uid://dmow26qnm5mpv" path="res://scripts/clawController.gd" id="27_ufegr"]
@@ -44,9 +61,217 @@ size = Vector2(124, 371)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0srf"]
 size = Vector2(701, 87.5)
 
-[sub_resource type="Theme" id="Theme_vpy7u"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0i0pt"]
+texture = ExtResource("13_5x1oe")
+expand_margin_left = 16.0
+expand_margin_top = 16.0
+expand_margin_right = 16.0
+expand_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5x1oe"]
+texture = ExtResource("13_qw4m0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bqxv4"]
+texture = ExtResource("13_qw4m0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0agwy"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nyn87"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vec61"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p8sw1"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2453e"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w3p3t"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ufegr"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bsucm"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kcbrs"]
+texture = ExtResource("13_qw4m0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dn1wf"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b87se"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1qatd"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0xvq0"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ogw0j"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jsd7a"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6lyf2"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3cuoo"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hbbfd"]
+texture = ExtResource("13_qw4m0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iltbr"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tc75b"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v00e2"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_scuqw"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hgxbw"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_csvn3"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1e0fl"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t0kcp"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q4ffn"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oiuaq"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u1gax"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_35ty0"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dyodi"]
+texture = ExtResource("13_qw4m0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v3kkr"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_njwk2"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3f824"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lng5k"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bl4nw"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b1xw3"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wfi7l"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_273so"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_322lt"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h26mn"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_867pq"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e8amh"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_plvfi"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1283p"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pbgpk"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c6y8h"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6dklo"]
+texture = ExtResource("13_qw4m0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ntwkj"]
+texture = ExtResource("13_qw4m0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fax51"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d0kxf"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j7ep4"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5u7bl"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kl1xn"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hpvpl"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f1jfq"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xa37y"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ie74s"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qawt4"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rejxm"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_unyw8"]
+texture = ExtResource("22_ntwkj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nsxsa"]
+texture = ExtResource("19_hbbfd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d2q26"]
+texture = ExtResource("20_dyodi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4waxb"]
+texture = ExtResource("21_6dklo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_518r7"]
+texture = ExtResource("22_ntwkj")
 
 [node name="root" type="Sprite2D" unique_id=1035922221]
+script = ExtResource("1_bsucm")
+level_music = ExtResource("2_dn1wf")
 
 [node name="RunManager" type="Node" parent="." unique_id=1852464911 node_paths=PackedStringArray("prizeContainer", "clawController", "layoutManager")]
 script = ExtResource("1_dc740")
@@ -94,27 +319,30 @@ position = Vector2(318, 31)
 script = ExtResource("10_kett4")
 
 [node name="AlienCollectionPanel" parent="CanvasLayer" unique_id=1208775010 node_paths=PackedStringArray("runManager") instance=ExtResource("11_vpy7u")]
-custom_minimum_size = Vector2(420, 300)
-anchors_preset = 8
+z_index = 50
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -171.0
-offset_top = -150.0
-offset_right = 249.0
-offset_bottom = 150.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -220.0
+offset_top = -160.0
+offset_right = 220.0
+offset_bottom = 160.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme = ExtResource("12_kett4")
+theme_override_styles/panel = SubResource("StyleBoxTexture_0i0pt")
 runManager = NodePath("../../RunManager")
 
 [node name="ActiveAbilitiesPanel" parent="CanvasLayer" unique_id=1948541691 node_paths=PackedStringArray("runManager") instance=ExtResource("12_qw4m0")]
+z_index = 50
 offset_left = 318.0
 offset_top = 140.0
 offset_right = 326.0
 offset_bottom = 206.0
 theme = ExtResource("12_kett4")
+theme_override_styles/panel = SubResource("StyleBoxTexture_5x1oe")
 runManager = NodePath("../../RunManager")
 
 [node name="EconomyDebugHUD" type="VBoxContainer" parent="CanvasLayer" unique_id=1398542342 node_paths=PackedStringArray("runManager")]
@@ -123,8 +351,10 @@ offset_top = 4.0
 offset_right = 132.0
 offset_bottom = 81.0
 mouse_filter = 0
+theme = ExtResource("12_kett4")
 script = ExtResource("13_0i0pt")
 runManager = NodePath("../../RunManager")
+attemptFrames = Array[Texture2D]([ExtResource("17_w3p3t"), ExtResource("18_ufegr"), ExtResource("19_bsucm"), ExtResource("20_dn1wf"), ExtResource("21_b87se"), ExtResource("22_1qatd"), ExtResource("23_0xvq0"), ExtResource("24_ogw0j"), ExtResource("25_jsd7a")])
 
 [node name="MoneyLabel" type="Label" parent="CanvasLayer/EconomyDebugHUD" unique_id=873156934]
 layout_mode = 2
@@ -134,11 +364,7 @@ text = "Money:0"
 layout_mode = 2
 text = "Quota: 0/100"
 
-[node name="SaleLabel" type="Label" parent="CanvasLayer/EconomyDebugHUD" unique_id=613652658]
-layout_mode = 2
-text = "No mineral sold"
-
-[node name="AttemptsLabel" type="Label" parent="CanvasLayer/EconomyDebugHUD" unique_id=653117933]
+[node name="AttemptsContainer" type="HBoxContainer" parent="CanvasLayer/EconomyDebugHUD" unique_id=523697285]
 layout_mode = 2
 
 [node name="CountdownLabel" type="Label" parent="CanvasLayer/EconomyDebugHUD" unique_id=709394461]
@@ -154,7 +380,13 @@ mouse_filter = 0
 theme = ExtResource("12_kett4")
 script = ExtResource("14_5x1oe")
 
-[node name="MineralNameLabel" type="Label" parent="CanvasLayer/SaleFeedback" unique_id=2145885237]
+[node name="HeaderRow" type="HBoxContainer" parent="CanvasLayer/SaleFeedback" unique_id=1995299089]
+layout_mode = 2
+
+[node name="MineralIcon" type="TextureRect" parent="CanvasLayer/SaleFeedback/HeaderRow" unique_id=1886176411]
+layout_mode = 2
+
+[node name="MineralNameLabel" type="Label" parent="CanvasLayer/SaleFeedback/HeaderRow" unique_id=2145885237]
 layout_mode = 2
 
 [node name="BreakdownLabel" type="Label" parent="CanvasLayer/SaleFeedback" unique_id=645029361]
@@ -177,12 +409,14 @@ one_shot = true
 
 [node name="LevelCompletePanel" type="PanelContainer" parent="CanvasLayer" unique_id=1739182077 node_paths=PackedStringArray("runManager")]
 visible = false
+z_index = 50
 offset_left = 270.0
 offset_top = 131.0
 offset_right = 394.0
 offset_bottom = 251.0
 mouse_filter = 2
-theme = SubResource("Theme_vpy7u")
+theme = ExtResource("12_kett4")
+theme_override_styles/panel = SubResource("StyleBoxTexture_bqxv4")
 script = ExtResource("15_bqxv4")
 runManager = NodePath("../../RunManager")
 
@@ -192,6 +426,8 @@ mouse_filter = 0
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=1455296043]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
+theme_override_font_sizes/font_size = 14
 text = "Level Complete!"
 
 [node name="EarningsLabel" type="Label" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=1317122354]
@@ -200,20 +436,30 @@ text = " Earned : 0"
 
 [node name="ContinueButton" type="Button" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=1738080007]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_0agwy")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_nyn87")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vec61")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_p8sw1")
 text = "Continue"
 
 [node name="ShopButton" type="Button" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=772285892]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_2453e")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_w3p3t")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ufegr")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_bsucm")
 text = "Shop"
 
 [node name="ShopPanel" type="PanelContainer" parent="CanvasLayer" unique_id=789925739 node_paths=PackedStringArray("runManager")]
 visible = false
+z_index = 50
 offset_left = 259.0
 offset_top = 9.0
 offset_right = 437.0
 offset_bottom = 210.0
 mouse_filter = 2
 theme = ExtResource("12_kett4")
+theme_override_styles/panel = SubResource("StyleBoxTexture_kcbrs")
 script = ExtResource("16_kcbrs")
 runManager = NodePath("../../RunManager")
 suitCatalog = Array[ExtResource("17_hbbfd")]([ExtResource("18_dyodi"), ExtResource("19_6dklo"), ExtResource("20_ntwkj"), ExtResource("21_0agwy"), ExtResource("22_nyn87")])
@@ -227,10 +473,18 @@ layout_mode = 2
 
 [node name="RerollButton" type="Button" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=2123462111]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_dn1wf")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_b87se")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1qatd")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_0xvq0")
 text = "Reroll"
 
 [node name="ContinueButton" type="Button" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=1136640569]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_ogw0j")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jsd7a")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6lyf2")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_3cuoo")
 text = "Continue"
 
 [node name="StatusLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=2110119621]
@@ -238,11 +492,14 @@ layout_mode = 2
 
 [node name="RunFailedPanel" type="PanelContainer" parent="CanvasLayer" unique_id=1130151050 node_paths=PackedStringArray("runManager")]
 visible = false
+z_index = 50
 offset_left = 249.0
 offset_top = 121.0
 offset_right = 395.0
 offset_bottom = 241.0
 mouse_filter = 2
+theme = ExtResource("12_kett4")
+theme_override_styles/panel = SubResource("StyleBoxTexture_hbbfd")
 script = ExtResource("23_vec61")
 runManager = NodePath("../../RunManager")
 
@@ -252,6 +509,8 @@ mouse_filter = 0
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=1565168108]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
+theme_override_font_sizes/font_size = 14
 text = "Run Failed"
 
 [node name="MessageLabel" type="Label" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=40664713]
@@ -260,10 +519,18 @@ text = "Quota not reached"
 
 [node name="NewRunButton" type="Button" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=17416925]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_iltbr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tc75b")
+theme_override_styles/hover = SubResource("StyleBoxTexture_v00e2")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_scuqw")
 text = "Start New Run"
 
 [node name="MainMenuButton" type="Button" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=547900442]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_hgxbw")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_csvn3")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1e0fl")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_t0kcp")
 text = "Main Menu"
 
 [node name="HelpButton" type="Button" parent="CanvasLayer" unique_id=1989792946]
@@ -271,10 +538,16 @@ offset_left = 20.0
 offset_top = 141.0
 offset_right = 64.0
 offset_bottom = 172.0
+theme = ExtResource("12_kett4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_q4ffn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_oiuaq")
+theme_override_styles/hover = SubResource("StyleBoxTexture_u1gax")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_35ty0")
 text = "Help"
 
 [node name="HelpPanel" type="PanelContainer" parent="CanvasLayer" unique_id=1316446709 node_paths=PackedStringArray("helpButton", "runManager")]
 visible = false
+z_index = 50
 custom_minimum_size = Vector2(300, 0)
 offset_left = 69.0
 offset_top = 3.0
@@ -282,6 +555,7 @@ offset_right = 619.0
 offset_bottom = 373.0
 mouse_filter = 2
 theme = ExtResource("12_kett4")
+theme_override_styles/panel = SubResource("StyleBoxTexture_dyodi")
 script = ExtResource("24_p8sw1")
 helpButton = NodePath("../HelpButton")
 runManager = NodePath("../../RunManager")
@@ -293,6 +567,8 @@ mouse_filter = 0
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer/HelpPanel/VBoxContainer" unique_id=1200168300]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
+theme_override_font_sizes/font_size = 14
 text = "How to Play"
 
 [node name="BodyLabel" type="Label" parent="CanvasLayer/HelpPanel/VBoxContainer" unique_id=1036248502]
@@ -320,6 +596,10 @@ autowrap_mode = 3
 
 [node name="CloseButton" type="Button" parent="CanvasLayer/HelpPanel/VBoxContainer" unique_id=1320010215]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_v3kkr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_njwk2")
+theme_override_styles/hover = SubResource("StyleBoxTexture_3f824")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_lng5k")
 text = "Close"
 
 [node name="CollectionButton" type="Button" parent="CanvasLayer" unique_id=640475432]
@@ -327,6 +607,11 @@ offset_left = 15.0
 offset_top = 175.0
 offset_right = 100.0
 offset_bottom = 206.0
+theme = ExtResource("12_kett4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_bl4nw")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_b1xw3")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wfi7l")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_273so")
 text = "Collection"
 
 [node name="AbilitiesButton" type="Button" parent="CanvasLayer" unique_id=120047696]
@@ -334,6 +619,11 @@ offset_left = 15.0
 offset_top = 214.0
 offset_right = 100.0
 offset_bottom = 245.0
+theme = ExtResource("12_kett4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_322lt")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_h26mn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_867pq")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_e8amh")
 text = "Abilities"
 
 [node name="OwnedSuitsButton" type="Button" parent="CanvasLayer" unique_id=781249223]
@@ -341,16 +631,23 @@ offset_left = 12.0
 offset_top = 254.0
 offset_right = 129.0
 offset_bottom = 285.0
+theme = ExtResource("12_kett4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_plvfi")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_1283p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_pbgpk")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_c6y8h")
 text = "Suit Inventory"
 
 [node name="OwnedSuitsPanel" type="PanelContainer" parent="CanvasLayer" unique_id=892049915 node_paths=PackedStringArray("runManager")]
 visible = false
+z_index = 50
 custom_minimum_size = Vector2(300, 0)
 offset_left = 219.0
 offset_top = 151.0
 offset_right = 519.0
 offset_bottom = 213.0
 theme = ExtResource("12_kett4")
+theme_override_styles/panel = SubResource("StyleBoxTexture_6dklo")
 script = ExtResource("25_2453e")
 runManager = NodePath("../../RunManager")
 
@@ -359,6 +656,8 @@ layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer/OwnedSuitsPanel/VBoxContainer" unique_id=989789121]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
+theme_override_font_sizes/font_size = 14
 text = "Owned Suits"
 
 [node name="SuitList" type="VBoxContainer" parent="CanvasLayer/OwnedSuitsPanel/VBoxContainer" unique_id=2016784296]
@@ -370,11 +669,13 @@ text = "Close"
 
 [node name="SettingsPanel" type="PanelContainer" parent="CanvasLayer" unique_id=7482773 node_paths=PackedStringArray("runManager")]
 visible = false
+z_index = 50
 offset_left = 139.0
 offset_top = 1.0
 offset_right = 499.0
 offset_bottom = 363.0
 theme = ExtResource("12_kett4")
+theme_override_styles/panel = SubResource("StyleBoxTexture_ntwkj")
 script = ExtResource("26_v7ofj")
 runManager = NodePath("../../RunManager")
 
@@ -386,6 +687,8 @@ layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer" unique_id=343900441]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
+theme_override_font_sizes/font_size = 14
 text = "Settings"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/SettingsPanel/VBoxContainer" unique_id=1246293889]
@@ -464,6 +767,7 @@ text = "High Contrast"
 
 [node name="CloseButton" type="Button" parent="CanvasLayer/SettingsPanel/VBoxContainer" unique_id=1433783906]
 layout_mode = 2
+theme = ExtResource("12_kett4")
 text = "Close"
 
 [node name="QuotaCompleteFeedback" type="Control" parent="CanvasLayer" unique_id=1276531992 node_paths=PackedStringArray("runManager")]
@@ -475,6 +779,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("12_kett4")
 script = ExtResource("28_vpy7u")
 runManager = NodePath("../../RunManager")
 
@@ -550,13 +855,13 @@ runManager = NodePath("../RunManager")
 
 [node name="PauseMenu" type="Control" parent="PauseController" unique_id=1453874411]
 process_mode = 3
-visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_left = 284.0
+offset_left = 302.0
 offset_top = 90.0
-offset_right = 324.0
+offset_right = 342.0
 offset_bottom = 130.0
+theme = ExtResource("12_kett4")
 
 [node name="MarginContainer" type="MarginContainer" parent="PauseController/PauseMenu" unique_id=725886246]
 layout_mode = 0
@@ -568,22 +873,41 @@ layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=1448226141]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
+theme_override_font_sizes/font_size = 14
 text = "Paused"
 
 [node name="ResumeButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=2135690849]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_fax51")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_d0kxf")
+theme_override_styles/hover = SubResource("StyleBoxTexture_j7ep4")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_5u7bl")
 text = "Resume"
 
 [node name="SettingsButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=243395431]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_kl1xn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hpvpl")
+theme_override_styles/hover = SubResource("StyleBoxTexture_f1jfq")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_xa37y")
 text = "Settings"
 
 [node name="RestartRunButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=2146362254]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_ie74s")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_qawt4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rejxm")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_unyw8")
 text = "Restart Run"
 
 [node name="ReturnToTitleButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=1470979763]
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxTexture_nsxsa")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_d2q26")
+theme_override_styles/hover = SubResource("StyleBoxTexture_4waxb")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_518r7")
 text = " Return to Title"
 
 [node name="QuitConfirmPanel" type="Control" parent="PauseController" unique_id=1378808546]

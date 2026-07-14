@@ -1,4 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://b114m23cil3i0"]
 
+[ext_resource type="FontFile" uid="uid://c8d2uw8klj8fv" path="res://art/ui/80s-retro-future.ttf" id="1_s24ug"]
+
 [resource]
+default_font = ExtResource("1_s24ug")
 default_font_size = 12
