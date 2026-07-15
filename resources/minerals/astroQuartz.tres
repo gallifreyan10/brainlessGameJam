@@ -13,4 +13,5 @@ displayName = "Astro Quartz"
 sprite = ExtResource("2_ul4wq")
 collision_shape = SubResource("RectangleShape2D_bw7so")
 sale_value = 10
+spawn_weight = 100.0
 metadata/_custom_type_script = "uid://dsddbp08ie4bc"

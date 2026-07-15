@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SuitData" format=3 uid="uid://l58payjl6n3q"]
+
+[ext_resource type="Texture2D" uid="uid://bj4ul5a0oh8ny" path="res://art/finalSprites/suits/pilotSuit.png" id="1_fwt0s"]
+[ext_resource type="Script" uid="uid://d1mwwo1iilnab" path="res://scripts/suitData.gd" id="2_7v32y"]
+
+[resource]
+script = ExtResource("2_7v32y")
+suit_id = &"pilot_suit"
+displayName = "Pilot Suit"
+icon = ExtResource("1_fwt0s")
+horizontal_speed_multiplier = 1.25
+max_tilt_angle_bonus = 4.0
+metadata/_custom_type_script = "uid://d1mwwo1iilnab"

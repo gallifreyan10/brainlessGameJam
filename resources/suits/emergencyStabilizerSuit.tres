@@ -1,11 +1,13 @@
 [gd_resource type="Resource" script_class="SuitData" format=3 uid="uid://crgil1yel8qr"]
 
 [ext_resource type="Script" uid="uid://d1mwwo1iilnab" path="res://scripts/suitData.gd" id="1_xgnaf"]
+[ext_resource type="Texture2D" uid="uid://cmpu1y0bd8du7" path="res://art/finalSprites/suits/emergencyStabilizerSuit.png" id="1_ymypb"]
 
 [resource]
 script = ExtResource("1_xgnaf")
 suit_id = &"emergencyStabilizer_suit"
 displayName = "Emergency Stabilizer Suit"
 price = 25
+icon = ExtResource("1_ymypb")
 blocks_cabinet_shake = true
 metadata/_custom_type_script = "uid://d1mwwo1iilnab"

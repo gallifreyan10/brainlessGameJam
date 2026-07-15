@@ -55,6 +55,7 @@ metadata/_custom_type_script = "uid://bxput7ta4vpbu"
 [resource]
 script = ExtResource("5_wwxym")
 mineralTable = Array[ExtResource("2_les4x")]([SubResource("Resource_7n0fx"), SubResource("Resource_8si3c"), SubResource("Resource_vpylb"), SubResource("Resource_j576s"), SubResource("Resource_so3ft"), SubResource("Resource_5m7t8")])
+targetMineralCount = 30
 earningsQuota = 90
 difficultyCurve = ExtResource("1_bum1n")
 metadata/_custom_type_script = "uid://bk1gkbcb461ts"

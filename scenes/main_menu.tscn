@@ -4,10 +4,13 @@
 [ext_resource type="Script" uid="uid://daale7juaodk4" path="res://scripts/settingsPanel.gd" id="1_l6cm7"]
 [ext_resource type="AudioStream" uid="uid://b4vjhv4ihwb1m" path="res://audio/music/menu.wav" id="2_5dd4i"]
 [ext_resource type="Texture2D" uid="uid://dh7275vsekg2i" path="res://art/backgrounds/spacePack/Blue Version/blue-preview.png" id="2_bqqt6"]
+[ext_resource type="AudioStream" uid="uid://jkcfufaceedk" path="res://audio/sfx/ui_startgame.wav" id="3_flqon"]
 [ext_resource type="Texture2D" uid="uid://c0gl4u41nwnlc" path="res://art/ui/hologramInterface/Card X1/Card X1.png" id="3_tbmy8"]
 [ext_resource type="Texture2D" uid="uid://kpgkxhsdv724" path="res://art/ui/hologramInterface/Button 1/Button Normal.png" id="4_jk1qb"]
+[ext_resource type="AudioStream" uid="uid://bft254583n0eq" path="res://audio/sfx/ui_select.wav" id="4_rcqid"]
 [ext_resource type="Texture2D" uid="uid://dmi45bvmeqcj2" path="res://art/ui/hologramInterface/Button 3/Active.png" id="5_5dd4i"]
 [ext_resource type="Texture2D" uid="uid://b55ppf0txoln5" path="res://art/ui/hologramInterface/Button 1/Button Hover.png" id="6_lgwnu"]
+[ext_resource type="Texture2D" uid="uid://s2bieit855qt" path="res://art/finalSprites/gameLogo.png" id="6_rcqid"]
 [ext_resource type="Texture2D" uid="uid://d3crnk2numnk2" path="res://art/ui/hologramInterface/Button 1/Button Disable.png" id="7_flqon"]
 [ext_resource type="Texture2D" uid="uid://gt0ylsspjgdb" path="res://art/ui/hologramInterface/Button 1/Button Active.png" id="8_flqon"]
 
@@ -80,6 +83,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ekxnf")
 menu_music = ExtResource("2_5dd4i")
+button_click_sfx = ExtResource("3_flqon")
+button_hover_sfx = ExtResource("4_rcqid")
 
 [node name="Background" type="TextureRect" parent="." unique_id=990149438]
 layout_mode = 1
@@ -95,10 +100,10 @@ stretch_mode = 6
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=553239035]
 layout_mode = 0
-offset_left = 157.0
-offset_top = 121.0
-offset_right = 489.0
-offset_bottom = 293.0
+offset_left = 147.0
+offset_top = 36.0
+offset_right = 499.0
+offset_bottom = 321.0
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1613416304]
 layout_mode = 2
@@ -115,12 +120,9 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1956848883]
+[node name="TitleLabel" type="TextureRect" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1931502441]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8737718, 0.7247337, 0, 1)
-theme_override_font_sizes/font_size = 32
-text = "Alien Claw Machine"
-horizontal_alignment = 1
+texture = ExtResource("6_rcqid")
 
 [node name="StartButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=895022127]
 layout_mode = 2
@@ -146,7 +148,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_qywvv")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_3wgol")
 text = "Quit"
 
-[node name="SettingsPanel" type="PanelContainer" parent="." unique_id=36727625 node_paths=PackedStringArray("settingsButton")]
+[node name="SettingsPanel" type="PanelContainer" parent="." unique_id=36727625]
 visible = false
 layout_mode = 0
 offset_left = 139.0
@@ -155,7 +157,6 @@ offset_right = 499.0
 offset_bottom = 363.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_1acrt")
 script = ExtResource("1_l6cm7")
-settingsButton = NodePath("../CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton")
 
 [node name="MarginContainer" type="MarginContainer" parent="SettingsPanel" unique_id=1609770636]
 layout_mode = 2

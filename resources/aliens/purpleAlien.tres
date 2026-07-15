@@ -12,5 +12,5 @@ icon = ExtResource("2_ub3da")
 ability = ExtResource("1_hsteb")
 rarity = 3
 collection_slot = 3
-spawn_weight = 8.0
+spawn_weight = 6.0
 metadata/_custom_type_script = "uid://bkfisr2cutesv"

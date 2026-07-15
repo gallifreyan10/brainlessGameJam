@@ -12,4 +12,5 @@ icon = ExtResource("2_hbdy8")
 description = "First Test Alien"
 ability = ExtResource("1_rglea")
 collection_slot = 5
+spawn_weight = 0.5
 metadata/_custom_type_script = "uid://bkfisr2cutesv"

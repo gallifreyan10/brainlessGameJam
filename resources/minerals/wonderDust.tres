@@ -15,4 +15,5 @@ collision_shape = SubResource("RectangleShape2D_bw7so")
 rarity = 2
 sale_value = 40
 weight = 1.0
+spawn_weight = 18.0
 metadata/_custom_type_script = "uid://dsddbp08ie4bc"

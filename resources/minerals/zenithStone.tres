@@ -13,6 +13,6 @@ displayName = "Zenith Stone"
 sprite = ExtResource("2_qatek")
 collision_shape = SubResource("RectangleShape2D_bw7so")
 rarity = 5
-sale_value = 20
+sale_value = 120
 weight = 2.0
 metadata/_custom_type_script = "uid://dsddbp08ie4bc"

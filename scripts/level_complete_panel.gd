@@ -1,6 +1,9 @@
 extends PanelContainer
 
 @export var runManager: RunManager
+@export var level_complete_sfx: AudioStream
+@export var button_click_sfx: AudioStream
+@export var button_hover_sfx: AudioStream
 const TITLE_COLOR := Color("#FFD36A")
 const DETAIL_COLOR := Color("#7CFFD6")
 
@@ -34,6 +37,9 @@ func _ready() -> void:
 	continueButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	shopButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	
+	continueButton.mouse_entered.connect(_on_button_hovered)
+	shopButton.mouse_entered.connect(_on_button_hovered)
+	
 	if runManager == null:
 		push_error("LevelCompletePanel has no RunManager.")
 		return
@@ -48,7 +54,9 @@ func _ready() -> void:
 	shopButton.pressed.connect(
 		_on_shop_pressed
 	)
-
+func _on_button_hovered() -> void:
+	SFXManager.play_sfx(button_hover_sfx, -6.0)
+	
 func _on_level_completed(
 	levelIndex: int,
 	grossEarnings: int
@@ -60,7 +68,7 @@ func _on_level_completed(
 			grossEarnings
 		]
 	)
-	
+	SFXManager.play_sfx(level_complete_sfx)
 	visible = true
 
 func _on_level_started(
@@ -70,9 +78,11 @@ func _on_level_started(
 	visible = false
 	
 func _on_continue_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	runManager.continue_to_next_level()
 	
 func _on_shop_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	visible = false
 	runManager.open_shop()
 	

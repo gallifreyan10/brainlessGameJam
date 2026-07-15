@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="SuitData" format=3 uid="uid://b2o6w5ttitv6s"]
 
+[ext_resource type="Texture2D" uid="uid://ln56kaey0jfn" path="res://art/finalSprites/suits/recoverySuit.png" id="1_e5e52"]
 [ext_resource type="Script" uid="uid://d1mwwo1iilnab" path="res://scripts/suitData.gd" id="1_fkh08"]
 
 [resource]
@@ -7,5 +8,6 @@ script = ExtResource("1_fkh08")
 suit_id = &"secondChance_suit"
 displayName = "Second Chance Suit"
 price = 25
+icon = ExtResource("1_e5e52")
 second_chance_regrabs = 1
 metadata/_custom_type_script = "uid://d1mwwo1iilnab"

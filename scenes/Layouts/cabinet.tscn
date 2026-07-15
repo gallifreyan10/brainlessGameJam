@@ -48,12 +48,21 @@
 [ext_resource type="Script" uid="uid://dmow26qnm5mpv" path="res://scripts/clawController.gd" id="27_ufegr"]
 [ext_resource type="Script" uid="uid://d0iq5k305ql3h" path="res://scripts/layoutManager.gd" id="28_r815q"]
 [ext_resource type="Script" uid="uid://djxyuln6bjtj7" path="res://scripts/quotaCompleteFeedback.gd" id="28_vpy7u"]
+[ext_resource type="AudioStream" uid="uid://c0isnqydujw1i" path="res://audio/sfx/sell.wav" id="29_0xvq0"]
 [ext_resource type="PackedScene" uid="uid://dapfs78ury1r8" path="res://scenes/Layouts/cabinetv2.tscn" id="29_hosw5"]
 [ext_resource type="PackedScene" uid="uid://o8thk3yme5x5" path="res://scenes/Layouts/cabinetv1.tscn" id="29_v7ofj"]
 [ext_resource type="PackedScene" uid="uid://klrsmy2ni0wy" path="res://scenes/Layouts/cabinetv3.tscn" id="30_v7ofj"]
 [ext_resource type="PackedScene" uid="uid://8yj1llkc651j" path="res://scenes/Layouts/cabinetv4.tscn" id="31_kj04f"]
+[ext_resource type="AudioStream" uid="uid://bxf4yami1o0le" path="res://audio/sfx/victory.wav" id="31_ogw0j"]
+[ext_resource type="AudioStream" uid="uid://bft254583n0eq" path="res://audio/sfx/ui_select.wav" id="32_jsd7a"]
 [ext_resource type="PackedScene" uid="uid://bopsol2as6rds" path="res://scenes/Layouts/cabinetv5.tscn" id="32_kett4"]
 [ext_resource type="Script" uid="uid://dofirwqkhaadw" path="res://scripts/pauseController.gd" id="35_kj04f"]
+[ext_resource type="Resource" uid="uid://l58payjl6n3q" path="res://resources/suits/pilotSuit.tres" id="44_iltbr"]
+[ext_resource type="AudioStream" uid="uid://dp3mk0wyv55c8" path="res://audio/sfx/game_over.wav" id="45_6lyf2"]
+[ext_resource type="AudioStream" uid="uid://dpsnvty5qa4l0" path="res://audio/sfx/drop.wav" id="52_3cuoo"]
+[ext_resource type="AudioStream" uid="uid://c2paqh83iuai2" path="res://audio/sfx/close.wav" id="53_iltbr"]
+[ext_resource type="AudioStream" uid="uid://lpqwsl85jakr" path="res://audio/sfx/return.wav" id="54_tc75b"]
+[ext_resource type="AudioStream" uid="uid://7wovvmr5sm5b" path="res://audio/sfx/slip.wav" id="55_v00e2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
 size = Vector2(124, 371)
@@ -317,6 +326,8 @@ position = Vector2(318, 31)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1951429874]
 script = ExtResource("10_kett4")
+button_click_sfx = ExtResource("32_jsd7a")
+button_hover_sfx = ExtResource("32_jsd7a")
 
 [node name="AlienCollectionPanel" parent="CanvasLayer" unique_id=1208775010 node_paths=PackedStringArray("runManager") instance=ExtResource("11_vpy7u")]
 z_index = 50
@@ -334,6 +345,8 @@ size_flags_vertical = 4
 theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_0i0pt")
 runManager = NodePath("../../RunManager")
+button_click_sfx = ExtResource("32_jsd7a")
+button_hover_sfx = ExtResource("32_jsd7a")
 
 [node name="ActiveAbilitiesPanel" parent="CanvasLayer" unique_id=1948541691 node_paths=PackedStringArray("runManager") instance=ExtResource("12_qw4m0")]
 z_index = 50
@@ -344,6 +357,8 @@ offset_bottom = 206.0
 theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_5x1oe")
 runManager = NodePath("../../RunManager")
+button_click_sfx = ExtResource("32_jsd7a")
+button_hover_sfx = ExtResource("32_jsd7a")
 
 [node name="EconomyDebugHUD" type="VBoxContainer" parent="CanvasLayer" unique_id=1398542342 node_paths=PackedStringArray("runManager")]
 offset_left = 9.0
@@ -379,6 +394,7 @@ offset_bottom = 110.0
 mouse_filter = 0
 theme = ExtResource("12_kett4")
 script = ExtResource("14_5x1oe")
+mineral_sold_sfx = ExtResource("29_0xvq0")
 
 [node name="HeaderRow" type="HBoxContainer" parent="CanvasLayer/SaleFeedback" unique_id=1995299089]
 layout_mode = 2
@@ -419,6 +435,9 @@ theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_bqxv4")
 script = ExtResource("15_bqxv4")
 runManager = NodePath("../../RunManager")
+level_complete_sfx = ExtResource("31_ogw0j")
+button_click_sfx = ExtResource("32_jsd7a")
+button_hover_sfx = ExtResource("32_jsd7a")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/LevelCompletePanel" unique_id=1804771937]
 layout_mode = 2
@@ -462,7 +481,9 @@ theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_kcbrs")
 script = ExtResource("16_kcbrs")
 runManager = NodePath("../../RunManager")
-suitCatalog = Array[ExtResource("17_hbbfd")]([ExtResource("18_dyodi"), ExtResource("19_6dklo"), ExtResource("20_ntwkj"), ExtResource("21_0agwy"), ExtResource("22_nyn87")])
+suitCatalog = Array[ExtResource("17_hbbfd")]([ExtResource("18_dyodi"), ExtResource("19_6dklo"), ExtResource("20_ntwkj"), ExtResource("21_0agwy"), ExtResource("22_nyn87"), ExtResource("44_iltbr")])
+button_hover_sfx = ExtResource("32_jsd7a")
+button_click_sfx = ExtResource("32_jsd7a")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ShopPanel" unique_id=1803431874]
 layout_mode = 2
@@ -502,6 +523,9 @@ theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_hbbfd")
 script = ExtResource("23_vec61")
 runManager = NodePath("../../RunManager")
+run_failed_sfx = ExtResource("45_6lyf2")
+button_click_sfx = ExtResource("32_jsd7a")
+button_hover_sfx = ExtResource("32_jsd7a")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/RunFailedPanel" unique_id=1567539791]
 layout_mode = 2
@@ -559,6 +583,8 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_dyodi")
 script = ExtResource("24_p8sw1")
 helpButton = NodePath("../HelpButton")
 runManager = NodePath("../../RunManager")
+button_click_sfx = ExtResource("32_jsd7a")
+button_hover_sfx = ExtResource("32_jsd7a")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HelpPanel" unique_id=2143578196]
 layout_mode = 2
@@ -650,6 +676,8 @@ theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_6dklo")
 script = ExtResource("25_2453e")
 runManager = NodePath("../../RunManager")
+button_click_sfx = ExtResource("32_jsd7a")
+button_hover_sfx = ExtResource("32_jsd7a")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/OwnedSuitsPanel" unique_id=1850875643]
 layout_mode = 2
@@ -678,6 +706,8 @@ theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_ntwkj")
 script = ExtResource("26_v7ofj")
 runManager = NodePath("../../RunManager")
+button_click_sfx = ExtResource("32_jsd7a")
+button_hover_sfx = ExtResource("32_jsd7a")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SettingsPanel" unique_id=2140580532]
 layout_mode = 2
@@ -821,6 +851,10 @@ return_speed = 190.0
 grab_Area = NodePath("GrabArea")
 hold_point = NodePath("HoldPoint")
 release_point = NodePath("ReleasePoint")
+claw_drop_sfx = ExtResource("52_3cuoo")
+claw_close_sfx = ExtResource("53_iltbr")
+claw_return_sfx = ExtResource("54_tc75b")
+prize_release_sfx = ExtResource("55_v00e2")
 animation_player = NodePath("../AnimationPlayer")
 cableAttachPoint = NodePath("cableAttachPoint")
 slipTimer = NodePath("SlipTimer")
@@ -852,15 +886,23 @@ layer = 20
 script = ExtResource("35_kj04f")
 settingsPanel = NodePath("../CanvasLayer/SettingsPanel")
 runManager = NodePath("../RunManager")
+button_click_sfx = ExtResource("32_jsd7a")
+button_hover_sfx = ExtResource("32_jsd7a")
 
 [node name="PauseMenu" type="Control" parent="PauseController" unique_id=1453874411]
 process_mode = 3
 layout_mode = 3
-anchors_preset = 0
-offset_left = 302.0
-offset_top = 90.0
-offset_right = 342.0
-offset_bottom = 130.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("12_kett4")
 
 [node name="MarginContainer" type="MarginContainer" parent="PauseController/PauseMenu" unique_id=725886246]

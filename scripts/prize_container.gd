@@ -1,13 +1,12 @@
 extends Node2D
 @export_category("Alien Spawning")
 @export var alien_Scene: PackedScene
-@export_range(1,10,1) var minimumAlienCount: int = 1
-@export_range(1,10,1) var maximumAlienCount: int = 6
+@export_range(0,30,1) var targetAlienCount: int = 30
 
 @export_category("Shared Spawn Area")
 @export var spawn_top_left: Marker2D
 @export var spawn_bottom_right: Marker2D
-@export var minimumSpawnSeparation: float = 28.0
+@export var minimumSpawnSeparation: float = 18.0
 
 @export_category("Mineral Spawning")
 @export var levelData: LevelData
@@ -53,12 +52,8 @@ func spawnLittleGuys() -> void:
 	if alien_Scene == null:
 		push_warning("No alien scene assigned.")
 		return
-	var minimumCount := mini(minimumAlienCount,maximumAlienCount)
-	var maximumCount := maxi(minimumAlienCount,maximumAlienCount)
-	
-	var alienCount := rng.randi_range(minimumCount,maximumCount)
-	
-	for index in range(alienCount):
+
+	for index in range(targetAlienCount):
 		spawnLittleGuy()
 		
 

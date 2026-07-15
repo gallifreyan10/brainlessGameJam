@@ -31,6 +31,7 @@ var locked_drop_tilt_degrees: float = 0.0
 @export var attempt_timer: Timer
 #Array of possible prizes to be picked from
 var grab_candidates: Array[RigidBody2D] = []
+var first_contact_prize: RigidBody2D = null
 @export var grab_Area: Area2D
 @export var hold_point: Marker2D
 @export var release_point: Marker2D
@@ -50,6 +51,13 @@ signal prize_released(prize: RigidBody2D)
 signal attempt_finished
 var held_prize_original_layer: int
 var held_prize_original_mask: int
+
+@export_category("SFX")
+@export var claw_drop_sfx: AudioStream
+@export var claw_close_sfx: AudioStream
+@export var claw_return_sfx: AudioStream
+@export var prize_release_sfx: AudioStream
+
 @export_category("Animations")
 @export var animation_player: AnimationPlayer
 signal claw_closed(claw: CharacterBody2D)
@@ -178,12 +186,17 @@ func start_dropping() -> void:
 		slipTimer.stop()	
 		
 	grab_candidates.clear()
+	first_contact_prize = null
+	
+	if grab_Area != null:
+		grab_Area.set_deferred("monitoring", true)
 		
 	if attempt_timer != null:
 		attempt_timer.stop()
 	
 	locked_drop_tilt_degrees = current_tilt_degrees
 	second_chance_regrabs_remaining = max_second_chance_regrabs
+	SFXManager.play_sfx(claw_drop_sfx)
 	change_state(State.DROPPING)
 	
 func process_dropping() -> void:
@@ -332,11 +345,11 @@ func request_close_claw() -> void:
 		
 	close_request_locked = true
 	velocity = Vector2.ZERO
-	grab_candidates.clear()
 	
 	grab_Area.set_deferred("monitoring", true)
 	
 	change_state(State.GRABBING)
+	SFXManager.play_sfx(claw_close_sfx)
 	animation_player.play(&"close_claw")	
 	
 func _on_animation_finished(animation_name: StringName) -> void:
@@ -355,6 +368,7 @@ func _on_animation_finished(animation_name: StringName) -> void:
 			hold_selected_prize()
 			
 		claw_closed.emit(self)
+		SFXManager.play_sfx(claw_return_sfx)
 		change_state(State.RETURNING)
 		return
 		
@@ -418,6 +432,8 @@ func release_held_prize(expect_chute_resolution: bool = true) -> void:
 		return
 		
 	var released_prize: RigidBody2D = held_prize
+	
+	SFXManager.play_sfx(prize_release_sfx)
 	held_prize = null
 	
 	if is_instance_valid(held_prize_original_parent):
@@ -486,31 +502,31 @@ func _ready() -> void:
 		apply_suit_modifiers(runManager.equippedSuit)
 func choose_nearest_candidate() -> RigidBody2D:
 	remove_invalid_candidates()
-	
-	var nearest_prize: RigidBody2D = null
-	var nearest_distance_squared: float = INF
-	
+
+	if(
+		is_instance_valid(first_contact_prize)
+		and not first_contact_prize.is_queued_for_deletion()
+		and first_contact_prize.is_inside_tree()
+		and first_contact_prize.is_in_group("prizes")
+	):
+		return first_contact_prize
+		
 	for prize in grab_candidates:
 		if not is_instance_valid(prize):
 			continue
+
 		if prize.is_queued_for_deletion():
 			continue
+
 		if not prize.is_inside_tree():
 			continue
-			
-		#optional eligability check if all prizes use this group
+
 		if not prize.is_in_group("prizes"):
 			continue
-		
-		var distance_squared := (
-			hold_point.global_position.distance_squared_to(prize.global_position)
-		)
-		
-		if distance_squared < nearest_distance_squared:
-			nearest_distance_squared = distance_squared
-			nearest_prize = prize
-			
-	return nearest_prize
+
+		return prize
+
+	return null
 
 func _on_grab_area_body_entered(body: Node2D) -> void:
 	# Ignore cabinet walls and other non-prize body types
@@ -526,10 +542,17 @@ func _on_grab_area_body_entered(body: Node2D) -> void:
 	if prize.is_queued_for_deletion():
 		return
 		
+	if not prize.is_in_group("prizes"):
+		return
+			
 	#prevent the same prize from appearing twice
 	if not grab_candidates.has(prize):
 		grab_candidates.append(prize)
-
+	
+	if current_State == State.DROPPING and first_contact_prize == null:
+		first_contact_prize = prize
+		request_close_claw()
+		
 func _on_grab_area_body_exited(body: Node2D) -> void:
 	if body is RigidBody2D:
 		grab_candidates.erase(body)

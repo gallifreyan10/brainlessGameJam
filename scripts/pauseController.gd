@@ -3,6 +3,8 @@ extends CanvasLayer
 @export_file("*.tscn") var title_scene_path: String = "res://scenes/main_menu.tscn"
 @export var settingsPanel: PanelContainer
 @export var runManager: RunManager
+@export var button_click_sfx: AudioStream
+@export var button_hover_sfx: AudioStream
 
 @onready var pauseMenu: Control = $PauseMenu
 @onready var resumeButton: Button = $PauseMenu/MarginContainer/VBoxContainer/ResumeButton
@@ -28,6 +30,11 @@ func _ready() -> void:
 	pauseMenu.offset_bottom = 110.0
 	
 	var margin_container := $PauseMenu/MarginContainer
+	margin_container.set_anchors_preset(Control.PRESET_FULL_RECT)
+	margin_container.offset_left = 0.0
+	margin_container.offset_top = 0.0
+	margin_container.offset_right = 0.0
+	margin_container.offset_bottom = 0.0
 	margin_container.add_theme_constant_override("margin_left", 24)
 	margin_container.add_theme_constant_override("margin_right", 24)
 	margin_container.add_theme_constant_override("margin_top", 24)
@@ -35,6 +42,7 @@ func _ready() -> void:
 	
 	var vbox := $PauseMenu/MarginContainer/VBoxContainer
 	vbox.add_theme_constant_override("separation", 8)
+	titleLabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	titleLabel.add_theme_color_override("font_color", TITLE_COLOR)
 	titleLabel.add_theme_font_size_override("font_size", 14)
 	
@@ -54,6 +62,10 @@ func _ready() -> void:
 	settingsButton.pressed.connect(_on_settings_pressed)
 	restartButton.pressed.connect(_on_restart_pressed)
 	titleButton.pressed.connect(_on_return_to_title_pressed)
+	resumeButton.mouse_entered.connect(_on_button_hovered)
+	settingsButton.mouse_entered.connect(_on_button_hovered)
+	restartButton.mouse_entered.connect(_on_button_hovered)
+	titleButton.mouse_entered.connect(_on_button_hovered)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause_game"):
@@ -78,6 +90,7 @@ func resume_game() -> void:
 	get_tree().paused = false
 	
 func _on_settings_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	if settingsPanel == null:
 		push_warning("PauseController needs SettingsPanel assigned.")
 		return
@@ -85,11 +98,16 @@ func _on_settings_pressed() -> void:
 	settingsPanel.open()
 
 func _on_restart_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	get_tree().paused = false
 	
 	if runManager != null:
 		runManager.start_new_run()
 		
 func _on_return_to_title_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	get_tree().paused = false
 	get_tree().change_scene_to_file(title_scene_path)
+
+func _on_button_hovered() -> void:
+	SFXManager.play_sfx(button_hover_sfx, -6.0)

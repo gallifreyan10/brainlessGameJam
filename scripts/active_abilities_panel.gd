@@ -5,6 +5,8 @@ extends PanelContainer
 @onready var close_button: Button = $MarginContainer/VBoxContainer/CloseButton
 @onready var title_label: Label = $MarginContainer/VBoxContainer/TitleLabel
 @export var runManager: RunManager
+@export var button_click_sfx: AudioStream
+@export var button_hover_sfx: AudioStream
 
 const ALIEN_RESOURCE_FOLDER := "res://resources/aliens/"
 const TITLE_COLOR := Color("#FFD36A")
@@ -39,8 +41,12 @@ func _ready() -> void:
 	
 	close_button.pressed.connect(_on_close_pressed)
 	AlienCollection.alien_collected.connect(_on_alien_collected)
+	close_button.mouse_entered.connect(_on_button_hovered)
 	refresh()
 
+func _on_button_hovered() -> void:
+	SFXManager.play_sfx(button_hover_sfx, -6.0)
+	
 func open() -> void:
 	if visible:
 		return
@@ -186,4 +192,5 @@ func _on_alien_collected(_alien_data: AlienData) -> void:
 	refresh()
 	
 func _on_close_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	close()

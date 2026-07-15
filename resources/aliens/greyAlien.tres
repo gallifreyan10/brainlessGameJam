@@ -10,5 +10,5 @@ alien_id = &"grey"
 displayName = "Greeble"
 icon = ExtResource("2_rl8wj")
 ability = ExtResource("1_42gn3")
-spawn_weight = 40.0
+spawn_weight = 100.0
 metadata/_custom_type_script = "uid://bkfisr2cutesv"

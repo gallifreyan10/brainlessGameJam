@@ -6,6 +6,7 @@ var collected_alien_ids: Array[StringName] = []
 var collected_aliens: Array[AlienData] = []
 var alien_stack_counts: Dictionary = {}
 var collected_alien_data: Dictionary = {}
+@export var alien_collected_sfx: AudioStream
 
 const SAVE_PATH := "user://alien_collection.save"
 const ALIEN_RESOURCE_FOLDER := "res://resources/aliens/"
@@ -32,6 +33,7 @@ func collect_alien(alien_data: AlienData) -> void:
 		"stack count: ",
 		alien_stack_counts[alien_id]
 	)
+	SFXManager.play_sfx(alien_collected_sfx)
 	alien_collected.emit(alien_data)
 	
 	save_collection()

@@ -16,6 +16,9 @@ const DETAIL_COLOR := Color("#7CFFD6")
 @onready var statusLabel: Label = $VBoxContainer/StatusLabel
 @onready var contentBox: VBoxContainer = $VBoxContainer
 
+@export var button_hover_sfx: AudioStream
+@export var button_click_sfx: AudioStream
+
 func _ready() -> void:
 	visible = false
 	_set_panel_rect(Vector2(460, 310), Vector2(150, 30))
@@ -67,7 +70,8 @@ func _ready() -> void:
 	continueButton.pressed.connect(_on_continue_pressed)
 	UIStyleHelper.apply_hologram_button_style(rerollButton)
 	UIStyleHelper.apply_hologram_button_style(continueButton)
-	
+	rerollButton.mouse_entered.connect(_on_button_hovered)
+	continueButton.mouse_entered.connect(_on_button_hovered)
 
 	repopulate_shop()
 	_refresh()
@@ -99,7 +103,10 @@ func _refresh() -> void:
 		
 	rerollButton.text = "Reroll: %d" % rerollCost
 	rerollButton.disabled = not RunEconomy.can_afford(rerollCost)
-
+	
+func _on_button_hovered() -> void:
+	SFXManager.play_sfx(button_hover_sfx, -6.0)
+	
 func create_offer_row(suit: SuitData) -> Control:
 	var row := HBoxContainer.new()
 	row.custom_minimum_size = Vector2(350, 72)
@@ -112,6 +119,7 @@ func create_offer_row(suit: SuitData) -> Control:
 	var buffLabel := Label.new()
 	var priceLabel := Label.new()
 	var buyButton := Button.new()
+	buyButton.mouse_entered.connect(_on_button_hovered)
 	
 	var price : int = get_discounted_price(suit)
 	var owned : bool = runManager.ownedSuits.has(suit)
@@ -176,6 +184,7 @@ func create_offer_row(suit: SuitData) -> Control:
 	return row
 
 func _on_buy_pressed(suit: SuitData) -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	if purchase_in_progress:
 		return
 	
@@ -228,6 +237,7 @@ func _on_buy_pressed(suit: SuitData) -> void:
 	_refresh()
 	
 func _on_reroll_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	if not RunEconomy.spend_money(rerollCost):
 		statusLabel.text = "Not enough money to reroll."
 		_refresh()
@@ -238,6 +248,7 @@ func _on_reroll_pressed() -> void:
 	_refresh()
 	
 func _on_continue_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	visible = false
 	runManager.leave_shop_and_continue()
 	

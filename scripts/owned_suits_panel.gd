@@ -6,6 +6,8 @@ extends PanelContainer
 @onready var close_button: Button = $VBoxContainer/CloseButton
 @onready var title_label: Label = $VBoxContainer/TitleLabel
 @onready var contentBox: VBoxContainer = $VBoxContainer
+@export var button_click_sfx: AudioStream
+@export var button_hover_sfx: AudioStream
 const TITLE_COLOR := Color("#FFD36A")
 const DETAIL_COLOR := Color("#7CFFD6")
 
@@ -32,6 +34,7 @@ func _ready() -> void:
 	
 	close_button.custom_minimum_size = Vector2(160, 28)
 	close_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	UIStyleHelper.apply_hologram_button_style(close_button)
 	suit_list.add_theme_constant_override("separation", 6)
 	
 	if runManager == null:
@@ -42,8 +45,12 @@ func _ready() -> void:
 	runManager.suitsCleared.connect(_on_suits_cleared)
 	
 	close_button.pressed.connect(_on_close_pressed)
+	close_button.mouse_entered.connect(_on_button_hovered)
 	refresh()
-	
+
+func _on_button_hovered() -> void:
+	SFXManager.play_sfx(button_hover_sfx, -6.0)
+		
 func open() -> void:
 	if visible:
 		return
@@ -54,6 +61,7 @@ func open() -> void:
 	visible = true
 	
 func close() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	if not visible:
 		return
 	
@@ -123,6 +131,7 @@ func _on_suits_cleared() -> void:
 	refresh()
 	
 func _on_close_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	close()
 
 func _set_panel_rect(panel_size: Vector2, top_left: Vector2) -> void:

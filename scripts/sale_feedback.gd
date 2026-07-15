@@ -6,6 +6,7 @@ extends VBoxContainer
 @onready var totalLabel: Label = $TotalLabel
 @onready var alienIcon: TextureRect = $AlienIcon
 @onready var hideTimer: Timer = $HideTimer
+@export var mineral_sold_sfx: AudioStream
 const DETAIL_COLOR := Color("#7CFFD6")
 var original_position : Vector2
 
@@ -27,6 +28,8 @@ func _on_mineral_banked(
 ) -> void:
 	var alienMultiplier: float = float(context.get("alien_multiplier", 1.0))
 	var suitMultiplier: float = float(context.get("suit_multiplier", 1.0))
+	
+	SFXManager.play_sfx(mineral_sold_sfx)
 	
 	mineralNameLabel.text = data.displayName
 	mineralIcon.texture = data.sprite

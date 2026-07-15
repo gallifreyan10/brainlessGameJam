@@ -1,6 +1,5 @@
 extends PanelContainer
 
-@export var settingsButton: Button
 @export var runManager: RunManager
 
 @onready var closeButton: Button = $VBoxContainer/CloseButton
@@ -16,6 +15,10 @@ extends PanelContainer
 @onready var reduceMotionCheck: CheckBox = $VBoxContainer/ScrollContainer/SettingsContent/ReduceMotionCheck
 @onready var highContrastCheck: CheckBox = $VBoxContainer/ScrollContainer/SettingsContent/HighContrastCheck
 @onready var titleLabel: Label = $VBoxContainer/TitleLabel
+
+@export var button_click_sfx:AudioStream
+@export var button_hover_sfx:AudioStream
+
 const TITLE_COLOR := Color("#FFD36A")
 
 func _ready() -> void:
@@ -43,13 +46,9 @@ func _ready() -> void:
 	
 	closeButton.custom_minimum_size = Vector2(140, 28)
 	closeButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	
-	if settingsButton != null:
-		settingsButton.pressed.connect(_on_settings_pressed)
-	else:
-		push_warning("SettingsPanel needs SettingsButton assigned.")
 		
 	closeButton.pressed.connect(_on_close_pressed)
+	closeButton.mouse_entered.connect(_on_button_hovered)
 	
 	_setup_options()
 	masterVolumeSlider.value_changed.connect(_on_master_volume_changed)
@@ -67,6 +66,9 @@ func _ready() -> void:
 	
 	_load_current_settings_into_ui()
 
+func _on_button_hovered() -> void:
+	SFXManager.play_sfx(button_hover_sfx, -6.0)
+	
 func _setup_options() -> void:
 	windowModeOption.clear()
 	windowModeOption.add_item("Windowed", 0)
@@ -114,9 +116,11 @@ func _load_current_settings_into_ui() -> void:
 	highContrastCheck.button_pressed = gameSettings.high_contrast_enabled
 
 func _on_settings_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	open()
 	
 func _on_close_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	close()
 
 func _on_master_volume_changed(value: float) -> void:
@@ -129,15 +133,19 @@ func _on_sfx_volume_changed(value: float) -> void:
 	gameSettings.set_master_volume(value)
 
 func _on_window_mode_selected(index: int) -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_window_mode(index)
 	
 func _on_resolution_selected(index: int) -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_resolution_index(index)
 	
 func _on_vsync_toggled(enabled: bool) -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_vsync_enabled(enabled)
 	
 func _on_scale_selected(index: int) -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	match index:
 		0:
 			gameSettings.set_screen_scale(1.0)	
@@ -149,12 +157,15 @@ func _on_scale_selected(index: int) -> void:
 			gameSettings.set_screen_scale(2.0)	
 			
 func _on_large_text_toggled(enabled: bool) -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_large_text_enabled(enabled)
 	
 func _on_reduce_motion_toggled(enabled: bool) -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_reduce_motion_enabled(enabled)
 		
 func _on_high_contrast_toggled(enabled: bool) -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_high_contrast_enabled(enabled)
 
 func open() -> void:

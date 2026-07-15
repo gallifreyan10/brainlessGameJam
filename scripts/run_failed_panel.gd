@@ -8,6 +8,12 @@ extends PanelContainer
 @onready var mainMenuButton: Button = $VBoxContainer/MainMenuButton
 @onready var contentBox: VBoxContainer = $VBoxContainer
 @onready var titleLabel: Label = $VBoxContainer/TitleLabel
+@export_file("*.tscn") var title_scene_path: String = "res://scenes/main_menu.tscn"
+
+@export var run_failed_sfx: AudioStream
+@export var button_click_sfx: AudioStream
+@export var button_hover_sfx: AudioStream
+
 const TITLE_COLOR := Color("#FFD36A")
 const DETAIL_COLOR := Color("#7CFFD6")
 
@@ -27,6 +33,8 @@ func _ready() -> void:
 	mainMenuButton.custom_minimum_size = Vector2(170, 28)
 	newRunButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	mainMenuButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	newRunButton.mouse_entered.connect(_on_button_hovered)
+	mainMenuButton.mouse_entered.connect(_on_button_hovered)
 	
 	if runManager == null:
 		push_error("RunFailedPanel needs RunManager assigned.")
@@ -38,7 +46,11 @@ func _ready() -> void:
 	newRunButton.pressed.connect(_on_newRun_pressed)
 	mainMenuButton.pressed.connect(_on_mainmenu_pressed)
 
+func _on_button_hovered() -> void:
+	SFXManager.play_sfx(button_hover_sfx, -6.0)
+	
 func _on_run_failed(_levelIndex: int, earned: int, quota: int) -> void:
+	SFXManager.play_sfx(run_failed_sfx)
 	visible = true
 	messageLabel.text = "Earned %d / %d" % [earned, quota]
 
@@ -46,11 +58,14 @@ func _on_level_started(_levelIndex: int, _data: LevelData) -> void:
 	visible = false
 	
 func _on_newRun_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	visible = false
 	runManager.start_new_run()
 
 func _on_mainmenu_pressed() -> void:
-	pass	
+	SFXManager.play_sfx(button_click_sfx)
+	get_tree().paused = false
+	get_tree().change_scene_to_file(title_scene_path)
 
 func _set_panel_rect(panel_size: Vector2, top_left: Vector2) -> void:
 	custom_minimum_size = panel_size

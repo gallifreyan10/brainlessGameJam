@@ -15,6 +15,10 @@ run/main_scene="uid://0o1s2ryoypp1"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://bbo0cnq32pmrt"
+
 [autoload]
 
 RunEconomy="*uid://bx5bhs1aavrrm"
@@ -22,6 +26,7 @@ AlienCollection="*uid://c307i0vr53204"
 PlayerProgress="*uid://fbo5iohpj1rm"
 gameSettings="*uid://cfrqsi163l88c"
 MusicManager="*uid://b3va3suifjfkf"
+SFXManager="*uid://dxcou68yjfuhk"
 
 [display]
 

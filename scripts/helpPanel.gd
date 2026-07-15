@@ -6,6 +6,8 @@ extends PanelContainer
 @onready var closeButton: Button = $VBoxContainer/CloseButton
 @onready var contentBox: VBoxContainer = $VBoxContainer
 @onready var titleLabel: Label = $VBoxContainer/TitleLabel
+@export var button_click_sfx: AudioStream
+@export var button_hover_sfx: AudioStream
 const TITLE_COLOR := Color("#FFD36A")
 
 func _ready() -> void:
@@ -36,6 +38,8 @@ func _ready() -> void:
 	
 	closeButton.custom_minimum_size = Vector2(160, 28)
 	closeButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	UIStyleHelper.apply_hologram_button_style(closeButton)
+	closeButton.mouse_entered.connect(_on_button_hovered)
 	
 	if helpButton == null:
 		push_warning("HelpPanel needs HelpButton Assigned.")
@@ -45,6 +49,7 @@ func _ready() -> void:
 	closeButton.pressed.connect(_on_close_pressed)
 	
 func _on_help_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	if visible:
 		return
 
@@ -54,6 +59,7 @@ func _on_help_pressed() -> void:
 	visible = true
 	
 func _on_close_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
 	close()
 
 func close() -> void:
@@ -75,7 +81,10 @@ func _set_panel_rect(panel_size: Vector2, top_left: Vector2) -> void:
 	offset_top = top_left.y
 	offset_right = top_left.x + panel_size.x
 	offset_bottom = top_left.y + panel_size.y
-
+	
+func _on_button_hovered() -> void:
+	SFXManager.play_sfx(button_hover_sfx, -6.0)
+	
 func _wrap_content_in_margin(padding: int) -> void:
 	if contentBox.get_parent() is MarginContainer:
 		return
