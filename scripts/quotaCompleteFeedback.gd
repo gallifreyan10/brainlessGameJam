@@ -25,7 +25,7 @@ func _ready() -> void:
 	runManager.levelCompleted.connect(_on_level_completed)
 	runManager.levelStarted.connect(_on_level_started)
 	
-func _on_level_started(_levelIndex: int, data: LevelData) -> void:
+func _on_level_started(_levelIndex: int, _data: LevelData) -> void:
 	has_played_for_level = false
 	visible = false
 	flashOverlay.color.a = 0.0

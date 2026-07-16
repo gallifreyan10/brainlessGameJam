@@ -9,6 +9,7 @@ extends VBoxContainer
 @export var mineral_sold_sfx: AudioStream
 const DETAIL_COLOR := Color("#7CFFD6")
 var original_position : Vector2
+var feedback_tween: Tween = null
 
 func _ready() -> void:
 	RunEconomy.mineral_banked.connect(
@@ -26,6 +27,10 @@ func _on_mineral_banked(
 	finalValue: int,
 	context: Dictionary
 ) -> void:
+	if feedback_tween != null and feedback_tween.is_valid():
+		feedback_tween.kill()
+		
+	hideTimer.stop()
 	var alienMultiplier: float = float(context.get("alien_multiplier", 1.0))
 	var suitMultiplier: float = float(context.get("suit_multiplier", 1.0))
 	
@@ -69,7 +74,8 @@ func _on_mineral_banked(
 	position = original_position + Vector2(0,8)
 	var target_position := original_position
 	
-	var tween := create_tween()
+	feedback_tween = create_tween()
+	var tween := feedback_tween
 	tween.set_parallel(true)
 	tween.tween_property(
 		self,
@@ -94,7 +100,11 @@ func _on_mineral_banked(
 	
 func _on_hide_timer_timeout() -> void:
 	
-	var tween := create_tween()
+	if feedback_tween != null and feedback_tween.is_valid():
+		feedback_tween.kill()
+		
+	feedback_tween = create_tween()
+	var tween := feedback_tween
 	
 	tween.tween_property(
 		self,

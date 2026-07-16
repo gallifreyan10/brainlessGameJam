@@ -2,15 +2,17 @@ extends Node2D
 @export_category("Alien Spawning")
 @export var alien_Scene: PackedScene
 @export_range(0,30,1) var targetAlienCount: int = 30
+@export var chuteArea: Area2D
 
 @export_category("Shared Spawn Area")
 @export var spawn_top_left: Marker2D
 @export var spawn_bottom_right: Marker2D
-@export var minimumSpawnSeparation: float = 18.0
+@export var minimumSpawnSeparation: float = 10.0
 
 @export_category("Mineral Spawning")
 @export var levelData: LevelData
 @export var discoveryMultiplier: float = 1.0
+@export var chuteAvoidDistance: float = 100.0
 
 var rng := RandomNumberGenerator.new()
 var mineralRng := RandomNumberGenerator.new()
@@ -22,8 +24,8 @@ const ALIEN_RESOURCE_FOLDER := "res://resources/aliens/"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if not validate_spawn_area():
-		return
+	#if not validate_spawn_area():
+		#return
 	if levelData != null:
 		for error in levelData.get_validation_errors():
 			push_warning(error)
@@ -66,15 +68,23 @@ func spawnLittleGuy() -> void:
 		return
 		
 	var chosen_data := choose_alien_data()
+	alien.set_meta("can_score_in_chute", false)
 	
 	if chosen_data != null:
 		alien.alien_data = chosen_data
 		
 	add_child(alien)
 	
-	alien.position = get_clear_spawn_position(rng)
+	alien.global_position = get_clear_spawn_position(rng)
 	alien.rotation = rng.randf_range(-1.0, 1.0)
+	alien.freeze = true
+	alien.linear_velocity = Vector2.ZERO
+	alien.angular_velocity = 0.0
+	alien.collision_layer = 2
+	alien.collision_mask = 35
 
+	call_deferred("_unfreeze_prize", alien)
+	
 func get_all_alien_data() -> Array[AlienData]:
 	var aliens: Array[AlienData] = []
 	var files := DirAccess.get_files_at(ALIEN_RESOURCE_FOLDER)
@@ -153,34 +163,42 @@ func get_random_spawn_position(
 		spawn_bottom_right.global_position.y
 	)
 	
-	var global_spawn_position := Vector2(
-		generator.randf_range(minimumX,maximumX),
-		generator.randf_range(minimumY,maximumY)
+	return Vector2(
+		generator.randf_range(minimumX, maximumX),
+		generator.randf_range(minimumY, maximumY)
 	)
-	
-	return to_local(global_spawn_position)
 	
 func get_clear_spawn_position(
 	generator: RandomNumberGenerator, ignoredPrize: RigidBody2D = null
 ) -> Vector2:
-	var fallbackPosition := get_random_spawn_position(generator)
+	var fallbackPosition := get_spawn_area_center()
 	
-	for attempt in range(12):
+	for attempt in range(60):
 		var candidate := get_random_spawn_position(
 			generator
 		)
-		fallbackPosition = candidate
 		
 		if is_spawn_position_clear(
 			candidate, ignoredPrize
 		):
 			return candidate
+	push_warning("No clear spawn position found. Using spawn area center.")
 	return fallbackPosition
+	
+func get_spawn_area_center() -> Vector2:
+	if spawn_top_left == null or spawn_bottom_right == null:
+		return global_position
+	
+	return (spawn_top_left.global_position + spawn_bottom_right.global_position)*0.5
 	
 func is_spawn_position_clear(
 	candidate: Vector2,
 	ignoredPrize: RigidBody2D = null
 ) -> bool:
+
+	if is_position_near_chute(candidate):
+		return false
+		
 	for child in get_children():
 		if not child is RigidBody2D:
 			continue
@@ -193,11 +211,17 @@ func is_spawn_position_clear(
 		if prize.is_queued_for_deletion():
 			continue
 			
-		if(
-			prize.position.distance_to(candidate)< minimumSpawnSeparation
-		):
+		if prize.global_position.distance_to(candidate) < minimumSpawnSeparation:
 			return false
+			
 	return true
+	
+func is_position_near_chute(world_position: Vector2) -> bool:
+
+	if chuteArea == null:
+		return false
+		
+	return world_position.distance_to(chuteArea.global_position) < chuteAvoidDistance
 	
 func _on_kill_zone_body_entered(body: Node2D) -> void:
 	if not body is RigidBody2D:
@@ -216,26 +240,29 @@ func _on_kill_zone_body_entered(body: Node2D) -> void:
 func reset_prize(prize: RigidBody2D) -> void:
 	if not is_instance_valid(prize):
 		return
+
 	if prize.is_queued_for_deletion():
 		return
-	
+
 	prize.freeze = true
-	
+
 	if prize is MineralPrize:
-		prize.position = get_clear_spawn_position(mineralRng,prize)
+		prize.global_position = get_clear_spawn_position(mineralRng, prize)
 	else:
-		prize.position = get_clear_spawn_position(rng,prize)
-	
+		prize.global_position = get_clear_spawn_position(rng, prize)
+
 	prize.linear_velocity = Vector2.ZERO
 	prize.angular_velocity = 0.0
 	prize.rotation = 0.0
-	
-	#restore expected prize collision settings
+
+	# Restore expected prize collision settings.
 	prize.collision_layer = 2
-	prize.collision_mask = 3
+	prize.collision_mask = 35
+
+	prize.set_meta("can_score_in_chute", false)
 	prize.freeze = false
 	prize.sleeping = false
-	
+
 	reset_count += 1
 	print("Escaped prizes reset: ", reset_count)
 
@@ -283,6 +310,7 @@ func spawn_mineral() -> void:
 		return
 		
 	var mineral := mineralScene.instantiate() as MineralPrize
+	mineral.set_meta("can_score_in_chute", false)
 	
 	if mineral == null:
 		push_error("Mineral scene root must use MineralPrize.")
@@ -311,10 +339,11 @@ func spawn_mineral() -> void:
 			maximumWeight
 		)
 	else:
-		push_warning("Spawnede mineral is missing MineralData.")
+		push_warning("Spawned mineral is missing MineralData.")
 		
 	mineral.freeze = true
-	mineral.position = get_clear_spawn_position(mineralRng)
+	mineral.set_meta("can_score_in_chute", false)
+	mineral.global_position = get_clear_spawn_position(mineralRng)
 	mineral.rotation = 0.0
 	mineral.linear_velocity = Vector2.ZERO
 	mineral.angular_velocity = 0.0
@@ -407,7 +436,6 @@ func load_level(newLevelData: LevelData, resolvedDifficulty: Dictionary) -> void
 	call_deferred("_finish_level_load")
 	
 func _finish_level_load() -> void:
-	
 	var resolvedQuota := int(
 		activeDifficulty.get(
 			"quota",
@@ -415,6 +443,8 @@ func _finish_level_load() -> void:
 		)
 	)
 	
+	if not validate_spawn_area():
+		return
 	RunEconomy.start_level(
 		resolvedQuota
 	)

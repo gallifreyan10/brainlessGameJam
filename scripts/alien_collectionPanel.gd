@@ -129,11 +129,11 @@ func create_slot(alien_data: AlienData) -> Control:
 	var icon_rect := TextureRect.new()
 	var name_label := Label.new()
 	var status_label := Label.new()
-	var stack_label := Label.new()
+	var _stack_label := Label.new()
 	
 	name_label.add_theme_font_size_override("font_size",8)
 	status_label.add_theme_font_size_override("font_size",7)
-	stack_label.add_theme_font_size_override("font_size", 7)
+	_stack_label.add_theme_font_size_override("font_size", 7)
 	
 	icon_rect.custom_minimum_size = Vector2(28,28)
 	icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -141,7 +141,7 @@ func create_slot(alien_data: AlienData) -> Control:
 	
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	stack_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_stack_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	
 	var collected : bool = AlienCollection.has_alien(alien_data.alien_id)
 	var stack_count : int = AlienCollection.get_alien_stack_count(alien_data.alien_id)
@@ -156,17 +156,17 @@ func create_slot(alien_data: AlienData) -> Control:
 		name_label.text = alien_data.displayName
 		name_label.add_theme_color_override("font_color", DETAIL_COLOR)
 		status_label.text = "Collected"
-		stack_label.text = "Stacks %d" % stack_count
+		_stack_label.text = "Stacks %d" % stack_count
 	else:
 		icon_rect.modulate = Color(0.05, 0.05,0.05,0.85)
 		name_label.text = "???"
 		status_label.text = "Locked"
-		stack_label.text = ""
+		_stack_label.text = ""
 	
 	slot.add_child(icon_rect)	
 	slot.add_child(name_label)
 	slot.add_child(status_label)
-	slot.add_child(stack_label)
+	slot.add_child(_stack_label)
 	
 	return slot
 	

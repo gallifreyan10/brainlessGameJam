@@ -99,7 +99,7 @@ enum State{
 	}
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	#Only trigger the behaviour belonging to the currently activated state
 	match current_State:
 		State.IDLE:
@@ -306,6 +306,9 @@ func finish_resolution() -> void:
 	if slipTimer != null:
 		slipTimer.stop()
 		
+	if is_instance_valid(resolvingPrize):
+		resolvingPrize.set_meta("can_score_in_chute", false)	
+		
 	resolvingPrize = null
 	close_request_locked = false
 	change_state(State.IDLE)
@@ -432,6 +435,7 @@ func release_held_prize(expect_chute_resolution: bool = true) -> void:
 		return
 		
 	var released_prize: RigidBody2D = held_prize
+	released_prize.set_meta("can_score_in_chute", expect_chute_resolution)
 	
 	SFXManager.play_sfx(prize_release_sfx)
 	held_prize = null

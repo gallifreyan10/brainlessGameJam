@@ -1,6 +1,8 @@
 extends Node
 class_name RunManager
 
+@export var default_spawn_separation: float = 18.0
+
 enum RunState {
 	RUNNING,
 	LEVEL_COMPLETE,
@@ -282,6 +284,7 @@ func apply_layout_references(layout: Node) -> void:
 	var spawn_bottom_right := layout.get_node_or_null("PrizeSpawnBottomRight") as Marker2D
 	var resolution_timer: Timer = null
 	var cable := layout.get_node_or_null("cable") as Line2D
+	var kill_zone := layout.get_node_or_null("KillZone") as Area2D
 	
 	if chute_release_point != null:
 		resolution_timer = chute_release_point.get_node_or_null("ResolutionTimer") as Timer
@@ -289,6 +292,23 @@ func apply_layout_references(layout: Node) -> void:
 	if prizeContainer != null:
 		prizeContainer.spawn_top_left = spawn_top_left
 		prizeContainer.spawn_bottom_right = spawn_bottom_right
+		prizeContainer.chuteArea = prize_chute
+		prizeContainer.minimumSpawnSeparation = default_spawn_separation
+		if kill_zone != null:
+			var kill_callable := Callable(
+				prizeContainer,
+				"on_kill_zone_body_entered"
+			)
+			
+			if not kill_zone.body_entered.is_connected(kill_callable):
+				kill_zone.body_entered.connect(kill_callable)
+				
+		var layout_settings := layout.get_node_or_null("LayoutSettings")
+		
+		if layout_settings != null:
+			prizeContainer.minimumSpawnSeparation = float(
+				layout_settings.get("spawn_separation")
+			)
 		
 	if clawController != null:
 		clawController.chuteArea = prize_chute

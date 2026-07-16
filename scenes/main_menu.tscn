@@ -157,6 +157,8 @@ offset_right = 499.0
 offset_bottom = 363.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_1acrt")
 script = ExtResource("1_l6cm7")
+button_click_sfx = ExtResource("4_rcqid")
+button_hover_sfx = ExtResource("4_rcqid")
 
 [node name="MarginContainer" type="MarginContainer" parent="SettingsPanel" unique_id=1609770636]
 layout_mode = 2

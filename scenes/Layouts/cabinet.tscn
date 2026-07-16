@@ -52,10 +52,10 @@
 [ext_resource type="PackedScene" uid="uid://dapfs78ury1r8" path="res://scenes/Layouts/cabinetv2.tscn" id="29_hosw5"]
 [ext_resource type="PackedScene" uid="uid://o8thk3yme5x5" path="res://scenes/Layouts/cabinetv1.tscn" id="29_v7ofj"]
 [ext_resource type="PackedScene" uid="uid://klrsmy2ni0wy" path="res://scenes/Layouts/cabinetv3.tscn" id="30_v7ofj"]
-[ext_resource type="PackedScene" uid="uid://8yj1llkc651j" path="res://scenes/Layouts/cabinetv4.tscn" id="31_kj04f"]
 [ext_resource type="AudioStream" uid="uid://bxf4yami1o0le" path="res://audio/sfx/victory.wav" id="31_ogw0j"]
+[ext_resource type="Script" uid="uid://yciu1rxofdtb" path="res://scripts/alienCollect_feedback.gd" id="31_v00e2"]
 [ext_resource type="AudioStream" uid="uid://bft254583n0eq" path="res://audio/sfx/ui_select.wav" id="32_jsd7a"]
-[ext_resource type="PackedScene" uid="uid://bopsol2as6rds" path="res://scenes/Layouts/cabinetv5.tscn" id="32_kett4"]
+[ext_resource type="AudioStream" uid="uid://yhv5xft6t4c2" path="res://audio/sfx/collectAlien.wav" id="32_scuqw"]
 [ext_resource type="Script" uid="uid://dofirwqkhaadw" path="res://scripts/pauseController.gd" id="35_kj04f"]
 [ext_resource type="Resource" uid="uid://l58payjl6n3q" path="res://resources/suits/pilotSuit.tres" id="44_iltbr"]
 [ext_resource type="AudioStream" uid="uid://dp3mk0wyv55c8" path="res://audio/sfx/game_over.wav" id="45_6lyf2"]
@@ -319,8 +319,6 @@ script = ExtResource("5_1rkfa")
 alien_Scene = ExtResource("6_r815q")
 levelData = ExtResource("3_3s4k1")
 
-[node name="RigidBody2D" parent="prizeContainer" unique_id=1158912329 instance=ExtResource("6_r815q")]
-
 [node name="clawSpawn" type="Marker2D" parent="." unique_id=601436855]
 position = Vector2(318, 31)
 
@@ -387,10 +385,11 @@ layout_mode = 2
 text = "Time: 5.0"
 
 [node name="SaleFeedback" type="VBoxContainer" parent="CanvasLayer" unique_id=2048277214]
-offset_left = 412.0
-offset_top = -3.0
-offset_right = 452.0
-offset_bottom = 110.0
+visible = false
+offset_left = 414.0
+offset_top = 77.0
+offset_right = 454.0
+offset_bottom = 190.0
 mouse_filter = 0
 theme = ExtResource("12_kett4")
 script = ExtResource("14_5x1oe")
@@ -421,6 +420,39 @@ stretch_mode = 5
 
 [node name="HideTimer" type="Timer" parent="CanvasLayer/SaleFeedback" unique_id=929046595]
 wait_time = 2.0
+one_shot = true
+
+[node name="AlienFeedback" type="VBoxContainer" parent="CanvasLayer" unique_id=763768498]
+visible = false
+offset_left = 412.0
+offset_top = 77.0
+offset_right = 452.0
+offset_bottom = 190.0
+mouse_filter = 0
+theme = ExtResource("12_kett4")
+script = ExtResource("31_v00e2")
+alien_collected_sfx = ExtResource("32_scuqw")
+
+[node name="HeaderRow" type="HBoxContainer" parent="CanvasLayer/AlienFeedback" unique_id=1360533569]
+layout_mode = 2
+
+[node name="AlienIcon" type="TextureRect" parent="CanvasLayer/AlienFeedback/HeaderRow" unique_id=1767462199]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AlienNameLabel" type="Label" parent="CanvasLayer/AlienFeedback/HeaderRow" unique_id=2056088259]
+layout_mode = 2
+
+[node name="BreakdownLabel" type="Label" parent="CanvasLayer/AlienFeedback" unique_id=1517725233]
+layout_mode = 2
+
+[node name="TotalLabel" type="Label" parent="CanvasLayer/AlienFeedback" unique_id=420704491]
+layout_mode = 2
+
+[node name="HideTimer" type="Timer" parent="CanvasLayer/AlienFeedback" unique_id=1852183675]
+wait_time = 1.5
 one_shot = true
 
 [node name="LevelCompletePanel" type="PanelContainer" parent="CanvasLayer" unique_id=1739182077 node_paths=PackedStringArray("runManager")]
@@ -878,7 +910,8 @@ scale = Vector2(0.5, 0.5)
 
 [node name="LayoutManager" type="Node2D" parent="." unique_id=1483436705]
 script = ExtResource("28_r815q")
-layouts = Array[PackedScene]([ExtResource("29_v7ofj"), ExtResource("29_hosw5"), ExtResource("30_v7ofj"), ExtResource("31_kj04f"), ExtResource("32_kett4")])
+layouts = Array[PackedScene]([ExtResource("29_v7ofj"), ExtResource("29_hosw5"), ExtResource("30_v7ofj")])
+avoid_repeating_layout = false
 
 [node name="PauseController" type="CanvasLayer" parent="." unique_id=1031572088 node_paths=PackedStringArray("settingsPanel", "runManager")]
 process_mode = 3
@@ -961,7 +994,6 @@ offset_top = 167.0
 offset_right = 124.0
 offset_bottom = 167.0
 
-[connection signal="body_entered" from="KillZone" to="prizeContainer" method="_on_kill_zone_body_entered"]
 [connection signal="attempt_finished" from="Claw/CharacterBody2D" to="prizeContainer" method="_on_attempt_finished"]
 [connection signal="timeout" from="Claw/CharacterBody2D/SlipTimer" to="Claw/CharacterBody2D" method="_on_slip_timer_timeout"]
 

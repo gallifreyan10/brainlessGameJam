@@ -9,7 +9,7 @@ size = Vector2(27, 23)
 
 [node name="ZenithStone" type="RigidBody2D" unique_id=13882485 groups=["minerals", "prizes"]]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 35
 continuous_cd = 1
 script = ExtResource("1_f151i")
 mineral_data = ExtResource("2_f151i")

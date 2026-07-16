@@ -9,7 +9,7 @@ size = Vector2(14, 17)
 
 [node name="infiniteShard" type="RigidBody2D" unique_id=13882485 groups=["minerals", "prizes"]]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 35
 continuous_cd = 1
 script = ExtResource("1_kn5hl")
 mineral_data = ExtResource("2_h0ola")

@@ -4,6 +4,16 @@ signal mineralCaptured(mineral: MineralPrize)
 
 func _on_body_entered(body: Node2D) -> void:
 
+	if not body is AlienPrize and not body is MineralPrize:
+		return
+	if not body.get_meta("can_score_in_chute",false):
+		var parent := body.get_parent()
+		
+		if parent != null and parent.has_method("reset_prize"):
+			parent.call_deferred("reset_prize", body)
+			
+		return
+		
 	if body is AlienPrize:
 		var alien := body as AlienPrize
 		
@@ -23,9 +33,6 @@ func _on_body_entered(body: Node2D) -> void:
 			
 		AlienCollection.collect_alien(alien.alien_data)
 		alien.queue_free()
-		return
-		
-	if not body is MineralPrize:
 		return
 		
 	var mineral := body as MineralPrize
