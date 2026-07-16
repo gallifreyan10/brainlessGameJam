@@ -74,6 +74,9 @@ texture = ExtResource("6_lgwnu")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6vcge"]
 texture = ExtResource("7_flqon")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rcqid"]
+bg_color = Color(0, 0, 0, 1)
+
 [node name="MainMenu" type="Control" unique_id=226517398]
 layout_mode = 3
 anchors_preset = 15
@@ -139,6 +142,15 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_hstxw")
 theme_override_styles/hover = SubResource("StyleBoxTexture_8egab")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_gw5y6")
 text = "Settings"
+
+[node name="CreditsButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=631748504]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_a8gd2")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hstxw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_8egab")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_gw5y6")
+text = "Credits
+"
 
 [node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1871106272]
 layout_mode = 2
@@ -252,4 +264,82 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_engjn")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_6h3lr")
 theme_override_styles/hover = SubResource("StyleBoxTexture_dj67d")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_6vcge")
+text = "Close"
+
+[node name="CreditsPanel" type="PanelContainer" parent="." unique_id=2097433102]
+z_index = 10
+custom_minimum_size = Vector2(600, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -297.0
+offset_top = -180.0
+offset_right = 303.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rcqid")
+
+[node name="MarginContainer" type="MarginContainer" parent="CreditsPanel" unique_id=2025671921]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditsPanel/MarginContainer" unique_id=1687279460]
+layout_mode = 2
+
+[node name="Title Label" type="Label" parent="CreditsPanel/MarginContainer/VBoxContainer" unique_id=397113600]
+layout_mode = 2
+text = "Credits"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CreditsPanel/MarginContainer/VBoxContainer" unique_id=187656761]
+custom_minimum_size = Vector2(520, 250)
+layout_mode = 2
+
+[node name="CreditsLabel" type="RichTextLabel" parent="CreditsPanel/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1371717459]
+z_index = 11
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center][font_size=24][color=#00D8FF]Retro Rocket Arcade[/color][/font_size][/center]
+
+[font_size=18][color=#FFD84A]Created By[/color][/font_size]
+scifinerd10
+
+[font_size=18][color=#FFD84A]Art[/color][/font_size]
+Original cabinet, claw, aliens, minerals, suits, and UI edits by scifinerd10.
+
+Additional asset packs:
+- Free Hologram Interface Wenrexa by [Creator Name] - itch.io
+- Pixel Coins by TotusLotus - itch.io
+
+[font_size=18][color=#FFD84A]Music[/color][/font_size]
+- 8bit retro arcade action music loop by Nestor-10 - itch.io
+- Space Music Pack - Menu Track by Goose Ninja- itch.io
+
+[font_size=18][color=#FFD84A]Sound Effects[/color][/font_size]
+- Mechanical Movements Sound Effects by Tagirijus - itch.io
+- Free SCI-FI UI Sound Effects Pack by Hove Audio - itch.io
+- Retro Sound FX Pack - itch.io
+
+[font_size=18][color=#FFD84A]Fonts[/color][/font_size]
+- 80's Retro Future by Scigo - Creative Commons Attribution v4.0 International - itch.io
+
+[font_size=18][color=#FFD84A]Tools[/color][/font_size]
+Godot 4.6.2
+Aseprite
+
+[font_size=18][color=#FFD84A]Special Thanks[/color][/font_size]
+Thanks for playing!"
+fit_content = true
+
+[node name="CloseButton" type="Button" parent="CreditsPanel/MarginContainer/VBoxContainer" unique_id=708855871]
+layout_mode = 2
 text = "Close"

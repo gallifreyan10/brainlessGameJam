@@ -7,16 +7,24 @@ extends Control
 
 @onready var startButton: Button = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StartButton
 @onready var settingsButton: Button = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton
+@onready var creditsButton: Button = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/CreditsButton
 @onready var quitButton: Button = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/QuitButton
 @onready var settingsPanel: PanelContainer = $SettingsPanel
+@onready var creditsPanel: PanelContainer = $CreditsPanel
+@onready var creditsCloseButton: Button = $CreditsPanel/MarginContainer/VBoxContainer/CloseButton
 
 func _ready() -> void:
 	startButton.pressed.connect(_on_start_pressed)
 	settingsButton.pressed.connect(_on_settings_pressed)
 	quitButton.pressed.connect(_on_quit_pressed)
+	creditsButton.pressed.connect(_on_credits_pressed)
+	creditsCloseButton.pressed.connect(_on_credits_close_pressed)
 	startButton.mouse_entered.connect(_on_button_hovered)
 	settingsButton.mouse_entered.connect(_on_button_hovered)
+	creditsButton.mouse_entered.connect(_on_button_hovered)
 	quitButton.mouse_entered.connect(_on_button_hovered)
+	creditsCloseButton.pressed.connect(_on_button_hovered)
+	
 	MusicManager.play_music(menu_music)
 
 func _on_start_pressed() -> void:
@@ -33,3 +41,11 @@ func _on_quit_pressed() -> void:
 
 func _on_button_hovered() -> void:
 	SFXManager.play_sfx(button_hover_sfx, -6.0)
+
+func _on_credits_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
+	creditsPanel.visible = true
+	
+func _on_credits_close_pressed() -> void:
+	SFXManager.play_sfx(button_click_sfx)
+	creditsPanel.visible = false
