@@ -1,7 +1,8 @@
 extends PanelContainer
 
 @onready var summary_label: Label = $MarginContainer/VBoxContainer/SummaryLabel
-@onready var ability_list: VBoxContainer = $MarginContainer/VBoxContainer/AbilityList
+@onready var ability_scroll: ScrollContainer = $MarginContainer/VBoxContainer/ScrollContainer
+@onready var ability_list: VBoxContainer = $MarginContainer/VBoxContainer/ScrollContainer/AbilityList
 @onready var close_button: Button = $MarginContainer/VBoxContainer/CloseButton
 @onready var title_label: Label = $MarginContainer/VBoxContainer/TitleLabel
 @export var runManager: RunManager
@@ -14,26 +15,28 @@ const DETAIL_COLOR := Color("#7CFFD6")
 
 func _ready() -> void:
 	visible = false
-	custom_minimum_size = Vector2(400, 280)
+	custom_minimum_size = Vector2(420, 320)
 	anchor_left = 0.5
 	anchor_top = 0.5
 	anchor_right = 0.5
 	anchor_bottom = 0.5
-	offset_left = -200.0
-	offset_top = -140.0
-	offset_right = 200.0
+	offset_left = -210.0
+	offset_top = -180.0
+	offset_right = 210.0
 	offset_bottom = 140.0
 	
 	var margin_container := $MarginContainer
-	margin_container.add_theme_constant_override("margin_left", 24)
-	margin_container.add_theme_constant_override("margin_right", 24)
-	margin_container.add_theme_constant_override("margin_top", 24)
-	margin_container.add_theme_constant_override("margin_bottom", 24)
+	margin_container.add_theme_constant_override("margin_left", 16)
+	margin_container.add_theme_constant_override("margin_right", 16)
+	margin_container.add_theme_constant_override("margin_top", 16)
+	margin_container.add_theme_constant_override("margin_bottom", 16)
 	
 	var vbox := $MarginContainer/VBoxContainer
 	vbox.add_theme_constant_override("separation", 6)
 	title_label.add_theme_color_override("font_color", TITLE_COLOR)
 	title_label.add_theme_font_size_override("font_size", 14)
+	ability_scroll.custom_minimum_size = Vector2(360, 190)
+	ability_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	
 	close_button.custom_minimum_size = Vector2(140, 28)
 	close_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER

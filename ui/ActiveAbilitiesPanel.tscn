@@ -20,7 +20,11 @@ text = "Active Alien Abilities"
 layout_mode = 2
 text = "No active abilities yet."
 
-[node name="AbilityList" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=991769780]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="AbilityList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer" unique_id=991769780]
 layout_mode = 2
 
 [node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=75144479]
