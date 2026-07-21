@@ -35,6 +35,7 @@ signal runCompleted(grossEarnings: int)
 @export var layoutManager: LayoutManager
 @export var decorativePrizePiles: Control
 @export var leftChutePrizePileOffsetX: float = 80.0
+@export var levelNameLabel: Label
 
 var attemptsCountdownRemaining: float = 0.0
 var countdownActive: bool = false
@@ -86,6 +87,7 @@ func start_level(levelIndex: int) -> void:
 	stateChanged.emit(currentState)
 	
 	var data := levels[currentLevelIndex]
+	update_level_name_label(currentLevelIndex, data)
 	
 	if layoutManager != null:
 		var layout : Node = null
@@ -120,6 +122,20 @@ func start_level(levelIndex: int) -> void:
 	)
 	levelStarted.emit(currentLevelIndex, data)
 	start_attempt_countdown()
+
+func update_level_name_label(levelIndex: int, data: LevelData) -> void:
+	if levelNameLabel == null:
+		return
+		
+	var resolved_name := ""
+	
+	if data != null:
+		resolved_name = data.displayName.strip_edges()
+		
+	if resolved_name.is_empty():
+		resolved_name = "LEVEL %d" % (levelIndex + 1)
+		
+	levelNameLabel.text = resolved_name
 	
 func _on_quota_reached(
 	earned: int,

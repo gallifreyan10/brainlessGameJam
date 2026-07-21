@@ -7,7 +7,7 @@
 script = ExtResource("1_xgnaf")
 suit_id = &"emergencyStabilizer_suit"
 displayName = "Emergency Stabilizer Suit"
-price = 25
+price = 28
 icon = ExtResource("1_ymypb")
 blocks_cabinet_shake = true
 metadata/_custom_type_script = "uid://d1mwwo1iilnab"

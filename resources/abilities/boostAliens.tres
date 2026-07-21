@@ -8,5 +8,5 @@ ability_id = &"boostAliens_bonus"
 displayName = "Rare Alien Signal"
 description = "Increased chance to boost rare alien spawns"
 ability_type = 6
-magnitude = 1.5
+magnitude = 1.25
 metadata/_custom_type_script = "uid://dlfh286jcwey"

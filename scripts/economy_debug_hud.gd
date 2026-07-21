@@ -39,10 +39,10 @@ func _on_quota_progress_changed(
 	earned: int,
 	quota: int
 ) -> void:
-	quotaLabel.text = "Quota: %d / %d" % [earned,quota]
+	quotaLabel.text = "Quota: %d / %d" % [earned, quota]
 	
 	if earned >= quota:
-		quotaLabel.text += " - REACHED!"
+		quotaLabel.text += " REACHED!"
 		
 	pulse_label(quotaLabel)
 

@@ -22,6 +22,8 @@ signal quotaReached(
 var runMoney: int = 0
 var earnedQuotaProgress: int = 0
 var levelQuota: int = 100
+var levelStartWallet: int = 0
+var quotaTargetWallet: int = 100
 var quotaWasReached: bool = false
 
 # Called when the node enters the scene tree for the first time.
@@ -67,7 +69,7 @@ func capture_mineral(
 	)
 	
 	if(
-		earnedQuotaProgress>=levelQuota
+		runMoney >= quotaTargetWallet
 		and not quotaWasReached
 	):
 		quotaWasReached = true
@@ -89,6 +91,8 @@ func can_afford(amount: int) -> bool:
 	
 func start_level(newQuota: int) -> void:
 	levelQuota = maxi(1, newQuota)
+	levelStartWallet = runMoney
+	quotaTargetWallet = levelStartWallet + levelQuota
 	earnedQuotaProgress = 0
 	quotaWasReached = false
 	

@@ -4,6 +4,8 @@ extends CharacterBody2D
 @export var drop_speed: float = 120
 @export var return_speed: float = 150
 @export var maximum_drop_depth: float = 290
+@export var minimum_horizontal_position: float = 180.0
+@export var maximum_horizontal_position: float = 600.0
 var base_horizontal_speed: float
 var base_maximum_drop_depth: float
 var base_grab_area_scale: Vector2
@@ -32,6 +34,8 @@ var locked_drop_tilt_degrees: float = 0.0
 #Array of possible prizes to be picked from
 var grab_candidates: Array[RigidBody2D] = []
 var first_contact_prize: RigidBody2D = null
+var contact_scan_remaining: float = 0.0
+var contact_close_pending: bool = false
 @export var grab_Area: Area2D
 @export var hold_point: Marker2D
 @export var release_point: Marker2D
@@ -42,6 +46,16 @@ var first_contact_prize: RigidBody2D = null
 @export var chuteMoveSpeed: float = 120.0
 @export var chuteArrivalTolerance: float = 12.0
 @export var clawSpawn: Marker2D
+@export var first_contact_scan_time: float = 0.16
+@export var first_contact_grab_bonus: float = 120.0
+@export var rarity_grab_bonus: float = 55.0
+@export var deeper_prize_grab_bonus: float = 0.25
+@export_range(0.0, 1.0) var dig_grab_chance: float = 0.35
+@export var dig_minimum_rarity: int = 2
+@export var dig_horizontal_range: float = 44.0
+@export var dig_scan_full_depth: bool = true
+@export var dig_vertical_range: float = 80.0
+@export var dig_grab_bonus: float = 220.0
 
 #Selected prize that is picked up by the claw
 var held_prize: RigidBody2D = null
@@ -100,13 +114,13 @@ enum State{
 	}
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	#Only trigger the behaviour belonging to the currently activated state
 	match current_State:
 		State.IDLE:
-			process_idle()
+			process_idle(delta)
 		State.DROPPING:
-			process_dropping()
+			process_dropping(delta)
 		State.GRABBING:
 			process_grabbing()
 		State.RETURNING:
@@ -121,7 +135,7 @@ func _physics_process(_delta: float) -> void:
 	
 	
 
-func process_idle() -> void:
+func process_idle(delta: float) -> void:
 	if attemptsLocked:
 		velocity = Vector2.ZERO
 		return
@@ -129,10 +143,15 @@ func process_idle() -> void:
 	#Player Control is only available when claw is idle
 	var direction := Input.get_axis("move_left","move_right")
 
-	velocity = Vector2(direction * horizontal_speed,0.0)
-	move_and_slide()
+	global_position.x = clampf(
+		global_position.x + direction * horizontal_speed * delta,
+		minimum_horizontal_position,
+		maximum_horizontal_position
+	)
+	velocity = Vector2.ZERO
+	position_changed.emit(global_position)
 	
-	process_tilt_input(get_physics_process_delta_time())
+	process_tilt_input(delta)
 
 func process_tilt_input(delta: float) -> void:
 	var viewport_rect := get_viewport_rect()
@@ -188,6 +207,8 @@ func start_dropping() -> void:
 		
 	grab_candidates.clear()
 	first_contact_prize = null
+	contact_scan_remaining = 0.0
+	contact_close_pending = false
 	
 	if grab_Area != null:
 		grab_Area.set_deferred("monitoring", true)
@@ -200,7 +221,7 @@ func start_dropping() -> void:
 	SFXManager.play_sfx(claw_drop_sfx)
 	change_state(State.DROPPING)
 	
-func process_dropping() -> void:
+func process_dropping(delta: float) -> void:
 	#Player controls are locked during drop
 	var tilt_radians := deg_to_rad(locked_drop_tilt_degrees)
 	 
@@ -209,11 +230,19 @@ func process_dropping() -> void:
 	
 	rotation_degrees = locked_drop_tilt_degrees
 	
-	move_and_slide()
-	
-	var hit_collision := get_slide_collision_count() > 0
+	global_position += velocity * delta
 	
 	position_changed.emit(global_position)
+	
+	if contact_close_pending:
+		contact_scan_remaining -= delta
+		
+		if contact_scan_remaining <= 0.0:
+			contact_close_pending = false
+			velocity = Vector2.ZERO
+			request_close_claw()
+			change_state(State.GRABBING)
+			return
 	 
 	var detector_hit := (
 		bottom_detector != null 
@@ -224,7 +253,7 @@ func process_dropping() -> void:
 		global_position.y >= starting_y + maximum_drop_depth
 	)
 	 #if max depth is reached or claw collides with bottom these conditions are triggered
-	if detector_hit or reached_maximum_depth or hit_collision:
+	if detector_hit or reached_maximum_depth:
 		velocity = Vector2.ZERO
 		request_close_claw()
 		change_state(State.GRABBING)
@@ -239,7 +268,7 @@ func process_returning() -> void:
 	velocity.x = 0
 	velocity.y = -return_speed
 	
-	move_and_slide()
+	global_position.y += velocity.y * get_physics_process_delta_time()
 	
 	position_changed.emit(global_position)
 	
@@ -288,15 +317,7 @@ func process_moving_to_chute() -> void:
 		return
 	
 	velocity.x = signf(difference) * chuteMoveSpeed
-	move_and_slide()
-	
-	if get_slide_collision_count() > 0:
-		push_warning("Claw hit wall near release point. Opening anyway.")
-		velocity = Vector2.ZERO
-		change_state(State.RELEASING)
-		
-		if animation_player != null:
-			animation_player.play(&"open_claw")
+	global_position.x += velocity.x * get_physics_process_delta_time()
 func process_resolving() -> void:
 	velocity = Vector2.ZERO	
 	
@@ -510,14 +531,15 @@ func _ready() -> void:
 		apply_suit_modifiers(runManager.equippedSuit)
 func choose_nearest_candidate() -> RigidBody2D:
 	remove_invalid_candidates()
-
-	if(
-		is_instance_valid(first_contact_prize)
-		and not first_contact_prize.is_queued_for_deletion()
-		and first_contact_prize.is_inside_tree()
-		and first_contact_prize.is_in_group("prizes")
-	):
-		return first_contact_prize
+	
+	var allow_dig_grab := randf() < dig_grab_chance
+	
+	if allow_dig_grab:
+		add_dig_grab_candidates()
+		remove_invalid_candidates()
+	
+	var best_prize: RigidBody2D = null
+	var best_score := -INF
 		
 	for prize in grab_candidates:
 		if not is_instance_valid(prize):
@@ -532,9 +554,101 @@ func choose_nearest_candidate() -> RigidBody2D:
 		if not prize.is_in_group("prizes"):
 			continue
 
-		return prize
+		var score := get_grab_candidate_score(prize, allow_dig_grab)
+		
+		if score > best_score:
+			best_score = score
+			best_prize = prize
 
-	return null
+	return best_prize
+
+func add_dig_grab_candidates() -> void:
+	var scan_center := global_position
+	
+	if hold_point != null:
+		scan_center = hold_point.global_position
+	
+	for node in get_tree().get_nodes_in_group("prizes"):
+		if not node is RigidBody2D:
+			continue
+			
+		var prize := node as RigidBody2D
+		
+		if not is_instance_valid(prize):
+			continue
+			
+		if prize.is_queued_for_deletion():
+			continue
+			
+		if not prize.is_inside_tree():
+			continue
+			
+		if get_prize_rarity_score(prize) < float(dig_minimum_rarity):
+			continue
+			
+		var offset := prize.global_position - scan_center
+		
+		if absf(offset.x) > dig_horizontal_range:
+			continue
+			
+		if offset.y < -16.0:
+			continue
+			
+		if not dig_scan_full_depth and offset.y > dig_vertical_range:
+			continue
+			
+		if not grab_candidates.has(prize):
+			grab_candidates.append(prize)
+
+func get_grab_candidate_score(
+	prize: RigidBody2D,
+	allow_dig_grab: bool
+) -> float:
+	var distance_score := 300.0
+	
+	if hold_point != null:
+		distance_score -= hold_point.global_position.distance_to(
+			prize.global_position
+		)
+		
+	var score := distance_score
+	
+	if prize == first_contact_prize:
+		score += first_contact_grab_bonus
+	
+	var rarity_score := get_prize_rarity_score(prize)
+	
+	score += rarity_score * rarity_grab_bonus
+	
+	if (
+		allow_dig_grab
+		and rarity_score >= float(dig_minimum_rarity)
+		and prize != first_contact_prize
+	):
+		score += dig_grab_bonus
+		
+	score += prize.global_position.y * deeper_prize_grab_bonus
+	
+	return score
+
+func get_prize_rarity_score(prize: RigidBody2D) -> float:
+	if prize is AlienPrize:
+		var alien_prize := prize as AlienPrize
+		
+		if alien_prize.alien_data == null:
+			return 0.0
+			
+		return float(alien_prize.alien_data.rarity)
+		
+	if prize is MineralPrize:
+		var mineral_prize := prize as MineralPrize
+		
+		if mineral_prize.mineral_data == null:
+			return 0.0
+			
+		return float(mineral_prize.mineral_data.rarity)
+		
+	return 0.0
 
 func _on_grab_area_body_entered(body: Node2D) -> void:
 	# Ignore cabinet walls and other non-prize body types
@@ -559,7 +673,8 @@ func _on_grab_area_body_entered(body: Node2D) -> void:
 	
 	if current_State == State.DROPPING and first_contact_prize == null:
 		first_contact_prize = prize
-		request_close_claw()
+		contact_scan_remaining = first_contact_scan_time
+		contact_close_pending = true
 		
 func _on_grab_area_body_exited(body: Node2D) -> void:
 	if body is RigidBody2D:

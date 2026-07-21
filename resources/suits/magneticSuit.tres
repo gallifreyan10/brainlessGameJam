@@ -7,7 +7,7 @@
 script = ExtResource("1_odgun")
 suit_id = &"magnetic_suit"
 displayName = "Magnetic Suit"
-price = 18
+price = 20
 icon = ExtResource("1_cssda")
 grab_area_scale_multiplier = 1.25
 metadata/_custom_type_script = "uid://d1mwwo1iilnab"

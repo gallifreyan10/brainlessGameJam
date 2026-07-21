@@ -54,6 +54,7 @@ metadata/_custom_type_script = "uid://bxput7ta4vpbu"
 
 [resource]
 script = ExtResource("5_hmw0o")
+displayName = "LEVEL 3"
 mineralTable = Array[ExtResource("2_qrpxn")]([SubResource("Resource_l6b0x"), SubResource("Resource_i7t1b"), SubResource("Resource_y2qnn"), SubResource("Resource_82j1x"), SubResource("Resource_drv2b"), SubResource("Resource_duacn")])
 targetMineralCount = 30
 earningsQuota = 65

@@ -10,6 +10,12 @@ var collected_alien_data: Dictionary = {}
 
 const SAVE_PATH := "user://alien_collection.save"
 const ALIEN_RESOURCE_FOLDER := "res://resources/aliens/"
+const MAX_SALE_VALUE_MULTIPLIER := 2.0
+const MIN_SUIT_PRICE_MULTIPLIER := 0.55
+const MAX_EXTRA_ATTEMPTS := 2
+const MAX_RARE_ALIEN_SPAWN_MULTIPLIER := 3.0
+const MAX_RARE_MINERAL_SPAWN_MULTIPLIER := 3.0
+const MAX_GRIP_STRENGTH_MULTIPLIER := 2.0
 
 func collect_alien(alien_data: AlienData) -> void:
 	if alien_data == null:
@@ -71,7 +77,7 @@ func get_sale_value_multiplier() -> float:
 		if ability.ability_type == AlienAbility.AbilityType.SALE_VALUE_MULTIPLIER:
 			multiplier *= ability.magnitude
 			
-	return multiplier
+	return minf(multiplier, MAX_SALE_VALUE_MULTIPLIER)
 	
 func get_suit_price_multiplier() -> float:
 	var multiplier := 1.0
@@ -80,7 +86,7 @@ func get_suit_price_multiplier() -> float:
 		if ability.ability_type == AlienAbility.AbilityType.SUIT_DISCOUNT:
 			multiplier *= ability.magnitude
 			
-	return multiplier
+	return maxf(multiplier, MIN_SUIT_PRICE_MULTIPLIER)
 
 func get_extra_attempts() -> int:
 	var extra_attempts := 0
@@ -89,7 +95,7 @@ func get_extra_attempts() -> int:
 		if ability.ability_type == AlienAbility.AbilityType.ATTEMPT_NUMBER_INCREASED:
 			extra_attempts += int(ability.magnitude)
 			
-	return extra_attempts
+	return mini(extra_attempts, MAX_EXTRA_ATTEMPTS)
 
 func get_rare_alien_spawn_multiplier() -> float:
 	var multiplier := 1.0
@@ -98,7 +104,7 @@ func get_rare_alien_spawn_multiplier() -> float:
 		if ability.ability_type == AlienAbility.AbilityType.BOOST_RARER_ALIEN_SPAWNS:
 			multiplier *= ability.magnitude
 			
-	return multiplier
+	return minf(multiplier, MAX_RARE_ALIEN_SPAWN_MULTIPLIER)
 	
 func get_rare_mineral_spawn_multiplier() -> float:
 	var multiplier := 1.0
@@ -107,7 +113,7 @@ func get_rare_mineral_spawn_multiplier() -> float:
 		if ability.ability_type == AlienAbility.AbilityType.BOOST_RARE_MINERAL_SPAWNS:
 			multiplier *= ability.magnitude
 			
-	return multiplier
+	return minf(multiplier, MAX_RARE_MINERAL_SPAWN_MULTIPLIER)
 	
 func get_grip_strength_multiplier() -> float:
 	var multiplier := 1.0
@@ -116,7 +122,7 @@ func get_grip_strength_multiplier() -> float:
 		if ability.ability_type == AlienAbility.AbilityType.GRIP_STRENGTH:
 			multiplier *= ability.magnitude
 			
-	return multiplier
+	return minf(multiplier, MAX_GRIP_STRENGTH_MULTIPLIER)
 	
 func find_alien_data_by_id(alien_id: StringName) -> AlienData:
 	var files := DirAccess.get_files_at(ALIEN_RESOURCE_FOLDER)

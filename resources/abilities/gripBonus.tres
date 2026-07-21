@@ -8,5 +8,5 @@ ability_id = &"grip_bonus"
 displayName = "Grip Increase Ability"
 description = "Grip of claw increased, less chance of prizes slipping"
 ability_type = 2
-magnitude = 1.25
+magnitude = 1.15
 metadata/_custom_type_script = "uid://dlfh286jcwey"

@@ -38,6 +38,13 @@ func _on_alien_collected(alien_data: AlienData) -> void:
 	
 	visible = true
 	modulate.a = 1.0
+	position = original_position
+	
+	if gameSettings.is_reduce_motion_enabled():
+		scale = Vector2.ONE
+		hideTimer.start()
+		return
+		
 	scale = Vector2(1.1,1.1)
 	
 	position = original_position + Vector2(0,8)
@@ -71,6 +78,13 @@ func _on_hide_timer_timeout() -> void:
 	
 	if feedback_tween != null and feedback_tween.is_valid():
 		feedback_tween.kill()
+	
+	if gameSettings.is_reduce_motion_enabled():
+		visible = false
+		modulate.a = 1.0
+		scale = Vector2.ONE
+		position = original_position
+		return
 		
 	feedback_tween = create_tween()
 	var tween := feedback_tween

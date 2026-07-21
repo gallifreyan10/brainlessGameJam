@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://0o1s2ryoypp1"]
 
+[ext_resource type="Theme" uid="uid://b114m23cil3i0" path="res://resources/default_ui_theme.tres" id="1_5pajh"]
 [ext_resource type="Script" uid="uid://btpo4ve7dff25" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Script" uid="uid://daale7juaodk4" path="res://scripts/settingsPanel.gd" id="1_l6cm7"]
 [ext_resource type="AudioStream" uid="uid://b4vjhv4ihwb1m" path="res://audio/music/menu.wav" id="2_5dd4i"]
@@ -86,6 +87,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_5pajh")
 script = ExtResource("1_ekxnf")
 menu_music = ExtResource("2_5dd4i")
 button_click_sfx = ExtResource("3_flqon")
@@ -305,6 +307,7 @@ horizontal_alignment = 1
 [node name="ScrollContainer" type="ScrollContainer" parent="CreditsPanel/MarginContainer/VBoxContainer" unique_id=187656761]
 custom_minimum_size = Vector2(520, 250)
 layout_mode = 2
+theme = ExtResource("1_5pajh")
 script = ExtResource("15_7b55j")
 
 [node name="CreditsLabel" type="RichTextLabel" parent="CreditsPanel/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1371717459]
@@ -322,7 +325,7 @@ scifinerd10
 Original cabinet, claw, aliens, minerals, suits, and UI edits by scifinerd10.
 
 Additional asset packs:
-- Free Hologram Interface Wenrexa by [Creator Name] - itch.io
+- Free Hologram Interface  by Wenrexa - itch.io
 - Pixel Coins by TotusLotus - itch.io
 
 [font_size=18][color=#FFD84A]Music[/color][/font_size]
@@ -341,6 +344,9 @@ Additional asset packs:
 [font_size=18][color=#FFD84A]Tools[/color][/font_size]
 Godot 4.6.2
 Aseprite
+With some teaching help from chat gpt didn't do any direct coding just explained what methods were needed and how they worked like live documentation
+Trello 
+Millanote
 
 [font_size=18][color=#FFD84A]Special Thanks[/color][/font_size]
 Thanks for playing!"

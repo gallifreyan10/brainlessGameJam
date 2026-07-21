@@ -8,5 +8,5 @@ ability_id = &"suitsale_bonus"
 displayName = "Suit Discount Ability"
 description = "Suits in shop cost less"
 ability_type = 3
-magnitude = 0.9
+magnitude = 0.92
 metadata/_custom_type_script = "uid://dlfh286jcwey"

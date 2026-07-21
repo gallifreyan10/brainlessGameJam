@@ -315,10 +315,10 @@ button_hover_sfx = ExtResource("32_jsd7a")
 
 [node name="ActiveAbilitiesPanel" parent="GameUI" unique_id=1948541691 node_paths=PackedStringArray("runManager") instance=ExtResource("12_qw4m0")]
 z_index = 50
-offset_left = 318.0
-offset_top = 140.0
-offset_right = 326.0
-offset_bottom = 206.0
+offset_left = 286.0
+offset_top = 17.0
+offset_right = 447.0
+offset_bottom = 83.0
 theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_5x1oe")
 runManager = NodePath("../../Managers/RunManager")
@@ -2146,6 +2146,8 @@ default_color = Color(0.8666667, 0.9843137, 1, 0.18039216)
 [node name="ColorRect" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1474055232]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 182.0
@@ -2159,6 +2161,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect2" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1627169826]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 207.0
@@ -2172,6 +2176,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect3" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1585840645]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 173.0
@@ -2185,6 +2191,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect4" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=223624988]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 237.0
@@ -2198,6 +2206,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect5" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1797517998]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 357.0
@@ -2211,6 +2221,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect6" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1260633630]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 288.0
@@ -2224,6 +2236,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect7" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=623996045]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_right = 40.0
@@ -2235,6 +2249,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect8" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1942072897]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 427.0
@@ -2245,22 +2261,11 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0.2)
 metadata/_edit_use_anchors_ = true
 
-[node name="ColorRect9" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=950217213]
-z_index = 2
-anchors_preset = -1
-anchor_right = -0.0609375
-anchor_bottom = -0.108333334
-offset_left = 436.0
-offset_top = 187.0
-offset_right = 476.0
-offset_bottom = 227.0
-mouse_filter = 2
-color = Color(1, 1, 1, 0.2)
-metadata/_edit_use_anchors_ = true
-
 [node name="ColorRect10" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=50534241]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 463.0
@@ -2274,6 +2279,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect11" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=812661378]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 447.0
@@ -2287,6 +2294,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect12" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1126857985]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 217.0
@@ -2300,6 +2309,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect13" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=2142379085]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 540.0
@@ -2313,6 +2324,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect14" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=542015233]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 245.0
@@ -2326,6 +2339,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect15" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=601398570]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 454.0
@@ -2339,6 +2354,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect16" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1631253237]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 535.0
@@ -2352,6 +2369,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect17" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1356169851]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 570.0
@@ -2365,6 +2384,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect18" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1697380840]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 535.0
@@ -2378,6 +2399,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect19" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=540805078]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 311.0
@@ -2391,6 +2414,8 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect20" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1501366506]
 z_index = 2
 anchors_preset = -1
+anchor_left = -0.0609375
+anchor_top = -0.108333334
 anchor_right = -0.0609375
 anchor_bottom = -0.108333334
 offset_left = 373.0
@@ -2403,13 +2428,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Managers" type="Node" parent="." unique_id=838759661]
 
-[node name="RunManager" type="Node" parent="Managers" unique_id=1852464911 node_paths=PackedStringArray("prizeContainer", "clawController", "layoutManager", "decorativePrizePiles")]
+[node name="RunManager" type="Node" parent="Managers" unique_id=1852464911 node_paths=PackedStringArray("prizeContainer", "clawController", "layoutManager", "decorativePrizePiles", "levelNameLabel")]
 script = ExtResource("1_dc740")
 levels = Array[ExtResource("2_5d133")]([ExtResource("3_3s4k1"), ExtResource("4_782ej"), ExtResource("5_kj04f"), ExtResource("6_kett4"), ExtResource("7_vpy7u")])
 prizeContainer = NodePath("../../Gameplay/prizeContainer")
 clawController = NodePath("../../Gameplay/Claw/CharacterBody2D")
 layoutManager = NodePath("../../Gameplay/LayoutManager")
 decorativePrizePiles = NodePath("../../Cabinet/PrizePiles")
+levelNameLabel = NodePath("../../Cabinet/Marquee/LevelLabel")
 
 [node name="Camera2D" type="Camera2D" parent="Managers" unique_id=302279949]
 position = Vector2(320, 180)

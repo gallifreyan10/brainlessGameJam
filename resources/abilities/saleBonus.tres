@@ -8,5 +8,5 @@ ability_id = &"sale_bonus"
 displayName = "Better Buy Ability"
 description = "Captured minerals sell for more while this alien is equipped."
 ability_type = 1
-magnitude = 1.25
+magnitude = 1.12
 metadata/_custom_type_script = "uid://dlfh286jcwey"

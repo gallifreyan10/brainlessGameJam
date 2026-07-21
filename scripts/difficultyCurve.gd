@@ -1,11 +1,11 @@
 extends Resource
 class_name DifficultyCurve
 
-@export var quota_by_level: Array[int] = [30,45,65,90,120]
+@export var quota_by_level: Array[int] = [20,45,55,65,75]
 
 @export_category("Spawn Odds")
-@export var common_mulitplier_by_level: Array [float] = [1.0, 0.9, 0.8, 0.7, 0.6]
-@export var rare_multiplier_by_level: Array[float] = [1.0, 1.15, 1.35, 1.6, 1.9]
+@export var common_mulitplier_by_level: Array [float] = [1.0, 0.95, 0.9, 0.85, 0.8]
+@export var rare_multiplier_by_level: Array[float] = [1.0, 1.1, 1.2, 1.35, 1.5]
 
 @export_category("Mineral Rarity")
 @export_range(0.0, 1.0, 0.05) var commonReductionPerLevel := 0.15
@@ -16,7 +16,7 @@ class_name DifficultyCurve
 @export var maximum_prize_weight_by_level: Array[float] = [5.0, 5.5, 6.0, 7.0, 8.0]
 
 @export_category("Timer")
-@export var timer_multiplier_by_level: Array[float] = [1.0, 0.95, 0.9, 0.85, 0.8]
+@export var timer_multiplier_by_level: Array[float] = [1.0, 1.0, 0.95, 0.95, 0.9]
 
 # Called when the node enters the scene tree for the first time.
 func resolve(levelIndex: int) -> Dictionary:

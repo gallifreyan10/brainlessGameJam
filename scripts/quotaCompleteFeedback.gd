@@ -102,13 +102,6 @@ func play_reduced_feedback() -> void:
 	tween.set_parallel(true)
 	
 	tween.tween_property(
-		flashOverlay,
-		"color:a",
-		0.18,
-		0.2
-	)
-	
-	tween.tween_property(
 		successBanner,
 		"modulate:a",
 		1.0,
@@ -117,13 +110,6 @@ func play_reduced_feedback() -> void:
 	
 	tween.chain().tween_interval(0.8)
 	
-	tween.chain().tween_property(
-		flashOverlay,
-		"color:a",
-		0.0, 
-		0.35
-	)
-
 	tween.chain().tween_property(
 		successBanner,
 		"modulate:a",

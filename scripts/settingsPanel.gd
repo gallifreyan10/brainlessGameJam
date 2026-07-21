@@ -21,6 +21,8 @@ extends PanelContainer
 
 const TITLE_COLOR := Color("#FFD36A")
 
+var loading_settings_ui: bool = false
+
 func _ready() -> void:
 	visible = false
 	custom_minimum_size = Vector2(360, 320)
@@ -84,13 +86,15 @@ func _setup_options() -> void:
 			i
 		)
 		
-		scaleOption.clear()
-		scaleOption.add_item("100%",0)
-		scaleOption.add_item("125%",1)
-		scaleOption.add_item("150%",2)
-		scaleOption.add_item("200%",3)
+	scaleOption.clear()
+	scaleOption.add_item("100%",0)
+	scaleOption.add_item("125%",1)
+	scaleOption.add_item("150%",2)
+	scaleOption.add_item("200%",3)
 		
 func _load_current_settings_into_ui() -> void:
+	loading_settings_ui = true
+	
 	masterVolumeSlider.value = gameSettings.master_volume
 	musicVolumeSlider.value = gameSettings.music_volume
 	sfxVolumeSlider.value = gameSettings.sfx_volume
@@ -114,6 +118,8 @@ func _load_current_settings_into_ui() -> void:
 	largeTextCheck.button_pressed = gameSettings.large_text_enabled
 	reduceMotionCheck.button_pressed = gameSettings.reduce_motion_enabled
 	highContrastCheck.button_pressed = gameSettings.high_contrast_enabled
+	
+	loading_settings_ui = false
 
 func _on_settings_pressed() -> void:
 	SFXManager.play_sfx(button_click_sfx)
@@ -124,27 +130,48 @@ func _on_close_pressed() -> void:
 	close()
 
 func _on_master_volume_changed(value: float) -> void:
+	if loading_settings_ui:
+		return
+		
 	gameSettings.set_master_volume(value)
 	
 func _on_music_volume_changed(value: float) -> void:
-	gameSettings.set_master_volume(value)
+	if loading_settings_ui:
+		return
+		
+	gameSettings.set_music_volume(value)
 	
 func _on_sfx_volume_changed(value: float) -> void:
-	gameSettings.set_master_volume(value)
+	if loading_settings_ui:
+		return
+		
+	gameSettings.set_sfx_volume(value)
 
 func _on_window_mode_selected(index: int) -> void:
+	if loading_settings_ui:
+		return
+		
 	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_window_mode(index)
 	
 func _on_resolution_selected(index: int) -> void:
+	if loading_settings_ui:
+		return
+		
 	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_resolution_index(index)
 	
 func _on_vsync_toggled(enabled: bool) -> void:
+	if loading_settings_ui:
+		return
+		
 	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_vsync_enabled(enabled)
 	
 func _on_scale_selected(index: int) -> void:
+	if loading_settings_ui:
+		return
+		
 	SFXManager.play_sfx(button_click_sfx)
 	match index:
 		0:
@@ -157,14 +184,23 @@ func _on_scale_selected(index: int) -> void:
 			gameSettings.set_screen_scale(2.0)	
 			
 func _on_large_text_toggled(enabled: bool) -> void:
+	if loading_settings_ui:
+		return
+		
 	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_large_text_enabled(enabled)
 	
 func _on_reduce_motion_toggled(enabled: bool) -> void:
+	if loading_settings_ui:
+		return
+		
 	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_reduce_motion_enabled(enabled)
 		
 func _on_high_contrast_toggled(enabled: bool) -> void:
+	if loading_settings_ui:
+		return
+		
 	SFXManager.play_sfx(button_click_sfx)
 	gameSettings.set_high_contrast_enabled(enabled)
 
