@@ -136,6 +136,9 @@ func apply_bus_volume(bus_name: StringName, linear_value: float) -> void:
 func apply_display_settings() -> void:
 	sanitize_display_settings()
 	
+	if is_web_build():
+		return
+	
 	var window := get_window()
 	var resolution := RESOLUTIONS[resolution_index]
 	
@@ -205,6 +208,9 @@ func apply_display_settings() -> void:
 	apply_screen_scale()
 
 func center_window_on_screen(resolution: Vector2i) -> void:
+	if is_web_build():
+		return
+		
 	if window_mode == 1:
 		return
 		
@@ -220,10 +226,16 @@ func center_window_on_screen(resolution: Vector2i) -> void:
 	window.position = centered_position
 
 func apply_screen_scale() -> void:
+	if is_web_build():
+		return
+		
 	var window := get_window()
 	
 	if object_has_property(window, &"content_scale_factor"):
 		window.set("content_scale_factor", screen_scale)
+
+func is_web_build() -> bool:
+	return OS.get_name() == "Web"
 
 func object_has_property(object: Object, property_name: StringName) -> bool:
 	for property in object.get_property_list():
