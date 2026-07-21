@@ -5,6 +5,7 @@ signal progress_loaded
 
 const SAVE_PATH := "user://player_progress.save"
 
+var open_credits_on_menu_load: bool = false
 var best_level_reached: int = 1
 var total_runs_started: int = 0
 var total_runs_failed: int = 0
@@ -87,3 +88,16 @@ func clear_progress_for_debug() -> void:
 	total_runs_completed = 0
 	save_progress()
 	progress_changed.emit()
+
+func request_credits_on_menu_load() -> void:
+	open_credits_on_menu_load = true
+	
+func clear_credits_on_menu_load() -> void:
+	open_credits_on_menu_load = false
+	
+func consume_credits_on_menu_load() -> bool:
+	if not open_credits_on_menu_load:
+		return false
+		
+	open_credits_on_menu_load = false
+	return true

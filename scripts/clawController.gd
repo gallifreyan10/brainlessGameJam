@@ -41,6 +41,7 @@ var first_contact_prize: RigidBody2D = null
 @export var release_impulse: float = 30.0
 @export var chuteMoveSpeed: float = 120.0
 @export var chuteArrivalTolerance: float = 12.0
+@export var clawSpawn: Marker2D
 
 #Selected prize that is picked up by the claw
 var held_prize: RigidBody2D = null
@@ -473,6 +474,9 @@ func _ready() -> void:
 	
 	max_tilt_angle_degrees = base_max_tilt_angle_degrees
 	
+	if clawSpawn != null:
+		global_position = clawSpawn.global_position
+		
 	starting_y = global_position.y
 	
 	 #Connect the timeout through code if it's not already connected

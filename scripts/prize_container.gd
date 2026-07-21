@@ -3,16 +3,19 @@ extends Node2D
 @export var alien_Scene: PackedScene
 @export_range(0,30,1) var targetAlienCount: int = 30
 @export var chuteArea: Area2D
+@export var killZone: Area2D
 
 @export_category("Shared Spawn Area")
 @export var spawn_top_left: Marker2D
 @export var spawn_bottom_right: Marker2D
 @export var minimumSpawnSeparation: float = 10.0
+@export var spawnAttemptCount: int = 240
+@export var killZoneAvoidDistance: float = 24.0
 
 @export_category("Mineral Spawning")
 @export var levelData: LevelData
 @export var discoveryMultiplier: float = 1.0
-@export var chuteAvoidDistance: float = 100.0
+@export var chuteAvoidDistance: float = 160.0
 
 var rng := RandomNumberGenerator.new()
 var mineralRng := RandomNumberGenerator.new()
@@ -146,6 +149,9 @@ func choose_alien_data() -> AlienData:
 func get_random_spawn_position(
 	generator: RandomNumberGenerator
 ) -> Vector2:
+	if spawn_top_left == null or spawn_bottom_right == null:
+		return global_position
+		
 	var minimumX := minf(
 		spawn_top_left.global_position.x,
 		spawn_bottom_right.global_position.x
@@ -171,9 +177,7 @@ func get_random_spawn_position(
 func get_clear_spawn_position(
 	generator: RandomNumberGenerator, ignoredPrize: RigidBody2D = null
 ) -> Vector2:
-	var fallbackPosition := get_spawn_area_center()
-	
-	for attempt in range(60):
+	for attempt in range(spawnAttemptCount):
 		var candidate := get_random_spawn_position(
 			generator
 		)
@@ -182,7 +186,9 @@ func get_clear_spawn_position(
 			candidate, ignoredPrize
 		):
 			return candidate
-	push_warning("No clear spawn position found. Using spawn area center.")
+			
+	var fallbackPosition := get_best_fallback_spawn_position(ignoredPrize)
+	push_warning("No clear spawn position found. Using best fallback spawn position.")
 	return fallbackPosition
 	
 func get_spawn_area_center() -> Vector2:
@@ -190,6 +196,97 @@ func get_spawn_area_center() -> Vector2:
 		return global_position
 	
 	return (spawn_top_left.global_position + spawn_bottom_right.global_position)*0.5
+
+func get_spawn_rect() -> Rect2:
+	if spawn_top_left == null or spawn_bottom_right == null:
+		return Rect2(global_position, Vector2.ZERO)
+		
+	var minimumX := minf(
+		spawn_top_left.global_position.x,
+		spawn_bottom_right.global_position.x
+	)
+	var maximumX := maxf(
+		spawn_top_left.global_position.x,
+		spawn_bottom_right.global_position.x
+	)
+	var minimumY := minf(
+		spawn_top_left.global_position.y,
+		spawn_bottom_right.global_position.y
+	)
+	var maximumY := maxf(
+		spawn_top_left.global_position.y,
+		spawn_bottom_right.global_position.y
+	)
+	
+	return Rect2(
+		Vector2(minimumX, minimumY),
+		Vector2(maximumX - minimumX, maximumY - minimumY)
+	)
+
+func get_best_fallback_spawn_position(
+	ignoredPrize: RigidBody2D = null
+) -> Vector2:
+	var spawnRect := get_spawn_rect()
+	
+	if spawnRect.size == Vector2.ZERO:
+		return global_position
+		
+	var bestPosition := spawnRect.get_center()
+	var bestScore := -INF
+	var sampleCount := 8
+	
+	for xIndex in range(sampleCount):
+		for yIndex in range(sampleCount):
+			var candidate := Vector2(
+				spawnRect.position.x
+				+ spawnRect.size.x
+				* ((float(xIndex) + 0.5) / float(sampleCount)),
+				spawnRect.position.y
+				+ spawnRect.size.y
+				* ((float(yIndex) + 0.5) / float(sampleCount))
+			)
+			
+			if is_position_near_chute(candidate):
+				continue
+				
+			if is_position_near_kill_zone(candidate):
+				continue
+				
+			var score := get_spawn_spacing_score(
+				candidate,
+				ignoredPrize
+			)
+			
+			if score > bestScore:
+				bestScore = score
+				bestPosition = candidate
+				
+	return bestPosition
+
+func get_spawn_spacing_score(
+	candidate: Vector2,
+	ignoredPrize: RigidBody2D = null
+) -> float:
+	var closestDistance := 100000.0
+	
+	for child in get_children():
+		if not child is RigidBody2D:
+			continue
+			
+		var prize := child as RigidBody2D
+		
+		if prize == ignoredPrize:
+			continue
+			
+		if prize.is_queued_for_deletion():
+			continue
+			
+		closestDistance = minf(
+			closestDistance,
+			prize.global_position.distance_to(candidate)
+		)
+		
+	return closestDistance
 	
 func is_spawn_position_clear(
 	candidate: Vector2,
@@ -197,6 +294,9 @@ func is_spawn_position_clear(
 ) -> bool:
 
 	if is_position_near_chute(candidate):
+		return false
+		
+	if is_position_near_kill_zone(candidate):
 		return false
 		
 	for child in get_children():
@@ -221,7 +321,64 @@ func is_position_near_chute(world_position: Vector2) -> bool:
 	if chuteArea == null:
 		return false
 		
-	return world_position.distance_to(chuteArea.global_position) < chuteAvoidDistance
+	if world_position.distance_to(chuteArea.global_position) < chuteAvoidDistance:
+		return true
+		
+	return is_position_near_area_collision(
+		chuteArea,
+		world_position,
+		chuteAvoidDistance
+	)
+	
+func is_position_near_kill_zone(world_position: Vector2) -> bool:
+	if killZone == null:
+		return false
+		
+	return is_position_near_area_collision(
+		killZone,
+		world_position,
+		killZoneAvoidDistance
+	)
+	
+func is_position_near_area_collision(
+	area: Area2D,
+	world_position: Vector2,
+	padding: float
+) -> bool:
+	for child in area.get_children():
+		if not child is CollisionShape2D:
+			continue
+			
+		var collisionShape := child as CollisionShape2D
+		
+		if collisionShape.disabled:
+			continue
+			
+		if collisionShape.shape == null:
+			continue
+			
+		var localPosition := collisionShape.to_local(world_position)
+		
+		if collisionShape.shape is RectangleShape2D:
+			var rectangle := collisionShape.shape as RectangleShape2D
+			var paddedHalfSize := (
+				rectangle.size * 0.5
+				+ Vector2.ONE * padding
+			)
+			
+			if (
+				abs(localPosition.x) <= paddedHalfSize.x
+				and abs(localPosition.y) <= paddedHalfSize.y
+			):
+				return true
+				
+		elif collisionShape.shape is CircleShape2D:
+			var circle := collisionShape.shape as CircleShape2D
+			
+			if localPosition.length() <= circle.radius + padding:
+				return true
+				
+	return false
 	
 func _on_kill_zone_body_entered(body: Node2D) -> void:
 	if not body is RigidBody2D:

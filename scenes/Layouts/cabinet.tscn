@@ -59,16 +59,17 @@
 [ext_resource type="Script" uid="uid://dofirwqkhaadw" path="res://scripts/pauseController.gd" id="35_kj04f"]
 [ext_resource type="Resource" uid="uid://l58payjl6n3q" path="res://resources/suits/pilotSuit.tres" id="44_iltbr"]
 [ext_resource type="AudioStream" uid="uid://dp3mk0wyv55c8" path="res://audio/sfx/game_over.wav" id="45_6lyf2"]
+[ext_resource type="Texture2D" uid="uid://dpxpbn5ndhhu6" path="res://art/finalSprites/Cabinet background.png" id="45_t0kcp"]
+[ext_resource type="Texture2D" uid="uid://mey84heghees" path="res://art/finalSprites/MarqueeFrame.png" id="46_q4ffn"]
+[ext_resource type="Texture2D" uid="uid://co8m0qq7aq5qh" path="res://art/finalSprites/MarqueeArt.png" id="47_oiuaq"]
+[ext_resource type="Texture2D" uid="uid://cs6vff4xcthlr" path="res://art/finalSprites/LargePile.png" id="48_u1gax"]
+[ext_resource type="Texture2D" uid="uid://c2vpp0u7g6q25" path="res://art/finalSprites/smallPile.png" id="49_35ty0"]
+[ext_resource type="Texture2D" uid="uid://cqc0riipmaq7q" path="res://art/finalSprites/mediumPile.png" id="50_v3kkr"]
+[ext_resource type="Texture2D" uid="uid://dksqfwxyx3s30" path="res://art/finalSprites/smallPilev2.png" id="51_njwk2"]
 [ext_resource type="AudioStream" uid="uid://dpsnvty5qa4l0" path="res://audio/sfx/drop.wav" id="52_3cuoo"]
 [ext_resource type="AudioStream" uid="uid://c2paqh83iuai2" path="res://audio/sfx/close.wav" id="53_iltbr"]
 [ext_resource type="AudioStream" uid="uid://lpqwsl85jakr" path="res://audio/sfx/return.wav" id="54_tc75b"]
 [ext_resource type="AudioStream" uid="uid://7wovvmr5sm5b" path="res://audio/sfx/slip.wav" id="55_v00e2"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
-size = Vector2(124, 371)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0srf"]
-size = Vector2(701, 87.5)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0i0pt"]
 texture = ExtResource("13_5x1oe")
@@ -278,56 +279,22 @@ texture = ExtResource("21_6dklo")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_518r7"]
 texture = ExtResource("22_ntwkj")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d2p3p"]
+size = Vector2(124, 371)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0srf"]
+size = Vector2(701, 87.5)
+
 [node name="root" type="Sprite2D" unique_id=1035922221]
 script = ExtResource("1_bsucm")
 level_music = ExtResource("2_dn1wf")
 
-[node name="RunManager" type="Node" parent="." unique_id=1852464911 node_paths=PackedStringArray("prizeContainer", "clawController", "layoutManager")]
-script = ExtResource("1_dc740")
-levels = Array[ExtResource("2_5d133")]([ExtResource("3_3s4k1"), ExtResource("4_782ej"), ExtResource("5_kj04f"), ExtResource("6_kett4"), ExtResource("7_vpy7u")])
-prizeContainer = NodePath("../prizeContainer")
-clawController = NodePath("../Claw/CharacterBody2D")
-layoutManager = NodePath("../LayoutManager")
-
-[node name="KillZone" type="Area2D" parent="." unique_id=2033197540]
-position = Vector2(-2, -2)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="KillZone" unique_id=1820535108]
-position = Vector2(71, 176.5)
-shape = SubResource("RectangleShape2D_d2p3p")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="KillZone" unique_id=24308122]
-position = Vector2(644, 183)
-shape = SubResource("RectangleShape2D_d2p3p")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=565892024]
-position = Vector2(356.5, -41)
-shape = SubResource("RectangleShape2D_r0srf")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="KillZone" unique_id=1541592484]
-position = Vector2(361, 406)
-shape = SubResource("RectangleShape2D_r0srf")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=302279949]
-position = Vector2(320, 180)
-
-[node name="prizeContainer" type="Node2D" parent="." unique_id=1425589497]
-position = Vector2(348, 282)
-script = ExtResource("5_1rkfa")
-alien_Scene = ExtResource("6_r815q")
-levelData = ExtResource("3_3s4k1")
-
-[node name="clawSpawn" type="Marker2D" parent="." unique_id=601436855]
-position = Vector2(318, 31)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1951429874]
+[node name="GameUI" type="CanvasLayer" parent="." unique_id=1951429874]
 script = ExtResource("10_kett4")
 button_click_sfx = ExtResource("32_jsd7a")
 button_hover_sfx = ExtResource("32_jsd7a")
 
-[node name="AlienCollectionPanel" parent="CanvasLayer" unique_id=1208775010 node_paths=PackedStringArray("runManager") instance=ExtResource("11_vpy7u")]
+[node name="AlienCollectionPanel" parent="GameUI" unique_id=1208775010 node_paths=PackedStringArray("runManager") instance=ExtResource("11_vpy7u")]
 z_index = 50
 anchors_preset = -1
 anchor_left = 0.5
@@ -342,11 +309,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_0i0pt")
-runManager = NodePath("../../RunManager")
+runManager = NodePath("../../Managers/RunManager")
 button_click_sfx = ExtResource("32_jsd7a")
 button_hover_sfx = ExtResource("32_jsd7a")
 
-[node name="ActiveAbilitiesPanel" parent="CanvasLayer" unique_id=1948541691 node_paths=PackedStringArray("runManager") instance=ExtResource("12_qw4m0")]
+[node name="ActiveAbilitiesPanel" parent="GameUI" unique_id=1948541691 node_paths=PackedStringArray("runManager") instance=ExtResource("12_qw4m0")]
 z_index = 50
 offset_left = 318.0
 offset_top = 140.0
@@ -354,11 +321,11 @@ offset_right = 326.0
 offset_bottom = 206.0
 theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_5x1oe")
-runManager = NodePath("../../RunManager")
+runManager = NodePath("../../Managers/RunManager")
 button_click_sfx = ExtResource("32_jsd7a")
 button_hover_sfx = ExtResource("32_jsd7a")
 
-[node name="EconomyDebugHUD" type="VBoxContainer" parent="CanvasLayer" unique_id=1398542342 node_paths=PackedStringArray("runManager")]
+[node name="EconomyDebugHUD" type="VBoxContainer" parent="GameUI" unique_id=1398542342 node_paths=PackedStringArray("runManager")]
 offset_left = 9.0
 offset_top = 4.0
 offset_right = 132.0
@@ -366,25 +333,25 @@ offset_bottom = 81.0
 mouse_filter = 0
 theme = ExtResource("12_kett4")
 script = ExtResource("13_0i0pt")
-runManager = NodePath("../../RunManager")
+runManager = NodePath("../../Managers/RunManager")
 attemptFrames = Array[Texture2D]([ExtResource("17_w3p3t"), ExtResource("18_ufegr"), ExtResource("19_bsucm"), ExtResource("20_dn1wf"), ExtResource("21_b87se"), ExtResource("22_1qatd"), ExtResource("23_0xvq0"), ExtResource("24_ogw0j"), ExtResource("25_jsd7a")])
 
-[node name="MoneyLabel" type="Label" parent="CanvasLayer/EconomyDebugHUD" unique_id=873156934]
+[node name="MoneyLabel" type="Label" parent="GameUI/EconomyDebugHUD" unique_id=873156934]
 layout_mode = 2
 text = "Money:0"
 
-[node name="QuotaLabel" type="Label" parent="CanvasLayer/EconomyDebugHUD" unique_id=975823737]
+[node name="QuotaLabel" type="Label" parent="GameUI/EconomyDebugHUD" unique_id=975823737]
 layout_mode = 2
 text = "Quota: 0/100"
 
-[node name="AttemptsContainer" type="HBoxContainer" parent="CanvasLayer/EconomyDebugHUD" unique_id=523697285]
+[node name="AttemptsContainer" type="HBoxContainer" parent="GameUI/EconomyDebugHUD" unique_id=523697285]
 layout_mode = 2
 
-[node name="CountdownLabel" type="Label" parent="CanvasLayer/EconomyDebugHUD" unique_id=709394461]
+[node name="CountdownLabel" type="Label" parent="GameUI/EconomyDebugHUD" unique_id=709394461]
 layout_mode = 2
 text = "Time: 5.0"
 
-[node name="SaleFeedback" type="VBoxContainer" parent="CanvasLayer" unique_id=2048277214]
+[node name="SaleFeedback" type="VBoxContainer" parent="GameUI" unique_id=2048277214]
 visible = false
 offset_left = 414.0
 offset_top = 77.0
@@ -395,22 +362,22 @@ theme = ExtResource("12_kett4")
 script = ExtResource("14_5x1oe")
 mineral_sold_sfx = ExtResource("29_0xvq0")
 
-[node name="HeaderRow" type="HBoxContainer" parent="CanvasLayer/SaleFeedback" unique_id=1995299089]
+[node name="HeaderRow" type="HBoxContainer" parent="GameUI/SaleFeedback" unique_id=1995299089]
 layout_mode = 2
 
-[node name="MineralIcon" type="TextureRect" parent="CanvasLayer/SaleFeedback/HeaderRow" unique_id=1886176411]
+[node name="MineralIcon" type="TextureRect" parent="GameUI/SaleFeedback/HeaderRow" unique_id=1886176411]
 layout_mode = 2
 
-[node name="MineralNameLabel" type="Label" parent="CanvasLayer/SaleFeedback/HeaderRow" unique_id=2145885237]
+[node name="MineralNameLabel" type="Label" parent="GameUI/SaleFeedback/HeaderRow" unique_id=2145885237]
 layout_mode = 2
 
-[node name="BreakdownLabel" type="Label" parent="CanvasLayer/SaleFeedback" unique_id=645029361]
+[node name="BreakdownLabel" type="Label" parent="GameUI/SaleFeedback" unique_id=645029361]
 layout_mode = 2
 
-[node name="TotalLabel" type="Label" parent="CanvasLayer/SaleFeedback" unique_id=712939237]
+[node name="TotalLabel" type="Label" parent="GameUI/SaleFeedback" unique_id=712939237]
 layout_mode = 2
 
-[node name="AlienIcon" type="TextureRect" parent="CanvasLayer/SaleFeedback" unique_id=438303149]
+[node name="AlienIcon" type="TextureRect" parent="GameUI/SaleFeedback" unique_id=438303149]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -418,11 +385,11 @@ size_flags_vertical = 0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="HideTimer" type="Timer" parent="CanvasLayer/SaleFeedback" unique_id=929046595]
+[node name="HideTimer" type="Timer" parent="GameUI/SaleFeedback" unique_id=929046595]
 wait_time = 2.0
 one_shot = true
 
-[node name="AlienFeedback" type="VBoxContainer" parent="CanvasLayer" unique_id=763768498]
+[node name="AlienFeedback" type="VBoxContainer" parent="GameUI" unique_id=763768498]
 visible = false
 offset_left = 412.0
 offset_top = 77.0
@@ -433,29 +400,29 @@ theme = ExtResource("12_kett4")
 script = ExtResource("31_v00e2")
 alien_collected_sfx = ExtResource("32_scuqw")
 
-[node name="HeaderRow" type="HBoxContainer" parent="CanvasLayer/AlienFeedback" unique_id=1360533569]
+[node name="HeaderRow" type="HBoxContainer" parent="GameUI/AlienFeedback" unique_id=1360533569]
 layout_mode = 2
 
-[node name="AlienIcon" type="TextureRect" parent="CanvasLayer/AlienFeedback/HeaderRow" unique_id=1767462199]
+[node name="AlienIcon" type="TextureRect" parent="GameUI/AlienFeedback/HeaderRow" unique_id=1767462199]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="AlienNameLabel" type="Label" parent="CanvasLayer/AlienFeedback/HeaderRow" unique_id=2056088259]
+[node name="AlienNameLabel" type="Label" parent="GameUI/AlienFeedback/HeaderRow" unique_id=2056088259]
 layout_mode = 2
 
-[node name="BreakdownLabel" type="Label" parent="CanvasLayer/AlienFeedback" unique_id=1517725233]
+[node name="BreakdownLabel" type="Label" parent="GameUI/AlienFeedback" unique_id=1517725233]
 layout_mode = 2
 
-[node name="TotalLabel" type="Label" parent="CanvasLayer/AlienFeedback" unique_id=420704491]
+[node name="TotalLabel" type="Label" parent="GameUI/AlienFeedback" unique_id=420704491]
 layout_mode = 2
 
-[node name="HideTimer" type="Timer" parent="CanvasLayer/AlienFeedback" unique_id=1852183675]
+[node name="HideTimer" type="Timer" parent="GameUI/AlienFeedback" unique_id=1852183675]
 wait_time = 1.5
 one_shot = true
 
-[node name="LevelCompletePanel" type="PanelContainer" parent="CanvasLayer" unique_id=1739182077 node_paths=PackedStringArray("runManager")]
+[node name="LevelCompletePanel" type="PanelContainer" parent="GameUI" unique_id=1739182077 node_paths=PackedStringArray("runManager")]
 visible = false
 z_index = 50
 offset_left = 270.0
@@ -466,26 +433,26 @@ mouse_filter = 2
 theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_bqxv4")
 script = ExtResource("15_bqxv4")
-runManager = NodePath("../../RunManager")
+runManager = NodePath("../../Managers/RunManager")
 level_complete_sfx = ExtResource("31_ogw0j")
 button_click_sfx = ExtResource("32_jsd7a")
 button_hover_sfx = ExtResource("32_jsd7a")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/LevelCompletePanel" unique_id=1804771937]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/LevelCompletePanel" unique_id=1804771937]
 layout_mode = 2
 mouse_filter = 0
 
-[node name="TitleLabel" type="Label" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=1455296043]
+[node name="TitleLabel" type="Label" parent="GameUI/LevelCompletePanel/VBoxContainer" unique_id=1455296043]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
 theme_override_font_sizes/font_size = 14
 text = "Level Complete!"
 
-[node name="EarningsLabel" type="Label" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=1317122354]
+[node name="EarningsLabel" type="Label" parent="GameUI/LevelCompletePanel/VBoxContainer" unique_id=1317122354]
 layout_mode = 2
 text = " Earned : 0"
 
-[node name="ContinueButton" type="Button" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=1738080007]
+[node name="ContinueButton" type="Button" parent="GameUI/LevelCompletePanel/VBoxContainer" unique_id=1738080007]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_0agwy")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_nyn87")
@@ -493,7 +460,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_vec61")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_p8sw1")
 text = "Continue"
 
-[node name="ShopButton" type="Button" parent="CanvasLayer/LevelCompletePanel/VBoxContainer" unique_id=772285892]
+[node name="ShopButton" type="Button" parent="GameUI/LevelCompletePanel/VBoxContainer" unique_id=772285892]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_2453e")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_w3p3t")
@@ -501,7 +468,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_ufegr")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_bsucm")
 text = "Shop"
 
-[node name="ShopPanel" type="PanelContainer" parent="CanvasLayer" unique_id=789925739 node_paths=PackedStringArray("runManager")]
+[node name="ShopPanel" type="PanelContainer" parent="GameUI" unique_id=789925739 node_paths=PackedStringArray("runManager")]
 visible = false
 z_index = 50
 offset_left = 259.0
@@ -512,19 +479,19 @@ mouse_filter = 2
 theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_kcbrs")
 script = ExtResource("16_kcbrs")
-runManager = NodePath("../../RunManager")
+runManager = NodePath("../../Managers/RunManager")
 suitCatalog = Array[ExtResource("17_hbbfd")]([ExtResource("18_dyodi"), ExtResource("19_6dklo"), ExtResource("20_ntwkj"), ExtResource("21_0agwy"), ExtResource("22_nyn87"), ExtResource("44_iltbr")])
 button_hover_sfx = ExtResource("32_jsd7a")
 button_click_sfx = ExtResource("32_jsd7a")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ShopPanel" unique_id=1803431874]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/ShopPanel" unique_id=1803431874]
 layout_mode = 2
 mouse_filter = 0
 
-[node name="OffersContainer" type="VBoxContainer" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=1963519881]
+[node name="OffersContainer" type="VBoxContainer" parent="GameUI/ShopPanel/VBoxContainer" unique_id=1963519881]
 layout_mode = 2
 
-[node name="RerollButton" type="Button" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=2123462111]
+[node name="RerollButton" type="Button" parent="GameUI/ShopPanel/VBoxContainer" unique_id=2123462111]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_dn1wf")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_b87se")
@@ -532,7 +499,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_1qatd")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_0xvq0")
 text = "Reroll"
 
-[node name="ContinueButton" type="Button" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=1136640569]
+[node name="ContinueButton" type="Button" parent="GameUI/ShopPanel/VBoxContainer" unique_id=1136640569]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_ogw0j")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_jsd7a")
@@ -540,10 +507,10 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_6lyf2")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_3cuoo")
 text = "Continue"
 
-[node name="StatusLabel" type="Label" parent="CanvasLayer/ShopPanel/VBoxContainer" unique_id=2110119621]
+[node name="StatusLabel" type="Label" parent="GameUI/ShopPanel/VBoxContainer" unique_id=2110119621]
 layout_mode = 2
 
-[node name="RunFailedPanel" type="PanelContainer" parent="CanvasLayer" unique_id=1130151050 node_paths=PackedStringArray("runManager")]
+[node name="RunFailedPanel" type="PanelContainer" parent="GameUI" unique_id=1130151050 node_paths=PackedStringArray("runManager")]
 visible = false
 z_index = 50
 offset_left = 249.0
@@ -554,26 +521,26 @@ mouse_filter = 2
 theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_hbbfd")
 script = ExtResource("23_vec61")
-runManager = NodePath("../../RunManager")
+runManager = NodePath("../../Managers/RunManager")
 run_failed_sfx = ExtResource("45_6lyf2")
 button_click_sfx = ExtResource("32_jsd7a")
 button_hover_sfx = ExtResource("32_jsd7a")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/RunFailedPanel" unique_id=1567539791]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/RunFailedPanel" unique_id=1567539791]
 layout_mode = 2
 mouse_filter = 0
 
-[node name="TitleLabel" type="Label" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=1565168108]
+[node name="TitleLabel" type="Label" parent="GameUI/RunFailedPanel/VBoxContainer" unique_id=1565168108]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
 theme_override_font_sizes/font_size = 14
 text = "Run Failed"
 
-[node name="MessageLabel" type="Label" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=40664713]
+[node name="MessageLabel" type="Label" parent="GameUI/RunFailedPanel/VBoxContainer" unique_id=40664713]
 layout_mode = 2
 text = "Quota not reached"
 
-[node name="NewRunButton" type="Button" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=17416925]
+[node name="NewRunButton" type="Button" parent="GameUI/RunFailedPanel/VBoxContainer" unique_id=17416925]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_iltbr")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_tc75b")
@@ -581,7 +548,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_v00e2")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_scuqw")
 text = "Start New Run"
 
-[node name="MainMenuButton" type="Button" parent="CanvasLayer/RunFailedPanel/VBoxContainer" unique_id=547900442]
+[node name="MainMenuButton" type="Button" parent="GameUI/RunFailedPanel/VBoxContainer" unique_id=547900442]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_hgxbw")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_csvn3")
@@ -589,7 +556,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_1e0fl")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_t0kcp")
 text = "Main Menu"
 
-[node name="HelpButton" type="Button" parent="CanvasLayer" unique_id=1989792946]
+[node name="HelpButton" type="Button" parent="GameUI" unique_id=1989792946]
 offset_left = 20.0
 offset_top = 141.0
 offset_right = 64.0
@@ -601,7 +568,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_u1gax")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_35ty0")
 text = "Help"
 
-[node name="HelpPanel" type="PanelContainer" parent="CanvasLayer" unique_id=1316446709 node_paths=PackedStringArray("helpButton", "runManager")]
+[node name="HelpPanel" type="PanelContainer" parent="GameUI" unique_id=1316446709 node_paths=PackedStringArray("helpButton", "runManager")]
 visible = false
 z_index = 50
 custom_minimum_size = Vector2(300, 0)
@@ -614,22 +581,22 @@ theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_dyodi")
 script = ExtResource("24_p8sw1")
 helpButton = NodePath("../HelpButton")
-runManager = NodePath("../../RunManager")
+runManager = NodePath("../../Managers/RunManager")
 button_click_sfx = ExtResource("32_jsd7a")
 button_hover_sfx = ExtResource("32_jsd7a")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HelpPanel" unique_id=2143578196]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/HelpPanel" unique_id=2143578196]
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 0
 
-[node name="TitleLabel" type="Label" parent="CanvasLayer/HelpPanel/VBoxContainer" unique_id=1200168300]
+[node name="TitleLabel" type="Label" parent="GameUI/HelpPanel/VBoxContainer" unique_id=1200168300]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
 theme_override_font_sizes/font_size = 14
 text = "How to Play"
 
-[node name="BodyLabel" type="Label" parent="CanvasLayer/HelpPanel/VBoxContainer" unique_id=1036248502]
+[node name="BodyLabel" type="Label" parent="GameUI/HelpPanel/VBoxContainer" unique_id=1036248502]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
@@ -652,7 +619,7 @@ Aliens are permanent upgrades. Collect repeat aliens to stack their abilities.
 Use Collection, Abilities, Suits, Help, and Settings panels to manage your run."
 autowrap_mode = 3
 
-[node name="CloseButton" type="Button" parent="CanvasLayer/HelpPanel/VBoxContainer" unique_id=1320010215]
+[node name="CloseButton" type="Button" parent="GameUI/HelpPanel/VBoxContainer" unique_id=1320010215]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_v3kkr")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_njwk2")
@@ -660,7 +627,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_3f824")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_lng5k")
 text = "Close"
 
-[node name="CollectionButton" type="Button" parent="CanvasLayer" unique_id=640475432]
+[node name="CollectionButton" type="Button" parent="GameUI" unique_id=640475432]
 offset_left = 15.0
 offset_top = 175.0
 offset_right = 100.0
@@ -672,7 +639,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_wfi7l")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_273so")
 text = "Collection"
 
-[node name="AbilitiesButton" type="Button" parent="CanvasLayer" unique_id=120047696]
+[node name="AbilitiesButton" type="Button" parent="GameUI" unique_id=120047696]
 offset_left = 15.0
 offset_top = 214.0
 offset_right = 100.0
@@ -684,7 +651,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_867pq")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_e8amh")
 text = "Abilities"
 
-[node name="OwnedSuitsButton" type="Button" parent="CanvasLayer" unique_id=781249223]
+[node name="OwnedSuitsButton" type="Button" parent="GameUI" unique_id=781249223]
 offset_left = 12.0
 offset_top = 254.0
 offset_right = 129.0
@@ -696,7 +663,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_pbgpk")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_c6y8h")
 text = "Suit Inventory"
 
-[node name="OwnedSuitsPanel" type="PanelContainer" parent="CanvasLayer" unique_id=892049915 node_paths=PackedStringArray("runManager")]
+[node name="OwnedSuitsPanel" type="PanelContainer" parent="GameUI" unique_id=892049915 node_paths=PackedStringArray("runManager")]
 visible = false
 z_index = 50
 custom_minimum_size = Vector2(300, 0)
@@ -707,27 +674,27 @@ offset_bottom = 213.0
 theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_6dklo")
 script = ExtResource("25_2453e")
-runManager = NodePath("../../RunManager")
+runManager = NodePath("../../Managers/RunManager")
 button_click_sfx = ExtResource("32_jsd7a")
 button_hover_sfx = ExtResource("32_jsd7a")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/OwnedSuitsPanel" unique_id=1850875643]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/OwnedSuitsPanel" unique_id=1850875643]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="CanvasLayer/OwnedSuitsPanel/VBoxContainer" unique_id=989789121]
+[node name="TitleLabel" type="Label" parent="GameUI/OwnedSuitsPanel/VBoxContainer" unique_id=989789121]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
 theme_override_font_sizes/font_size = 14
 text = "Owned Suits"
 
-[node name="SuitList" type="VBoxContainer" parent="CanvasLayer/OwnedSuitsPanel/VBoxContainer" unique_id=2016784296]
+[node name="SuitList" type="VBoxContainer" parent="GameUI/OwnedSuitsPanel/VBoxContainer" unique_id=2016784296]
 layout_mode = 2
 
-[node name="CloseButton" type="Button" parent="CanvasLayer/OwnedSuitsPanel/VBoxContainer" unique_id=1170830468]
+[node name="CloseButton" type="Button" parent="GameUI/OwnedSuitsPanel/VBoxContainer" unique_id=1170830468]
 layout_mode = 2
 text = "Close"
 
-[node name="SettingsPanel" type="PanelContainer" parent="CanvasLayer" unique_id=7482773 node_paths=PackedStringArray("runManager")]
+[node name="SettingsPanel" type="PanelContainer" parent="GameUI" unique_id=7482773 node_paths=PackedStringArray("runManager")]
 visible = false
 z_index = 50
 offset_left = 139.0
@@ -737,102 +704,102 @@ offset_bottom = 363.0
 theme = ExtResource("12_kett4")
 theme_override_styles/panel = SubResource("StyleBoxTexture_ntwkj")
 script = ExtResource("26_v7ofj")
-runManager = NodePath("../../RunManager")
+runManager = NodePath("../../Managers/RunManager")
 button_click_sfx = ExtResource("32_jsd7a")
 button_hover_sfx = ExtResource("32_jsd7a")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SettingsPanel" unique_id=2140580532]
+[node name="MarginContainer" type="MarginContainer" parent="GameUI/SettingsPanel" unique_id=2140580532]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SettingsPanel" unique_id=1995948895]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/SettingsPanel" unique_id=1995948895]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer" unique_id=343900441]
+[node name="TitleLabel" type="Label" parent="GameUI/SettingsPanel/VBoxContainer" unique_id=343900441]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
 theme_override_font_sizes/font_size = 14
 text = "Settings"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/SettingsPanel/VBoxContainer" unique_id=1246293889]
+[node name="ScrollContainer" type="ScrollContainer" parent="GameUI/SettingsPanel/VBoxContainer" unique_id=1246293889]
 custom_minimum_size = Vector2(360, 300)
 layout_mode = 2
 
-[node name="SettingsContent" type="VBoxContainer" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer" unique_id=981517854]
+[node name="SettingsContent" type="VBoxContainer" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer" unique_id=981517854]
 layout_mode = 2
 
-[node name="MasterVolumeLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=892303319]
+[node name="MasterVolumeLabel" type="Label" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=892303319]
 layout_mode = 2
 text = "Master Volume"
 
-[node name="MasterVolumeSlider" type="HSlider" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=816950368]
+[node name="MasterVolumeSlider" type="HSlider" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=816950368]
 layout_mode = 2
 max_value = 1.0
 step = 0.05
 value = 1.0
 
-[node name="MusicVolumeLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=209061924]
+[node name="MusicVolumeLabel" type="Label" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=209061924]
 layout_mode = 2
 text = "Music Volume"
 
-[node name="MusicVolumeSlider" type="HSlider" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=552814508]
+[node name="MusicVolumeSlider" type="HSlider" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=552814508]
 layout_mode = 2
 max_value = 1.0
 step = 0.05
 value = 1.0
 
-[node name="SFXVolumeLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1826683817]
+[node name="SFXVolumeLabel" type="Label" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1826683817]
 layout_mode = 2
 text = "SFX Volume"
 
-[node name="SFXVolumeSlider" type="HSlider" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=664827748]
+[node name="SFXVolumeSlider" type="HSlider" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=664827748]
 layout_mode = 2
 max_value = 1.0
 step = 0.05
 value = 1.0
 
-[node name="WindowModeLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=959797652]
+[node name="WindowModeLabel" type="Label" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=959797652]
 layout_mode = 2
 text = "Window Mode"
 
-[node name="WindowModeOption" type="OptionButton" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=664402891]
+[node name="WindowModeOption" type="OptionButton" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=664402891]
 layout_mode = 2
 
-[node name="ResolutionLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=521934518]
+[node name="ResolutionLabel" type="Label" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=521934518]
 layout_mode = 2
 text = "Resolution"
 
-[node name="ResolutionOption" type="OptionButton" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=820162048]
+[node name="ResolutionOption" type="OptionButton" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=820162048]
 layout_mode = 2
 
-[node name="VSyncCheck" type="CheckBox" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=695527627]
+[node name="VSyncCheck" type="CheckBox" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=695527627]
 layout_mode = 2
 text = "VSync"
 
-[node name="ScaleLabel" type="Label" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1916305358]
+[node name="ScaleLabel" type="Label" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1916305358]
 layout_mode = 2
 text = "Screen Scale"
 
-[node name="ScaleOption" type="OptionButton" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=564625801]
+[node name="ScaleOption" type="OptionButton" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=564625801]
 layout_mode = 2
 
-[node name="LargeTextCheck" type="CheckBox" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=499552085]
+[node name="LargeTextCheck" type="CheckBox" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=499552085]
 layout_mode = 2
 text = "Large Text"
 
-[node name="ReduceMotionCheck" type="CheckBox" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1309671216]
+[node name="ReduceMotionCheck" type="CheckBox" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1309671216]
 layout_mode = 2
 text = "Reduce Motion"
 
-[node name="HighContrastCheck" type="CheckBox" parent="CanvasLayer/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1128658440]
+[node name="HighContrastCheck" type="CheckBox" parent="GameUI/SettingsPanel/VBoxContainer/ScrollContainer/SettingsContent" unique_id=1128658440]
 layout_mode = 2
 text = "High Contrast"
 
-[node name="CloseButton" type="Button" parent="CanvasLayer/SettingsPanel/VBoxContainer" unique_id=1433783906]
+[node name="CloseButton" type="Button" parent="GameUI/SettingsPanel/VBoxContainer" unique_id=1433783906]
 layout_mode = 2
 theme = ExtResource("12_kett4")
 text = "Close"
 
-[node name="QuotaCompleteFeedback" type="Control" parent="CanvasLayer" unique_id=1276531992 node_paths=PackedStringArray("runManager")]
+[node name="QuotaCompleteFeedback" type="Control" parent="GameUI" unique_id=1276531992 node_paths=PackedStringArray("runManager")]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -843,9 +810,9 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("12_kett4")
 script = ExtResource("28_vpy7u")
-runManager = NodePath("../../RunManager")
+runManager = NodePath("../../Managers/RunManager")
 
-[node name="FlashOverlay" type="ColorRect" parent="CanvasLayer/QuotaCompleteFeedback" unique_id=1815763478]
+[node name="FlashOverlay" type="ColorRect" parent="GameUI/QuotaCompleteFeedback" unique_id=1815763478]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -855,7 +822,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 0.007843138, 0)
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/QuotaCompleteFeedback" unique_id=482684351]
+[node name="CenterContainer" type="CenterContainer" parent="GameUI/QuotaCompleteFeedback" unique_id=482684351]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -863,67 +830,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SuccessBanner" type="Label" parent="CanvasLayer/QuotaCompleteFeedback/CenterContainer" unique_id=393927751]
+[node name="SuccessBanner" type="Label" parent="GameUI/QuotaCompleteFeedback/CenterContainer" unique_id=393927751]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "QUOTA COMPLETE!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Claw" parent="." unique_id=1355383 instance=ExtResource("26_w3p3t")]
-position = Vector2(318, 65)
-scale = Vector2(2, 2)
-
-[node name="CharacterBody2D" parent="Claw" index="0" unique_id=621652505 node_paths=PackedStringArray("grab_Area", "hold_point", "release_point", "animation_player", "cableAttachPoint", "slipTimer", "runManager")]
-collision_layer = 0
-script = ExtResource("27_ufegr")
-horizontal_speed = 180.0
-drop_speed = 190.0
-return_speed = 190.0
-grab_Area = NodePath("GrabArea")
-hold_point = NodePath("HoldPoint")
-release_point = NodePath("ReleasePoint")
-claw_drop_sfx = ExtResource("52_3cuoo")
-claw_close_sfx = ExtResource("53_iltbr")
-claw_return_sfx = ExtResource("54_tc75b")
-prize_release_sfx = ExtResource("55_v00e2")
-animation_player = NodePath("../AnimationPlayer")
-cableAttachPoint = NodePath("cableAttachPoint")
-slipTimer = NodePath("SlipTimer")
-runManager = NodePath("../../RunManager")
-
-[node name="GrabArea" parent="Claw/CharacterBody2D" index="3" unique_id=935614972]
-position = Vector2(-0.5, 9)
-
-[node name="HoldPoint" parent="Claw/CharacterBody2D" index="4" unique_id=2054188710]
-position = Vector2(-0.5, -18)
-
-[node name="ReleasePoint" type="Marker2D" parent="Claw/CharacterBody2D" index="5" unique_id=1456995759]
-position = Vector2(-1, -9)
-
-[node name="SlipTimer" type="Timer" parent="Claw/CharacterBody2D" index="8" unique_id=2044250276]
-one_shot = true
-
-[node name="cableAttachPoint" type="Marker2D" parent="Claw/CharacterBody2D" index="9" unique_id=1846019417]
-position = Vector2(-1.5, -36)
-scale = Vector2(0.5, 0.5)
-
-[node name="LayoutManager" type="Node2D" parent="." unique_id=1483436705]
-script = ExtResource("28_r815q")
-layouts = Array[PackedScene]([ExtResource("29_v7ofj"), ExtResource("29_hosw5"), ExtResource("30_v7ofj")])
-avoid_repeating_layout = false
-
-[node name="PauseController" type="CanvasLayer" parent="." unique_id=1031572088 node_paths=PackedStringArray("settingsPanel", "runManager")]
+[node name="PauseController" type="CanvasLayer" parent="GameUI" unique_id=1031572088 node_paths=PackedStringArray("settingsPanel", "runManager")]
 process_mode = 3
 layer = 20
 script = ExtResource("35_kj04f")
-settingsPanel = NodePath("../CanvasLayer/SettingsPanel")
-runManager = NodePath("../RunManager")
+settingsPanel = NodePath("../SettingsPanel")
+runManager = NodePath("../../Managers/RunManager")
 button_click_sfx = ExtResource("32_jsd7a")
 button_hover_sfx = ExtResource("32_jsd7a")
 
-[node name="PauseMenu" type="Control" parent="PauseController" unique_id=1453874411]
+[node name="PauseMenu" type="Control" parent="GameUI/PauseController" unique_id=1453874411]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -938,21 +863,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("12_kett4")
 
-[node name="MarginContainer" type="MarginContainer" parent="PauseController/PauseMenu" unique_id=725886246]
+[node name="MarginContainer" type="MarginContainer" parent="GameUI/PauseController/PauseMenu" unique_id=725886246]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseController/PauseMenu/MarginContainer" unique_id=1143541682]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/PauseController/PauseMenu/MarginContainer" unique_id=1143541682]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=1448226141]
+[node name="TitleLabel" type="Label" parent="GameUI/PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=1448226141]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.827451, 0.41568628, 1)
 theme_override_font_sizes/font_size = 14
 text = "Paused"
 
-[node name="ResumeButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=2135690849]
+[node name="ResumeButton" type="Button" parent="GameUI/PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=2135690849]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_fax51")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_d0kxf")
@@ -960,7 +885,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_j7ep4")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_5u7bl")
 text = "Resume"
 
-[node name="SettingsButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=243395431]
+[node name="SettingsButton" type="Button" parent="GameUI/PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=243395431]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_kl1xn")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_hpvpl")
@@ -968,7 +893,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_f1jfq")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_xa37y")
 text = "Settings"
 
-[node name="RestartRunButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=2146362254]
+[node name="RestartRunButton" type="Button" parent="GameUI/PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=2146362254]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_ie74s")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_qawt4")
@@ -976,7 +901,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_rejxm")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_unyw8")
 text = "Restart Run"
 
-[node name="ReturnToTitleButton" type="Button" parent="PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=1470979763]
+[node name="ReturnToTitleButton" type="Button" parent="GameUI/PauseController/PauseMenu/MarginContainer/VBoxContainer" unique_id=1470979763]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxTexture_nsxsa")
@@ -985,7 +910,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_4waxb")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_518r7")
 text = " Return to Title"
 
-[node name="QuitConfirmPanel" type="Control" parent="PauseController" unique_id=1378808546]
+[node name="QuitConfirmPanel" type="Control" parent="GameUI/PauseController" unique_id=1378808546]
 process_mode = 3
 visible = false
 layout_mode = 3
@@ -994,7 +919,1502 @@ offset_top = 167.0
 offset_right = 124.0
 offset_bottom = 167.0
 
-[connection signal="attempt_finished" from="Claw/CharacterBody2D" to="prizeContainer" method="_on_attempt_finished"]
-[connection signal="timeout" from="Claw/CharacterBody2D/SlipTimer" to="Claw/CharacterBody2D" method="_on_slip_timer_timeout"]
+[node name="Cabinet" type="Node" parent="." unique_id=1733274387]
 
-[editable path="Claw"]
+[node name="CabinetBackground" type="Sprite2D" parent="Cabinet" unique_id=541105344]
+position = Vector2(348, 172.50002)
+scale = Vector2(1.125, 1.0416667)
+texture = ExtResource("45_t0kcp")
+
+[node name="Marquee" type="Node2D" parent="Cabinet" unique_id=935731890]
+z_index = 100
+z_as_relative = false
+position = Vector2(22.00003, -1.5258789e-05)
+
+[node name="MarqueeFrame" type="Sprite2D" parent="Cabinet/Marquee" unique_id=1794139251]
+position = Vector2(265, 180)
+texture = ExtResource("46_q4ffn")
+
+[node name="MarqueeArt" type="Sprite2D" parent="Cabinet/Marquee" unique_id=1299603666]
+position = Vector2(358, 27)
+texture = ExtResource("47_oiuaq")
+
+[node name="LevelLabel" type="Label" parent="Cabinet/Marquee" unique_id=1959151812]
+offset_left = 298.0
+offset_top = 32.0
+offset_right = 389.0
+offset_bottom = 55.0
+theme = ExtResource("12_kett4")
+theme_override_colors/font_color = Color(0.94509804, 0.43529412, 0.011764706, 1)
+theme_override_colors/font_shadow_color = Color(0.33333334, 0.05882353, 0.007843138, 1)
+theme_override_font_sizes/font_size = 7
+text = "Level Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="PrizePiles" type="Control" parent="Cabinet" unique_id=116549985]
+z_index = 5
+layout_mode = 3
+anchors_preset = 0
+offset_left = 168.00003
+offset_top = 52.999985
+offset_right = 590.0
+offset_bottom = 344.0
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="BackPile" type="Control" parent="Cabinet/PrizePiles" unique_id=1053586190]
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Sprite2D5" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1712541254]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(132.68501, 161.68501)
+rotation = -0.27925268
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D6" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1747732435]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(334.5274, 117.52735)
+rotation = -0.20943949
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D7" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=2017698105]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(16.684982, 31.68502)
+rotation = -0.3490658
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D8" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1463478427]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(86.68503, 120.685)
+rotation = 0.78714335
+scale = Vector2(0.90000004, 0.90000004)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D12" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=2045737501]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(109.68504, 132.685)
+rotation = -0.20943949
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D14" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1052528409]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(95.739136, 154.7392)
+rotation = -0.3490658
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D13" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1461547229]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(309.73914, 162.73923)
+rotation = -0.13962632
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1646268167]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(26.684998, 161.685)
+rotation = -0.069813155
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=1414527365]
+position = Vector2(24.452707, -127.554016)
+rotation = -0.13962632
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=604650606]
+position = Vector2(-9.867238, -34.104706)
+rotation = -0.06981317
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D13" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=1526997954]
+position = Vector2(-13.556684, -13.200037)
+rotation = -0.06981317
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=745319605]
+position = Vector2(32.996204, -41.800125)
+rotation = -0.20943947
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D14" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=1197685638]
+position = Vector2(32.996204, -41.800125)
+rotation = -0.20943947
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=803011247]
+position = Vector2(348.14984, 24.345016)
+rotation = 0.92676985
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D5" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=352518046]
+position = Vector2(25.607727, -96.28613)
+rotation = -0.34906584
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D6" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=821814954]
+position = Vector2(27.072765, -69.45193)
+rotation = -0.418879
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D7" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=162202047]
+position = Vector2(58.340584, -70.60695)
+rotation = 4.9113564
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D16" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=1970611334]
+position = Vector2(83.230064, -97.062996)
+rotation = -0.13962632
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D17" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=722264572]
+position = Vector2(84.385086, -65.79511)
+rotation = -0.34906584
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D18" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=881916561]
+position = Vector2(117.11794, -40.11593)
+rotation = 4.9113564
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D8" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=1295093810]
+position = Vector2(65.27177, -25.508984)
+rotation = -0.06981317
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D9" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=945658653]
+position = Vector2(-6.743642, -62.84573)
+rotation = -0.20943947
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D10" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=1654120012]
+position = Vector2(338.29434, 3.546713)
+rotation = 0.92676985
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D11" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=526159282]
+position = Vector2(306.92557, -9.7850275)
+rotation = -0.34906584
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D12" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile/Sprite2D" unique_id=1111097386]
+position = Vector2(-5.0633774, -119.59357)
+rotation = -0.418879
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=2035440805]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(56.684998, 158.685)
+rotation = 0.052359886
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=624489656]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(19.684998, 77.685)
+rotation = -0.069813155
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D19" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=258383545]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(13.684998, 174.68498)
+rotation = 0.052359886
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D20" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1996854589]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(38.684998, 121.68498)
+rotation = 0.052359886
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D22" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=758966895]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(258.68506, 198.685)
+rotation = -0.017453276
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D23" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=406344329]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(264.68497, 140.68498)
+rotation = -0.15707962
+scale = Vector2(0.90000004, 0.90000004)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D24" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1143898484]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(255.03526, 165.14807)
+rotation = -0.087266445
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D25" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1657901628]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(287.72055, 160.55234)
+rotation = -0.22689275
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D27" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=613278783]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(252.68494, 183.68498)
+rotation = -0.36651906
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D28" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1174798121]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(160.685, 101.685)
+rotation = -0.43633223
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D29" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=715363827]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(130.68503, 129.685)
+rotation = -1.3892821
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D30" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1399702364]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(293.86298, 129.33102)
+rotation = -0.087266445
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D31" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1280756036]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(131.685, 84.685)
+rotation = -0.22689277
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D35" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1495225749]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(71.369995, 55.370003)
+rotation = -0.3490658
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D38" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1670473784]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(301.68506, 106.68504)
+rotation = -0.5585053
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D39" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=382541132]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(326.68503, 91.685)
+rotation = 0.052359886
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D40" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=448733433]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(68.685, 99.685)
+rotation = -0.22689277
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D41" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1631092201]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(194.685, 105.685005)
+rotation = -0.3490658
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D36" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=460914856]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(215.37, 125.36998)
+rotation = -0.43633223
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D37" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=923217892]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(164.37, 128.36998)
+rotation = -0.22689277
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D32" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=686174540]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(111.685, 173.68506)
+rotation = 0.9093165
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D33" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1305835582]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(258.68494, 157.68507)
+rotation = -0.36651906
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D34" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=310194242]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(163.685, 135.685)
+rotation = -0.43633223
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D43" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1790754089]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(256.68494, 105.685005)
+rotation = -0.99483746
+scale = Vector2(0.8099999, 0.8099999)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D44" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=455187771]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(204.68509, 81.68504)
+rotation = -0.7853981
+scale = Vector2(0.80999994, 0.80999994)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D45" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=2092894737]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(229.685, 98.685)
+rotation = -0.90757114
+scale = Vector2(0.80999994, 0.80999994)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D46" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1790020247]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(242.685, 127.68497)
+rotation = -1.1170106
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D47" type="Sprite2D" parent="Cabinet/PrizePiles/BackPile" unique_id=1462479101]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(274.685, 109.68501)
+rotation = -1.8151423
+scale = Vector2(0.65609986, 0.65609986)
+texture = ExtResource("50_v3kkr")
+
+[node name="PileDepthShadow2" type="ColorRect" parent="Cabinet/PrizePiles" unique_id=1834513342]
+visible = false
+modulate = Color(0, 0, 0, 0.33333334)
+z_index = 1
+layout_mode = 0
+offset_left = 0.9999694
+offset_top = 83.000015
+offset_right = 419.99997
+offset_bottom = 150.00002
+scale = Vector2(1, 1.4400036)
+color = Color(0.02745098, 0.07450981, 0.101960786, 0.26666668)
+
+[node name="MiddlePile" type="Control" parent="Cabinet/PrizePiles" unique_id=555791751]
+z_index = 2
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Sprite2D5" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=360968161]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(136.70082, 208.15248)
+rotation = -0.27925268
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D7" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1063927505]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(150.99997, 173.4675)
+rotation = -0.3490658
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D8" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=209716471]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(90.700836, 167.15247)
+rotation = 0.78714335
+scale = Vector2(0.90000004, 0.90000004)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D12" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=40113256]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(113.70085, 179.15247)
+rotation = -0.20943949
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D14" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=2141606676]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(99.754974, 201.20667)
+rotation = -0.3490658
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D13" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=677061463]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(313.75494, 209.2067)
+rotation = -0.13962632
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1840909459]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(30.700806, 208.1525)
+rotation = -0.069813155
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1410528714]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(60.700806, 205.1525)
+rotation = 0.052359886
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1375646345]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(23.700806, 124.152466)
+rotation = -0.069813155
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D19" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=412465777]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(14.700806, 221.15247)
+rotation = 0.052359886
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D20" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1388291291]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(42.700806, 168.15247)
+rotation = 0.052359886
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D22" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=610668290]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(200.99997, 191.46756)
+rotation = -0.017453276
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D23" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=499240993]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(174.99995, 195.4675)
+rotation = -0.20943949
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D24" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=373904294]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(19.700806, 178.1525)
+rotation = -0.13962634
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D25" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=521128806]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(16.99997, 197.4675)
+rotation = -0.13962634
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D26" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1862228197]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(57.700806, 168.55249)
+rotation = -0.27925262
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D27" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=753302220]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(57.700806, 168.55249)
+rotation = -0.27925262
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D29" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1801807203]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(47.646698, 120.09839)
+rotation = -0.41887897
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D30" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=200161459]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(50.646683, 144.09837)
+rotation = -0.48869213
+scale = Vector2(0.80999994, 0.80999994)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D31" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1824430035]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(78.64665, 141.09836)
+rotation = -1.441642
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D32" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=75500933]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(87.700836, 181.15253)
+rotation = -0.13962634
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D34" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1455098530]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(16.646698, 153.09836)
+rotation = -0.27925262
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D35" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=868742038]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(334.64673, 190.09836)
+rotation = 0.85695654
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D36" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=529489096]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(305.64664, 180.09839)
+rotation = -0.41887897
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D37" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1557408947]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(113.999954, 138.4675)
+rotation = -0.48869213
+scale = Vector2(0.80999994, 0.80999994)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D38" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1774411036]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(282.99994, 206.4675)
+rotation = -0.15707962
+scale = Vector2(0.90000004, 0.90000004)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D39" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1570697291]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(197.35017, 157.93063)
+rotation = -0.08726644
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D40" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=752699884]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(233, 164.00002)
+rotation = -0.22689277
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D41" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1408742029]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(149.99997, 149.46756)
+rotation = 0.9093165
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D42" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1113230445]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(260.99997, 165.46751)
+rotation = -0.36651906
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D43" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=847650580]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(258.8899, 133.33453)
+rotation = -0.43633223
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D44" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=202007249]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(236.99997, 193.46747)
+rotation = -1.3892821
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D45" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=647880824]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(289, 163.46747)
+rotation = -0.08726644
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D46" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=260539003]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(171.99997, 158.46748)
+rotation = -0.22689277
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D47" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1690709910]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(215.99997, 141.4675)
+rotation = 0.9093165
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D48" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1941079642]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(216.99997, 212.00002)
+rotation = -0.36651906
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D49" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=76206900]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(181.99994, 129.46747)
+rotation = -0.43633223
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D51" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=593346925]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(313.8899, 145.33453)
+rotation = -0.20943949
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D53" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=15007219]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(24.889893, 88.33455)
+rotation = -0.069813155
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D55" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1546605186]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(45.889908, 82.666306)
+rotation = -0.41887897
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D56" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=56937424]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(76.88986, 103.66627)
+rotation = -1.441642
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D57" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=497587006]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(102.88985, 115.33455)
+rotation = -0.48869213
+scale = Vector2(0.80999994, 0.80999994)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D58" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=772005278]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(138.8899, 124.33456)
+rotation = 0.9093165
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D59" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=2053722860]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(233.99994, 134.00002)
+rotation = -0.43633223
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D60" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1171896722]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(287.24323, 126.03539)
+rotation = -0.08726644
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D61" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1116581420]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(204.8899, 114.3346)
+rotation = 0.9093165
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D62" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=690020720]
+modulate = Color(0.24705882, 0.37254903, 0.43529412, 0.8)
+position = Vector2(161.88986, 114.33452)
+rotation = -0.43633223
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D50" type="Sprite2D" parent="Cabinet/PrizePiles/MiddlePile" unique_id=1450145679]
+modulate = Color(0.11764706, 0.1764706, 0.20784314, 0.6666667)
+position = Vector2(309.88992, 148.33453)
+rotation = -0.97738415
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("49_35ty0")
+
+[node name="PileDepthShadow" type="ColorRect" parent="Cabinet/PrizePiles" unique_id=1438832545]
+visible = false
+modulate = Color(0, 0, 0, 0.33333334)
+z_index = 3
+layout_mode = 0
+offset_left = 0.9999695
+offset_top = 179.00002
+offset_right = 419.99997
+offset_bottom = 287.0
+
+[node name="FrontPile" type="Control" parent="Cabinet/PrizePiles" unique_id=728317652]
+modulate = Color(0.5411765, 0.47843137, 0.36862746, 0.8)
+z_index = 4
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Sprite2D5" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1820479323]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(128.40169, 267.56793)
+rotation = -0.27925268
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D7" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1250823654]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(151.51172, 238.70087)
+rotation = -0.3490658
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D8" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=389909227]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(91.212585, 232.38586)
+rotation = 0.78714335
+scale = Vector2(0.90000004, 0.90000004)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D12" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1004018650]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(114.2126, 244.38586)
+rotation = -0.20943949
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D14" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1210265086]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(100.26672, 266.44006)
+rotation = -0.3490658
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D13" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1258576959]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(318.4016, 268.56793)
+rotation = -0.13962632
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1000431951]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(31.212555, 273.38586)
+rotation = -0.069813155
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=2081906499]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(61.212555, 270.38586)
+rotation = 0.052359886
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1846729867]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(24.212555, 189.38585)
+rotation = -0.069813155
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D19" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=395249830]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(17.401657, 273.56793)
+rotation = 0.052359886
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D50" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1592773374]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(16.700806, 280)
+rotation = 0.052359886
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D20" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1612093335]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(43.212555, 233.38586)
+rotation = 0.052359886
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D22" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=897950270]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(201.51172, 256.70096)
+rotation = -0.017453276
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D23" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=51976896]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(175.5117, 260.70087)
+rotation = -0.20943949
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D24" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1287653115]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(20.212555, 243.38586)
+rotation = -0.13962634
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D25" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=579797226]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(20.401642, 255.56793)
+rotation = -0.13962634
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D26" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1419041599]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(58.212555, 233.78589)
+rotation = -0.27925262
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D27" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=828179921]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(58.212555, 233.78589)
+rotation = -0.27925262
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D29" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=78967071]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(48.158447, 185.33177)
+rotation = -0.41887897
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D30" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=327588471]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(51.158447, 209.33176)
+rotation = -0.48869213
+scale = Vector2(0.80999994, 0.80999994)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D31" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1706296205]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(79.1584, 206.33173)
+rotation = -1.441642
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D32" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1359864641]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(88.212585, 246.38593)
+rotation = -0.13962634
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D34" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1061034198]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(23.401642, 217.56793)
+rotation = -0.27925262
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D35" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1258960302]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(335.15845, 255.33176)
+rotation = 0.85695654
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D36" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=65395325]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(306.1584, 245.33179)
+rotation = -0.41887897
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D37" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=718458870]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(114.5117, 203.70088)
+rotation = -0.48869213
+scale = Vector2(0.80999994, 0.80999994)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D38" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1852809872]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(285.4016, 269.56793)
+rotation = -0.15707962
+scale = Vector2(0.90000004, 0.90000004)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D39" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1236777350]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(197.86192, 223.16403)
+rotation = -0.08726644
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D40" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=89342456]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(192.40164, 264.56793)
+rotation = -0.22689277
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D41" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=745852352]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(162.40167, 267.56787)
+rotation = 0.9093165
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D42" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1611738475]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(261.51172, 230.70087)
+rotation = -0.36651906
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D43" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1189040907]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(232.40164, 270.56793)
+rotation = -0.43633223
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D44" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=897127273]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(252.40161, 262.56793)
+rotation = -1.3892821
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D51" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1370728534]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(135.52077, 275.31284)
+rotation = -0.27925268
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("48_u1gax")
+
+[node name="Sprite2D52" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=314372442]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(107.3858, 274.18497)
+rotation = -0.3490658
+scale = Vector2(0.8999999, 0.8999999)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D53" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=815985168]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(199.52072, 272.31284)
+rotation = -0.22689277
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D54" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=399306837]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(169.52075, 275.31277)
+rotation = 0.9093165
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D55" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=510462122]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(239.52072, 278.31284)
+rotation = -0.43633223
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D56" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=2081257150]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(259.5207, 270.31284)
+rotation = -1.3892821
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D57" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=976892991]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(295, 227.00003)
+rotation = -1.3892821
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D58" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1484842458]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(322.99997, 232.00003)
+rotation = -1.3892821
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D59" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=2003574504]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(126.99997, 235.00003)
+rotation = -1.3892821
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D45" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=339916655]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(279.40167, 234.56793)
+rotation = -0.08726644
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D46" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1553116384]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(172.51172, 223.70087)
+rotation = -0.22689277
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_v3kkr")
+
+[node name="Sprite2D47" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=1010365379]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(237.40164, 226.56787)
+rotation = 0.9093165
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("49_35ty0")
+
+[node name="Sprite2D48" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=656840207]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(221.51172, 248.70087)
+rotation = -0.36651906
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("51_njwk2")
+
+[node name="Sprite2D49" type="Sprite2D" parent="Cabinet/PrizePiles/FrontPile" unique_id=279758013]
+modulate = Color(0.9411765, 0.83137256, 0.6117647, 1)
+position = Vector2(182.51169, 194.70085)
+rotation = -0.43633223
+scale = Vector2(0.89999986, 0.89999986)
+texture = ExtResource("49_35ty0")
+
+[node name="Gameplay" type="Control" parent="." unique_id=411719366]
+z_index = 5
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Claw" parent="Gameplay" unique_id=1355383 instance=ExtResource("26_w3p3t")]
+z_index = 8
+position = Vector2(318, 65)
+scale = Vector2(2, 2)
+
+[node name="CharacterBody2D" parent="Gameplay/Claw" index="0" unique_id=621652505 node_paths=PackedStringArray("grab_Area", "hold_point", "release_point", "clawSpawn", "animation_player", "cableAttachPoint", "slipTimer", "runManager")]
+collision_layer = 0
+script = ExtResource("27_ufegr")
+horizontal_speed = 180.0
+drop_speed = 190.0
+return_speed = 190.0
+maximum_drop_depth = 278.0
+grab_Area = NodePath("GrabArea")
+hold_point = NodePath("HoldPoint")
+release_point = NodePath("ReleasePoint")
+clawSpawn = NodePath("../../clawSpawn")
+claw_drop_sfx = ExtResource("52_3cuoo")
+claw_close_sfx = ExtResource("53_iltbr")
+claw_return_sfx = ExtResource("54_tc75b")
+prize_release_sfx = ExtResource("55_v00e2")
+animation_player = NodePath("../AnimationPlayer")
+cableAttachPoint = NodePath("cableAttachPoint")
+slipTimer = NodePath("SlipTimer")
+runManager = NodePath("../../../Managers/RunManager")
+
+[node name="GrabArea" parent="Gameplay/Claw/CharacterBody2D" index="3" unique_id=935614972]
+position = Vector2(-0.5, 9)
+
+[node name="HoldPoint" parent="Gameplay/Claw/CharacterBody2D" index="4" unique_id=2054188710]
+position = Vector2(-0.5, -18)
+
+[node name="ReleasePoint" type="Marker2D" parent="Gameplay/Claw/CharacterBody2D" index="5" unique_id=1456995759]
+position = Vector2(-1, -9)
+
+[node name="SlipTimer" type="Timer" parent="Gameplay/Claw/CharacterBody2D" index="8" unique_id=2044250276]
+one_shot = true
+
+[node name="cableAttachPoint" type="Marker2D" parent="Gameplay/Claw/CharacterBody2D" index="9" unique_id=1846019417]
+position = Vector2(-1.5, -36)
+scale = Vector2(0.5, 0.5)
+
+[node name="prizeContainer" type="Node2D" parent="Gameplay" unique_id=1425589497]
+z_index = 10
+position = Vector2(348, 282)
+script = ExtResource("5_1rkfa")
+alien_Scene = ExtResource("6_r815q")
+levelData = ExtResource("3_3s4k1")
+
+[node name="KillZone" type="Area2D" parent="Gameplay" unique_id=2033197540]
+position = Vector2(-2, -2)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Gameplay/KillZone" unique_id=1820535108]
+position = Vector2(71, 176.5)
+shape = SubResource("RectangleShape2D_d2p3p")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Gameplay/KillZone" unique_id=24308122]
+position = Vector2(644, 183)
+shape = SubResource("RectangleShape2D_d2p3p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/KillZone" unique_id=565892024]
+position = Vector2(356.5, -41)
+shape = SubResource("RectangleShape2D_r0srf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Gameplay/KillZone" unique_id=1541592484]
+position = Vector2(361, 406)
+shape = SubResource("RectangleShape2D_r0srf")
+
+[node name="LayoutManager" type="Node2D" parent="Gameplay" unique_id=1483436705]
+position = Vector2(-20, 0)
+script = ExtResource("28_r815q")
+layouts = Array[PackedScene]([ExtResource("29_v7ofj"), ExtResource("29_hosw5"), ExtResource("30_v7ofj")])
+avoid_repeating_layout = false
+
+[node name="clawSpawn" type="Marker2D" parent="Gameplay" unique_id=601436855]
+position = Vector2(359, 98)
+
+[node name="GlassOverlay" type="Control" parent="." unique_id=881388352]
+visible = false
+z_index = 30
+layout_mode = 3
+anchors_preset = 0
+offset_left = -2.0
+offset_top = -5.0
+offset_right = -2.0
+offset_bottom = -5.0
+mouse_filter = 2
+
+[node name="GlassTint" type="ColorRect" parent="GlassOverlay" unique_id=1443766198]
+modulate = Color(0.7411765, 0.9372549, 1, 1)
+self_modulate = Color(1, 1, 1, 0.8862745)
+layout_mode = 0
+offset_left = 154.0
+offset_top = 52.0
+offset_right = 608.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0.62352943, 0.8666667, 0.9019608, 0.12156863)
+metadata/_edit_use_anchors_ = true
+
+[node name="Streaks" type="Node" parent="GlassOverlay" unique_id=991265703]
+
+[node name="Streak1" type="Line2D" parent="GlassOverlay/Streaks" unique_id=1746106572]
+z_index = 1
+points = PackedVector2Array(170, 101, 234, 57)
+width = 2.0
+default_color = Color(0.8666667, 0.9843137, 1, 0.18039216)
+
+[node name="Streak2" type="Line2D" parent="GlassOverlay/Streaks" unique_id=1776729210]
+z_index = 1
+points = PackedVector2Array(572, 60, 308, 209)
+width = 2.0
+default_color = Color(0.8666667, 0.9843137, 1, 0.18039216)
+
+[node name="Dustspecks" type="Node" parent="GlassOverlay" unique_id=740328678]
+
+[node name="ColorRect" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1474055232]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 182.0
+offset_top = 57.0
+offset_right = 222.0
+offset_bottom = 97.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect2" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1627169826]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 207.0
+offset_top = 56.0
+offset_right = 247.0
+offset_bottom = 96.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect3" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1585840645]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 173.0
+offset_top = 78.0
+offset_right = 213.0
+offset_bottom = 118.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect4" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=223624988]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 237.0
+offset_top = 97.0
+offset_right = 277.0
+offset_bottom = 137.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect5" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1797517998]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 357.0
+offset_top = 86.0
+offset_right = 397.0
+offset_bottom = 126.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect6" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1260633630]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 288.0
+offset_top = 149.0
+offset_right = 328.0
+offset_bottom = 189.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect7" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=623996045]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect8" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1942072897]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 427.0
+offset_top = 156.0
+offset_right = 467.0
+offset_bottom = 196.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect9" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=950217213]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 436.0
+offset_top = 187.0
+offset_right = 476.0
+offset_bottom = 227.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect10" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=50534241]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 463.0
+offset_top = 62.0
+offset_right = 503.0
+offset_bottom = 102.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect11" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=812661378]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 447.0
+offset_top = 200.0
+offset_right = 487.0
+offset_bottom = 240.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect12" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1126857985]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 217.0
+offset_top = 211.0
+offset_right = 257.0
+offset_bottom = 251.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect13" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=2142379085]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 540.0
+offset_top = 212.0
+offset_right = 580.0
+offset_bottom = 252.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect14" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=542015233]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 245.0
+offset_top = 285.0
+offset_right = 285.0
+offset_bottom = 325.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect15" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=601398570]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 454.0
+offset_top = 243.0
+offset_right = 494.0
+offset_bottom = 283.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect16" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1631253237]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 535.0
+offset_top = 222.0
+offset_right = 575.0
+offset_bottom = 262.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect17" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1356169851]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 570.0
+offset_top = 89.0
+offset_right = 610.0
+offset_bottom = 129.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect18" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1697380840]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 535.0
+offset_top = 215.0
+offset_right = 575.0
+offset_bottom = 255.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect19" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=540805078]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 311.0
+offset_top = 265.0
+offset_right = 351.0
+offset_bottom = 305.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect20" type="ColorRect" parent="GlassOverlay/Dustspecks" unique_id=1501366506]
+z_index = 2
+anchors_preset = -1
+anchor_right = -0.0609375
+anchor_bottom = -0.108333334
+offset_left = 373.0
+offset_top = 284.0
+offset_right = 413.0
+offset_bottom = 324.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.2)
+metadata/_edit_use_anchors_ = true
+
+[node name="Managers" type="Node" parent="." unique_id=838759661]
+
+[node name="RunManager" type="Node" parent="Managers" unique_id=1852464911 node_paths=PackedStringArray("prizeContainer", "clawController", "layoutManager", "decorativePrizePiles")]
+script = ExtResource("1_dc740")
+levels = Array[ExtResource("2_5d133")]([ExtResource("3_3s4k1"), ExtResource("4_782ej"), ExtResource("5_kj04f"), ExtResource("6_kett4"), ExtResource("7_vpy7u")])
+prizeContainer = NodePath("../../Gameplay/prizeContainer")
+clawController = NodePath("../../Gameplay/Claw/CharacterBody2D")
+layoutManager = NodePath("../../Gameplay/LayoutManager")
+decorativePrizePiles = NodePath("../../Cabinet/PrizePiles")
+
+[node name="Camera2D" type="Camera2D" parent="Managers" unique_id=302279949]
+position = Vector2(320, 180)
+
+[connection signal="attempt_finished" from="Gameplay/Claw/CharacterBody2D" to="Gameplay/prizeContainer" method="_on_attempt_finished"]
+[connection signal="timeout" from="Gameplay/Claw/CharacterBody2D/SlipTimer" to="Gameplay/Claw/CharacterBody2D" method="_on_slip_timer_timeout"]
+
+[editable path="Gameplay/Claw"]

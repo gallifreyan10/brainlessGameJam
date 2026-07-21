@@ -2,6 +2,8 @@ extends Node
 class_name RunManager
 
 @export var default_spawn_separation: float = 18.0
+@export_file("*tscn") var title_scene_path: String = "res://scenes/main_menu.tscn"
+
 
 enum RunState {
 	RUNNING,
@@ -24,12 +26,15 @@ signal countdownStopped
 signal countdownExpired
 signal runFailed(levelIndex: int, earned: int, quota: int)
 signal newRunStarted
+signal runCompleted(grossEarnings: int)
 
 @export var levels: Array[LevelData] = []
 @export var prizeContainer: Node
 @export var clawController: Node
 @export var attemptCountdownDuration: float = 15.0
 @export var layoutManager: LayoutManager
+@export var decorativePrizePiles: Control
+@export var leftChutePrizePileOffsetX: float = 80.0
 
 var attemptsCountdownRemaining: float = 0.0
 var countdownActive: bool = false
@@ -43,10 +48,16 @@ var attemptsRemaining: int = 0
 var currentAttemptCountdownDuration: float = 15.0
 var ui_timer_pause_count: int = 0
 var countdown_was_active_before_ui_pause:bool = false
+var defaultDecorativePrizePilePosition: Vector2 = Vector2.ZERO
+var hasDefaultDecorativePrizePilePosition: bool = false
 
 signal suitsCleared
 
 func _ready() -> void:
+	if decorativePrizePiles != null:
+		defaultDecorativePrizePilePosition = decorativePrizePiles.position
+		hasDefaultDecorativePrizePilePosition = true
+	
 	RunEconomy.quotaReached.connect(
 		_on_quota_reached
 	)
@@ -123,6 +134,14 @@ func complete_level(grossEarnings: int) -> void:
 	completedLevelIndex = currentLevelIndex
 	completedLevelEarnings = grossEarnings
 	
+	if is_final_level():
+		currentState = RunState.RUN_COMPLETE
+		stateChanged.emit(currentState)
+		PlayerProgress.record_run_completed()
+		PlayerProgress.request_credits_on_menu_load()
+		call_deferred("_go_to_title")
+		return
+		
 	currentState = RunState.LEVEL_COMPLETE
 	stateChanged.emit(currentState)
 	
@@ -143,10 +162,14 @@ func continue_to_next_level() -> void:
 func open_shop() -> void:
 	if currentState != RunState.LEVEL_COMPLETE:
 		return
-	
+		
+	if is_final_level():
+		return
+		
 	currentState = RunState.SHOP
 	stateChanged.emit(currentState)
 	shopRequested.emit()
+
 
 func buy_and_equip_suit(suit: SuitData, price_override: int = -1) -> bool:
 	if currentState != RunState.SHOP:
@@ -286,6 +309,12 @@ func apply_layout_references(layout: Node) -> void:
 	var cable := layout.get_node_or_null("cable") as Line2D
 	var kill_zone := layout.get_node_or_null("KillZone") as Area2D
 	
+	apply_decorative_prize_pile_layout(
+		prize_chute,
+		spawn_top_left,
+		spawn_bottom_right
+	)
+	
 	if chute_release_point != null:
 		resolution_timer = chute_release_point.get_node_or_null("ResolutionTimer") as Timer
 	
@@ -293,11 +322,12 @@ func apply_layout_references(layout: Node) -> void:
 		prizeContainer.spawn_top_left = spawn_top_left
 		prizeContainer.spawn_bottom_right = spawn_bottom_right
 		prizeContainer.chuteArea = prize_chute
+		prizeContainer.killZone = kill_zone
 		prizeContainer.minimumSpawnSeparation = default_spawn_separation
 		if kill_zone != null:
 			var kill_callable := Callable(
 				prizeContainer,
-				"on_kill_zone_body_entered"
+				"_on_kill_zone_body_entered"
 			)
 			
 			if not kill_zone.body_entered.is_connected(kill_callable):
@@ -314,7 +344,9 @@ func apply_layout_references(layout: Node) -> void:
 		clawController.chuteArea = prize_chute
 		clawController.chuteReleasePoint = chute_release_point
 		clawController.resolutionTimer = resolution_timer
-		clawController.cable = cable
+		
+		if cable != null:
+			clawController.cable = cable
 		
 		if prize_chute != null:
 			var chute_callable := Callable(clawController, "_on_prize_chute_body_entered")
@@ -327,6 +359,35 @@ func apply_layout_references(layout: Node) -> void:
 			
 			if not resolution_timer.timeout.is_connected(timer_callable):
 				resolution_timer.timeout.connect(timer_callable)
+
+func apply_decorative_prize_pile_layout(
+	prize_chute: Area2D,
+	spawn_top_left: Marker2D,
+	spawn_bottom_right: Marker2D
+) -> void:
+	if decorativePrizePiles == null:
+		return
+		
+	if not hasDefaultDecorativePrizePilePosition:
+		defaultDecorativePrizePilePosition = decorativePrizePiles.position
+		hasDefaultDecorativePrizePilePosition = true
+		
+	var targetPosition := defaultDecorativePrizePilePosition
+	
+	if (
+		prize_chute != null
+		and spawn_top_left != null
+		and spawn_bottom_right != null
+	):
+		var spawnCenterX := (
+			spawn_top_left.global_position.x
+			+ spawn_bottom_right.global_position.x
+		) * 0.5
+		
+		if prize_chute.global_position.x < spawnCenterX:
+			targetPosition.x += leftChutePrizePileOffsetX
+			
+	decorativePrizePiles.position = targetPosition
 				
 func request_ui_timer_pause() -> void:
 	ui_timer_pause_count += 1
@@ -363,3 +424,9 @@ func resume_attempt_countdown_from_current_time() -> void:
 	countdownActive = true
 	countdownStarted.emit(attemptsCountdownRemaining)
 	countdownChanged.emit(attemptsCountdownRemaining)
+
+func is_final_level() -> bool:
+	return currentLevelIndex >= levels.size() -1
+
+func _go_to_title() -> void:
+	get_tree().change_scene_to_file(title_scene_path)

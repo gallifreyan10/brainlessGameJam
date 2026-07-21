@@ -8,11 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://c0gl4u41nwnlc" path="res://art/ui/hologramInterface/Card X1/Card X1.png" id="3_tbmy8"]
 [ext_resource type="Texture2D" uid="uid://kpgkxhsdv724" path="res://art/ui/hologramInterface/Button 1/Button Normal.png" id="4_jk1qb"]
 [ext_resource type="AudioStream" uid="uid://bft254583n0eq" path="res://audio/sfx/ui_select.wav" id="4_rcqid"]
+[ext_resource type="AudioStream" uid="uid://b3v0rdqxgxsr3" path="res://audio/music/creditsMusic.wav" id="5_1ajci"]
 [ext_resource type="Texture2D" uid="uid://dmi45bvmeqcj2" path="res://art/ui/hologramInterface/Button 3/Active.png" id="5_5dd4i"]
 [ext_resource type="Texture2D" uid="uid://b55ppf0txoln5" path="res://art/ui/hologramInterface/Button 1/Button Hover.png" id="6_lgwnu"]
 [ext_resource type="Texture2D" uid="uid://s2bieit855qt" path="res://art/finalSprites/gameLogo.png" id="6_rcqid"]
 [ext_resource type="Texture2D" uid="uid://d3crnk2numnk2" path="res://art/ui/hologramInterface/Button 1/Button Disable.png" id="7_flqon"]
 [ext_resource type="Texture2D" uid="uid://gt0ylsspjgdb" path="res://art/ui/hologramInterface/Button 1/Button Active.png" id="8_flqon"]
+[ext_resource type="Script" uid="uid://ce0ppwpe8php3" path="res://scenes/scroll_container.gd" id="15_7b55j"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jk1qb"]
 
@@ -88,6 +90,7 @@ script = ExtResource("1_ekxnf")
 menu_music = ExtResource("2_5dd4i")
 button_click_sfx = ExtResource("3_flqon")
 button_hover_sfx = ExtResource("4_rcqid")
+credits_music = ExtResource("5_1ajci")
 
 [node name="Background" type="TextureRect" parent="." unique_id=990149438]
 layout_mode = 1
@@ -267,6 +270,7 @@ theme_override_styles/disabled = SubResource("StyleBoxTexture_6vcge")
 text = "Close"
 
 [node name="CreditsPanel" type="PanelContainer" parent="." unique_id=2097433102]
+visible = false
 z_index = 10
 custom_minimum_size = Vector2(600, 300)
 layout_mode = 1
@@ -301,6 +305,7 @@ horizontal_alignment = 1
 [node name="ScrollContainer" type="ScrollContainer" parent="CreditsPanel/MarginContainer/VBoxContainer" unique_id=187656761]
 custom_minimum_size = Vector2(520, 250)
 layout_mode = 2
+script = ExtResource("15_7b55j")
 
 [node name="CreditsLabel" type="RichTextLabel" parent="CreditsPanel/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1371717459]
 z_index = 11
@@ -323,6 +328,7 @@ Additional asset packs:
 [font_size=18][color=#FFD84A]Music[/color][/font_size]
 - 8bit retro arcade action music loop by Nestor-10 - itch.io
 - Space Music Pack - Menu Track by Goose Ninja- itch.io
+- Space Music Pack - Meet the Princess Track by Goose Ninja- itch.io
 
 [font_size=18][color=#FFD84A]Sound Effects[/color][/font_size]
 - Mechanical Movements Sound Effects by Tagirijus - itch.io
